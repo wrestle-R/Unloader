@@ -7,6 +7,12 @@ export default defineConfig({
   manifest: ({ browser, manifestVersion }) => ({
     name: "Unloader",
     description: "Unload idle tabs while keeping important sites awake.",
+    icons: {
+      16: "icon/16.png",
+      32: "icon/32.png",
+      48: "icon/48.png",
+      128: "icon/128.png",
+    },
     permissions: [
       "tabs",
       "storage",
@@ -18,8 +24,8 @@ export default defineConfig({
     commands: {
       "unload-current-tab": {
         suggested_key: {
-          default: "Ctrl+U",
-          mac: "Command+U",
+          default: "Ctrl+Shift+U",
+          mac: "Command+Shift+U",
         },
         description: "Unload the current tab",
       },
