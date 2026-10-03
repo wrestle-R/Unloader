@@ -1,6 +1,6 @@
 # Unloader
 
-Unloader keeps idle pages in your browser's tab bar while releasing their page memory. It starts in **manual mode**: choose a tab in the dashboard or use the browser shortcut to unload it. The page reloads when you return. You can opt into a global idle timer and give each website its own rule. Set `web.whatsapp.com` to **Keep awake** if you want WhatsApp ready when the browser starts.
+Unloader keeps idle pages in your browser's tab bar while asking the browser to discard their page content. It starts in **manual mode**: choose a tab in the dashboard or use the browser shortcut to unload it. The page reloads when you return. You can opt into a global idle timer and give each website its own rule. Set `web.whatsapp.com` to **Keep awake** if you want WhatsApp ready when the browser starts.
 
 Unloader is built for desktop Chrome/Brave and Firefox/Zen. It stores settings, recent activity, and focused-tab sorting data in the local browser profile. No account or server is involved.
 
@@ -28,6 +28,6 @@ npm run test:startup -- --browser chrome
 npm run benchmark -- --browser chromium --tab-counts 20,100,300 --runs 3
 ```
 
-The browser scripts use disposable profiles and local fixture pages; use `--help` for browser binary, WebDriver, headed mode, and output options. The restart test supports `chrome`, `brave`, and `firefox-dev`; Firefox Developer Edition is needed for an unsigned add-on to persist across restarts. Reports and screenshots are written under ignored `test-results/`. Benchmarks compare Linux browser-process PSS and CPU across paired profiles. They are environment-specific measurements, not an exact live extension RAM meter. Full per-page RAM is unavailable to a standard cross-browser extension; use Chrome/Brave Task Manager (`Shift+Esc`) or Firefox/Zen `about:processes` for browser-native inspection.
+The browser scripts use disposable profiles and local fixture pages; use `--help` for browser binary, WebDriver, headed mode, and output options. The restart test supports `chrome`, `brave`, and `firefox-dev`; Firefox Developer Edition is needed for an unsigned add-on to persist across restarts. Reports and screenshots are written under ignored `test-results/`. Benchmarks compare Linux browser-process PSS and CPU across paired profiles. They are environment-specific measurements, not an exact live extension RAM meter or a promise of immediate memory savings. Full per-page RAM is unavailable to a standard cross-browser extension; use Chrome/Brave Task Manager (`Shift+Esc`) or Firefox/Zen `about:processes` for browser-native inspection.
 
 The detailed product decisions, test matrix, sources, and local verification record live in the intentionally Git-ignored `docs.md`.
