@@ -99,7 +99,8 @@ export type RequestMessage =
   | { type: "clearActivity" }
   | { type: "exportSettings" }
   | { type: "importSettings"; value: unknown }
-  | { type: "safetyUpdate"; safety: SafetySignals };
+  | { type: "safetyUpdate"; safety: SafetySignals }
+  | { type: "shortcutFromPage" };
 
 export type ResponseMessage<T> =
   | { ok: true; data: T }

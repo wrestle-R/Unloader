@@ -85,8 +85,10 @@ async function keyChord(driver) {
       id: "keyboard",
       actions: [
         { type: "keyDown", value: "\uE009" },
+        { type: "keyDown", value: "\uE008" },
         { type: "keyDown", value: "u" },
         { type: "keyUp", value: "u" },
+        { type: "keyUp", value: "\uE008" },
         { type: "keyUp", value: "\uE009" },
       ],
     }],
@@ -335,7 +337,7 @@ async function main() {
       return "all sections opened";
     });
 
-    await check("Ctrl+U is registered and physically unloads the current tab", async () => {
+    await check("Ctrl+Shift+U is registered and physically unloads the current tab", async () => {
       await driver.switchWindow(dashboardHandle);
       const registered = await commands(driver);
       if (!Array.isArray(registered)) throw new Error(`commands.getAll failed: ${JSON.stringify(registered)}`);
@@ -344,15 +346,21 @@ async function main() {
       report.shortcutRegistration = unload.shortcut || null;
       const shortcutHandle = await driver.newTab(`${fixture.origin}/page/shortcut`);
       await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "shortcut fixture");
+      await driver.execute("window.__unloaderKeys = []; window.addEventListener('keydown', event => window.__unloaderKeys.push({ key: event.key, ctrl: event.ctrlKey, shift: event.shiftKey }))");
       await keyChord(driver);
+      // Give the browser command handler time to resolve the focused tab before
+      // WebDriver switches back to the dashboard.
+      await pause(750);
       await driver.switchWindow(dashboardHandle);
       try {
         await waitForTab(driver, "/page/shortcut", (tab) => tab.discarded, "shortcut discard", 5000);
       } catch {
         const state = await snapshot(driver);
-        throw new Error(`physical Ctrl+U did not discard; command=${unload.shortcut || "unbound"}; tracked=${JSON.stringify(state.tabs.filter((tab) => tab.url.includes("shortcut") || tab.url.startsWith("view-source:")) .map((tab) => ({ url: tab.url, discarded: tab.discarded })) )}`);
+        await driver.switchWindow(shortcutHandle);
+        const keys = await driver.execute("return window.__unloaderKeys || []");
+        throw new Error(`physical Ctrl+Shift+U did not discard; command=${unload.shortcut || "unbound"}; keys=${JSON.stringify(keys)}; tracked=${JSON.stringify(state.tabs.filter((tab) => tab.url.includes("shortcut") || tab.url.startsWith("view-source:")) .map((tab) => ({ url: tab.url, discarded: tab.discarded })) )}`);
       }
-      if (!/^Ctrl\+U$/i.test(unload.shortcut ?? "")) {
+      if (!/^Ctrl\+Shift\+U$/i.test(unload.shortcut ?? "")) {
         throw new Error(`Physical key worked, but registered shortcut is ${unload.shortcut || "unbound"}`);
       }
       return `shortcut unloaded tab ${shortcutHandle}`;

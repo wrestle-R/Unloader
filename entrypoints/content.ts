@@ -97,6 +97,14 @@ export default defineContentScript({
     document.addEventListener("submit", noteSubmit, options);
     document.addEventListener("focusin", queuePublish, options);
     document.addEventListener("focusout", queuePublish, options);
+    document.addEventListener("keydown", (event) => {
+      const commandModifier = (event.ctrlKey && !event.metaKey) || (event.metaKey && !event.ctrlKey);
+      if (event.repeat || event.isComposing || !commandModifier || !event.shiftKey || event.altKey ||
+          (event.code !== "KeyU" && event.key.toLowerCase() !== "u")) return;
+      event.preventDefault();
+      event.stopPropagation();
+      void browser.runtime.sendMessage({ type: "shortcutFromPage" }).catch(() => {});
+    }, options);
     for (const event of ["play", "pause", "ended", "emptied", "loadeddata", "volumechange"]) {
       document.addEventListener(event, queuePublish, options);
     }

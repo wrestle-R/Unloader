@@ -182,6 +182,7 @@ export function startBackground(): void {
   const safetyByTab = new Map<number, Map<number, SafetySignals>>();
   let focusedWindowId = -1;
   let userActive = true;
+  let lastShortcutAt = 0;
 
   async function save(): Promise<void> {
     await browser.storage.local.set({ [STORAGE_KEY]: state });
@@ -497,6 +498,15 @@ export function startBackground(): void {
     }
   }
 
+  async function handleShortcut(tabId: number): Promise<UnloadResult | null> {
+    const now = Date.now();
+    if (now - lastShortcutAt < 1000) return null;
+    lastShortcutAt = now;
+    const result = await unloadTab(tabId, false, "Shortcut");
+    if (result.status === "needs_confirmation") await openConfirmation(tabId);
+    return result;
+  }
+
   async function restoreTab(tabId: number): Promise<boolean> {
     if (!Number.isInteger(tabId) || tabId < 0) throw new Error("Invalid tab.");
     const tab = await browser.tabs.get(tabId);
@@ -594,6 +604,11 @@ export function startBackground(): void {
       }
       case "unloadTab":
         return unloadTab(message.tabId, message.force === true, "Manual", message.expectedUrl);
+      case "shortcutFromPage":
+        if (sender.tab?.id === undefined || sender.tab.incognito) {
+          throw new Error("The shortcut must come from a webpage tab.");
+        }
+        return handleShortcut(sender.tab.id);
       case "restoreTab":
         return restoreTab(message.tabId);
       case "clearActivity":
@@ -666,8 +681,7 @@ export function startBackground(): void {
     void enqueue(async () => {
       const tab = (await browser.tabs.query({ active: true, lastFocusedWindow: true }))[0];
       if (tab?.id === undefined || tab.incognito) return;
-      const result = await unloadTab(tab.id, false, "Shortcut");
-      if (result.status === "needs_confirmation") await openConfirmation(tab.id);
+      await handleShortcut(tab.id);
     });
   });
 
