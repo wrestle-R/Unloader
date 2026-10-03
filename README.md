@@ -16,6 +16,15 @@ npm run build:firefox
 
 The project installs a local Node 24 runtime as a development dependency for WXT. Load `.output/chrome-mv3` from **Load unpacked** on `chrome://extensions` or `brave://extensions` with Developer mode enabled. For Firefox or Zen, use **Load Temporary Add-on** in `about:debugging#/runtime/this-firefox` and select `.output/firefox-mv2/manifest.json`. Temporary Firefox add-ons are removed when the browser restarts; persistent development testing requires Firefox Developer Edition or a signed release.
 
+To try Unloader without changing your usual browser profiles, launch a visible test window from the project folder:
+
+```bash
+npm run preview -- --browser chrome
+# Choose brave, firefox, zen, or firefox-dev instead of chrome as needed.
+```
+
+The launcher installs the matching local build, opens the dashboard, and saves the dedicated profile under ignored `test-results/manual-profiles/`. Keep its terminal open while testing; closing the test window or pressing Ctrl+C ends the preview. Chrome for Testing and Brave load the unpacked build on each preview launch. Firefox and Zen load the unsigned add-on again each time; `firefox-dev` uses a persistent unsigned add-on in its dedicated profile.
+
 Click the toolbar icon to open the dashboard. The **Tabs** page searches and groups open tabs by window. **Website rules** controls global and per-hostname timers. **Page usage** sorts by recent focused use; it deliberately hides time totals. **Extension statistics** shows local storage and scheduler work, and can import a local benchmark report. **Activity** keeps the latest 100 events. **Settings** exports or imports your rules and appearance.
 
 The suggested quick-unload shortcut is **Ctrl+Shift+U** (Command+Shift+U on macOS). Some browsers or operating systems may reserve a key combination. The Settings page shows the shortcut that actually registered and points to the browser's extension-shortcut page if you need to assign another one. The dashboard's Unload button always remains available.
