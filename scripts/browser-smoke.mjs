@@ -13,6 +13,8 @@ Options:
   --driver PATH                            Matching chromedriver or geckodriver
   --artifacts PATH                         Ignored screenshot/report folder
   --stress-tabs N                           Additional tabs for UI stress check (0-300)
+  --cycles N                                Repeated unload/restore retention check (0-120)
+  --timer-wait MS                           Exercise a real 1-minute idle alarm (e.g. 90000)
   --headed                                 Show browser window
   --help                                   Show this help
 
@@ -78,6 +80,18 @@ async function commands(driver) {
   `);
 }
 
+async function grantedPermissions(driver) {
+  return driver.executeAsync(`
+    const done = arguments[arguments.length - 1];
+    if (globalThis.browser?.permissions?.getAll) {
+      browser.permissions.getAll().then(done, error => done({ error: String(error) }));
+    } else {
+      chrome.permissions.getAll(value => done(chrome.runtime.lastError
+        ? { error: chrome.runtime.lastError.message } : value));
+    }
+  `);
+}
+
 async function keyChord(driver) {
   await driver.command("POST", "/actions", {
     actions: [{
@@ -123,6 +137,12 @@ async function updateTab(driver, tabId, properties) {
   `, [tabId, properties]);
 }
 
+async function clickCss(driver, selector) {
+  const element = await driver.command("POST", "/element", { using: "css selector", value: selector });
+  const id = element["element-6066-11e4-a52e-4f735466cecf"];
+  await driver.command("POST", `/element/${id}/click`, {});
+}
+
 async function createBrowserTab(driver, properties) {
   return driver.executeAsync(`
     const [properties, done] = arguments;
@@ -153,8 +173,16 @@ async function main() {
   }
   const browser = options.browser ?? "chromium";
   const stressTabs = Number(options["stress-tabs"] ?? 0);
+  const cycles = Number(options.cycles ?? 0);
+  const timerWait = Number(options["timer-wait"] ?? 0);
   if (!Number.isInteger(stressTabs) || stressTabs < 0 || stressTabs > 300) {
     throw new Error("--stress-tabs must be an integer from 0 to 300.");
+  }
+  if (!Number.isInteger(cycles) || cycles < 0 || cycles > 120) {
+    throw new Error("--cycles must be an integer from 0 to 120.");
+  }
+  if (!Number.isInteger(timerWait) || timerWait < 0 || timerWait > 180000) {
+    throw new Error("--timer-wait must be an integer from 0 to 180000 milliseconds.");
   }
   const extension = resolve(options.extension ?? (isFirefox(browser) ? ".output/firefox-mv2" : ".output/chrome-mv3"));
   await access(resolve(extension, "manifest.json"));
@@ -224,6 +252,19 @@ async function main() {
       return "navigation and screenshot verified";
     });
 
+    await check("required tab and webpage permissions are granted", async () => {
+      await driver.switchWindow(dashboardHandle);
+      const grants = await grantedPermissions(driver);
+      if (grants?.error) throw new Error(grants.error);
+      for (const permission of ["tabs", "storage", "alarms", "idle"]) {
+        if (!grants.permissions?.includes(permission)) throw new Error(`Missing ${permission} permission`);
+      }
+      for (const origin of ["http://*/*", "https://*/*"]) {
+        if (!grants.origins?.includes(origin)) throw new Error(`Missing ${origin} access`);
+      }
+      return "tabs, storage, alarms, idle, and HTTP(S) access available";
+    });
+
     await check("native discard preserves tab and reloads on activation", async () => {
       await driver.switchWindow(dashboardHandle);
       const before = await snapshot(driver);
@@ -256,7 +297,10 @@ async function main() {
       const before = await snapshot(driver);
       const target = findTab(before, "/page/main");
       await send(driver, { type: "setRule", hostname: "127.0.0.1", rule: { mode: "awake" } });
-      const result = await send(driver, { type: "unloadTab", tabId: target.id });
+      let result = await send(driver, { type: "unloadTab", tabId: target.id });
+      if (result.status === "needs_confirmation") {
+        result = await send(driver, { type: "unloadTab", tabId: target.id, force: true, expectedUrl: target.url });
+      }
       if (result.status !== "done") throw new Error(`Explicit unload returned ${result.status}`);
       const after = await snapshot(driver);
       if (after.settings.siteRules["127.0.0.1"]?.mode !== "awake") {
@@ -327,15 +371,38 @@ async function main() {
       return `guarded tab ${editingHandle}`;
     });
 
-    await check("settings export and invalid import", async () => {
+    await check("playing media requires explicit confirmation", async () => {
+      const mediaHandle = await driver.newTab(`${fixture.origin}/page/media`);
+      await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "media fixture");
+      await pause(500);
+      await clickCss(driver, "#play");
+      await driver.switchWindow(dashboardHandle);
+      const mediaTab = await waitForTab(driver, "/page/media", (tab) => tab.safety.media,
+        "playing media signal", 10000);
+      const guarded = await send(driver, { type: "unloadTab", tabId: mediaTab.id });
+      if (guarded.status !== "needs_confirmation") {
+        throw new Error(`Playing media returned ${guarded.status} instead of confirmation`);
+      }
+      await driver.switchWindow(mediaHandle);
+      await clickCss(driver, "#stop");
+      await driver.switchWindow(dashboardHandle);
+      return "content media signal and unload guard verified";
+    });
+
+    await check("settings export, import, and invalid-file rejection", async () => {
       await driver.switchWindow(dashboardHandle);
       const exported = await send(driver, { type: "exportSettings" });
       if (exported?.schema !== 1 || exported.settings?.siteRules?.["127.0.0.1"]?.mode !== "awake") {
         throw new Error("Settings export omitted the saved rule");
       }
+      await send(driver, { type: "setRule", hostname: "127.0.0.1", rule: null });
+      await send(driver, { type: "importSettings", value: exported });
+      if ((await snapshot(driver)).settings.siteRules["127.0.0.1"]?.mode !== "awake") {
+        throw new Error("Settings import did not restore the exported rule");
+      }
       const invalid = await requestFromExtension(driver, { type: "importSettings", value: { schema: 99 } });
       if (invalid?.ok) throw new Error("Invalid settings import was accepted");
-      return "versioned export and rejection verified";
+      return "versioned export, restore, and rejection verified";
     });
 
     await check("active tab in a second window gets a replacement", async () => {
@@ -370,6 +437,35 @@ async function main() {
       }
       await driver.screenshot(resolve(artifacts, "dashboard-dark.png"));
       return "all sections opened";
+    });
+
+    await check("Page usage explains RAM limits and statistics imports a report", async () => {
+      await driver.switchWindow(dashboardHandle);
+      await driver.execute("document.querySelector('[data-testid=nav-usage]').click()");
+      await driver.waitFor(() => driver.execute(
+        "return document.body.textContent.includes('Full per-page RAM: Unavailable')",
+      ), "RAM unavailable explanation");
+      await driver.execute("document.querySelector('[data-testid=nav-stats]').click()");
+      await driver.waitFor(() => driver.execute(
+        "return !!document.querySelector('input[aria-label=\"Import benchmark report\"]')",
+      ), "benchmark import control");
+      await driver.execute(`
+        const report = { schema: 1, generatedAt: new Date().toISOString(),
+          browser: 'Browser smoke fixture', platform: 'linux x64', series: [{
+            tabs: 20, condition: 'idle', baselineMedianPssKiB: 500000,
+            extensionMedianPssKiB: 510000, deltaMedianPssKiB: 10000,
+            runs: 3, cpuPercent: 1.2 }] };
+        const transfer = new DataTransfer();
+        transfer.items.add(new File([JSON.stringify(report)], 'benchmark.json', { type: 'application/json' }));
+        const input = document.querySelector('input[aria-label="Import benchmark report"]');
+        input.files = transfer.files;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      `);
+      await driver.waitFor(() => driver.execute(
+        "return document.body.textContent.includes('Browser smoke fixture') && !!document.querySelector('.report-table tbody tr')",
+      ), "imported benchmark row");
+      await driver.screenshot(resolve(artifacts, "statistics-imported.png"));
+      return "RAM limitation shown and measured report rendered";
     });
 
     await check("Ctrl+Shift+U is registered and physically unloads the current tab", async () => {
@@ -415,6 +511,66 @@ async function main() {
       }
     });
 
+    if (cycles) await check(`${cycles} unload/restore cycles retain bounded state`, async () => {
+      await driver.switchWindow(dashboardHandle);
+      const created = await createBrowserTab(driver, { url: `${fixture.origin}/page/cycles`, active: false });
+      if (created?.error) throw new Error(created.error);
+      await waitForTab(driver, "/page/cycles", () => true, "cycle fixture");
+      const initial = await snapshot(driver);
+      let bytesAtCap = null;
+      for (let iteration = 0; iteration < cycles; iteration += 1) {
+        const current = findTab(await snapshot(driver), "/page/cycles");
+        const unloaded = await send(driver, { type: "unloadTab", tabId: current.id });
+        if (unloaded.status !== "done") throw new Error(`Cycle ${iteration + 1} unload returned ${unloaded.status}`);
+        const sleeping = await waitForTab(driver, "/page/cycles", (tab) => tab.discarded, "cycle discard");
+        await send(driver, { type: "restoreTab", tabId: sleeping.id });
+        await waitForTab(driver, "/page/cycles", (tab) => !tab.discarded, "cycle restore");
+        await driver.switchWindow(dashboardHandle);
+        if (iteration === 49) bytesAtCap = (await snapshot(driver)).stats.storageBytes;
+      }
+      const final = await snapshot(driver);
+      if (final.stats.trackedTabs !== initial.stats.trackedTabs) {
+        throw new Error(`Tracked tabs grew from ${initial.stats.trackedTabs} to ${final.stats.trackedTabs}`);
+      }
+      if (final.activity.length > 100) throw new Error(`Activity grew to ${final.activity.length}`);
+      if (bytesAtCap !== null && final.stats.storageBytes - bytesAtCap > 1024) {
+        throw new Error(`Storage grew after the activity cap: ${bytesAtCap} to ${final.stats.storageBytes} bytes`);
+      }
+      return `${cycles} cycles, ${final.activity.length} recent entries, ${final.stats.storageBytes} storage bytes`;
+    });
+
+    if (timerWait) await check("real idle timer unloads an unused page but keeps a draft", async () => {
+      await driver.switchWindow(dashboardHandle);
+      await send(driver, { type: "setRule", hostname: "127.0.0.1", rule: null });
+      await send(driver, { type: "setGlobalMinutes", minutes: 1 });
+      try {
+        const idleUrl = `${fixture.origin}/page/idle-timer`;
+        const editUrl = `${fixture.origin}/page/idle-draft`;
+        const idle = await createBrowserTab(driver, { url: idleUrl, active: false });
+        const editing = await createBrowserTab(driver, { url: editUrl, active: false });
+        if (idle?.error || editing?.error) throw new Error(idle?.error ?? editing?.error);
+        await switchToUrlPart(driver, "/page/idle-draft");
+        await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "timer draft fixture");
+        await pause(700);
+        await driver.execute(`
+          const field = document.querySelector('#draft');
+          field.focus(); field.value = 'Do not discard this draft';
+          field.dispatchEvent(new Event('input', { bubbles: true }));
+        `);
+        await driver.switchWindow(dashboardHandle);
+        await waitForTab(driver, "/page/idle-draft", (tab) => tab.safety.editing, "timer draft safety");
+        const start = Date.now();
+        const sleeping = await waitForTab(driver, "/page/idle-timer", (tab) => tab.discarded,
+          "one-minute idle discard", timerWait);
+        const draft = findTab(await snapshot(driver), "/page/idle-draft");
+        if (!draft || draft.discarded) throw new Error("Unsaved draft was unloaded by the timer");
+        return `unused tab ${sleeping.id} unloaded after ${Math.round((Date.now() - start) / 1000)}s; draft stayed loaded`;
+      } finally {
+        await send(driver, { type: "setGlobalMinutes", minutes: null });
+        await send(driver, { type: "setRule", hostname: "127.0.0.1", rule: { mode: "awake" } });
+      }
+    });
+
     if (stressTabs) await check(`${stressTabs}-tab dashboard search and virtualization`, async () => {
       await driver.switchWindow(dashboardHandle);
       for (let index = 0; index < stressTabs; index += 1) {
@@ -430,6 +586,16 @@ async function main() {
       await driver.execute("document.querySelector('[data-testid=nav-tabs]').click()");
       const visible = await driver.execute("return document.querySelectorAll('[data-testid=tab-list] [role=listitem]').length");
       if (visible >= stressTabs) throw new Error(`All ${visible} rows rendered; list is not virtualized`);
+      await driver.screenshot(resolve(artifacts, "dashboard-300-list.png"));
+      await driver.execute(`
+        const list = document.querySelector('[data-testid=tab-list]');
+        list.focus();
+        list.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true, cancelable: true }));
+      `);
+      await driver.waitFor(() => driver.execute(
+        "return document.querySelector('[data-testid=tab-list]').scrollTop > 0",
+      ), "keyboard scroll to last virtual rows");
+      await driver.execute("document.querySelector('[data-testid=tab-list]').scrollTop = 0");
       const target = `stress-${stressTabs - 1}`;
       await driver.execute(`
         const input = document.querySelector('input[aria-label="Search tabs"]');
@@ -441,7 +607,24 @@ async function main() {
         "return document.querySelectorAll('[data-testid=tab-list] [role=listitem]').length === 1",
       ), "filtered stress tab");
       await driver.screenshot(resolve(artifacts, "dashboard-300-tabs.png"));
-      return `${stressTabs} tracked, ${visible} rendered before search, one matching row`;
+      await driver.command("POST", "/window/rect", { width: 600, height: 800 });
+      await driver.waitFor(() => driver.execute(
+        "return window.matchMedia('(max-width: 760px)').matches",
+      ), "narrow dashboard layout");
+      await driver.execute("document.querySelector('button[aria-label=\"Open navigation\"]').click()");
+      await driver.waitFor(() => driver.execute(
+        "return document.querySelector('.sidebar').classList.contains('open')",
+      ), "responsive navigation opened");
+      const narrow = await driver.execute(`
+        return { menuOpen: document.querySelector('.sidebar').classList.contains('open'),
+          horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 2 };
+      `);
+      await driver.screenshot(resolve(artifacts, "dashboard-mobile-300.png"));
+      await driver.command("POST", "/window/rect", { width: 1440, height: 900 });
+      if (!narrow.menuOpen || narrow.horizontalOverflow) {
+        throw new Error(`Narrow dashboard failed navigation or overflow: ${JSON.stringify(narrow)}`);
+      }
+      return `${stressTabs} tracked, ${visible} rendered, keyboard End/search and narrow navigation passed`;
     });
 
     await check("activity and storage statistics are available", async () => {

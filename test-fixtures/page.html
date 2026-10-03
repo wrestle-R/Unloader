@@ -54,6 +54,7 @@
         audio?.pause();
         audio = new Audio(URL.createObjectURL(new Blob([wav], { type: "audio/wav" })));
         audio.loop = true;
+        document.body.append(audio);
         await audio.play();
       });
       document.querySelector("#stop").addEventListener("click", () => audio?.pause());
