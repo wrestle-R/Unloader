@@ -1,0 +1,11 @@
+/docs.md
+/node_modules/
+/.output/
+/.wxt/
+/coverage/
+/test-results/
+/artifacts/
+/.env
+/.env.*
+!.env.example
+.DS_Store

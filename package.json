@@ -1,0 +1,41 @@
+{
+  "name": "unloader",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "A local-first tab unloader for Chromium and Firefox browsers.",
+  "engines": {
+    "node": ">=24.15.0"
+  },
+  "scripts": {
+    "dev:chrome": "wxt -b chrome",
+    "dev:firefox": "wxt -b firefox",
+    "build:chrome": "wxt build -b chrome",
+    "build:firefox": "wxt build -b firefox",
+    "zip:chrome": "wxt zip -b chrome",
+    "zip:firefox": "wxt zip -b firefox",
+    "prepare": "wxt prepare",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:browser": "node scripts/browser-smoke.mjs",
+    "benchmark": "node scripts/benchmark.mjs"
+  },
+  "dependencies": {
+    "@tanstack/react-virtual": "^3.13.12",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@wxt-dev/module-react": "^1.2.2",
+    "node": "24.21.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0",
+    "wxt": "^0.21.4"
+  },
+  "allowScripts": {
+    "node@24.21.0": true
+  }
+}
