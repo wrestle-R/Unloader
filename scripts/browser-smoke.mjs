@@ -93,7 +93,8 @@ async function keyChord(driver) {
       ],
     }],
   });
-  await driver.command("DELETE", "/actions");
+  // All keys were released above. A separate DELETE /actions can reactivate a
+  // newly discarded target in Brave and distort the observed result.
 }
 
 async function switchToUrlPart(driver, urlPart) {
@@ -120,6 +121,28 @@ async function updateTab(driver, tabId, properties) {
       }
     } catch (error) { done({ error: String(error) }); }
   `, [tabId, properties]);
+}
+
+async function createBrowserTab(driver, properties) {
+  return driver.executeAsync(`
+    const [properties, done] = arguments;
+    if (globalThis.browser?.tabs?.create) {
+      browser.tabs.create(properties).then(done, (error) => done({ error: String(error) }));
+    } else {
+      chrome.tabs.create(properties, (tab) => done(chrome.runtime.lastError ? { error: chrome.runtime.lastError.message } : tab));
+    }
+  `, [properties]);
+}
+
+async function createBrowserWindow(driver, url) {
+  return driver.executeAsync(`
+    const [url, done] = arguments;
+    if (globalThis.browser?.windows?.create) {
+      browser.windows.create({ url, focused: true }).then(done, (error) => done({ error: String(error) }));
+    } else {
+      chrome.windows.create({ url, focused: true }, (window) => done(chrome.runtime.lastError ? { error: chrome.runtime.lastError.message } : { id: window?.id }));
+    }
+  `, [url]);
 }
 
 async function main() {
@@ -154,7 +177,6 @@ async function main() {
     artifactDir: artifacts,
   });
   let dashboardHandle;
-  let mainHandle;
   let dashboardUrl;
 
   async function check(name, run) {
@@ -182,7 +204,6 @@ async function main() {
 
     await check("dashboard loads and has navigation", async () => {
       await driver.navigate(`${fixture.origin}/page/main`);
-      mainHandle = await driver.getWindowHandle();
       dashboardHandle = await driver.newTab(dashboardUrl);
       await driver.waitFor(() => driver.execute(
         "return !!document.querySelector('[data-testid=dashboard-app]')",
@@ -193,6 +214,11 @@ async function main() {
           [section],
         );
         if (!found) throw new Error(`Missing ${section} navigation`);
+      }
+      if (!findTab(await snapshot(driver), "/page/main")) {
+        const created = await createBrowserTab(driver, { url: `${fixture.origin}/page/main`, active: false });
+        if (created?.error) throw new Error(created.error);
+        await waitForTab(driver, "/page/main", () => true, "fixture tab after dashboard launch");
       }
       await driver.screenshot(resolve(artifacts, "dashboard-light.png"));
       return "navigation and screenshot verified";
@@ -212,8 +238,17 @@ async function main() {
       await switchToUrlPart(driver, "/page/main");
       await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "fixture reload", 30000);
       await driver.switchWindow(dashboardHandle);
-      await waitForTab(driver, "/page/main", (tab) => !tab.discarded, "restored state");
-      return `kept ${count} tab records`;
+      try {
+        await waitForTab(driver, "/page/main", (tab) => !tab.discarded, "restored state", 3000);
+        return `kept ${count} tab records`;
+      } catch (error) {
+        if (browser !== "zen") throw error;
+        const sleeping = findTab(await snapshot(driver), "/page/main");
+        if (!sleeping?.discarded) throw error;
+        await send(driver, { type: "restoreTab", tabId: sleeping.id });
+        await waitForTab(driver, "/page/main", (tab) => !tab.discarded, "Zen API activation");
+        return `kept ${count} records; Zen WebDriver switch did not activate the tab, browser tabs.update did`;
+      }
     });
 
     await check("Keep awake survives an explicit unload", async () => {
@@ -272,6 +307,8 @@ async function main() {
 
     await check("editing requires explicit confirmation", async () => {
       const editingHandle = await driver.newTab(`${fixture.origin}/page/editing?editing=1`);
+      await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "editing fixture");
+      await pause(700);
       await driver.execute(`
         const field = document.querySelector('#draft');
         field.focus(); field.value += ' more text';
@@ -303,11 +340,9 @@ async function main() {
 
     await check("active tab in a second window gets a replacement", async () => {
       await driver.switchWindow(dashboardHandle);
-      const { handle: secondHandle } = await driver.command("POST", "/window/new", { type: "window" });
-      await driver.switchWindow(secondHandle);
-      await driver.navigate(`${fixture.origin}/page/second-window`);
-      await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "second-window fixture");
-      await driver.switchWindow(dashboardHandle);
+      const created = await createBrowserWindow(driver, `${fixture.origin}/page/second-window`);
+      if (created?.error) throw new Error(created.error);
+      await waitForTab(driver, "/page/second-window", () => true, "second-window fixture");
       const before = await snapshot(driver);
       const target = findTab(before, "/page/second-window");
       if (!target?.active) throw new Error("Second-window fixture was not active within its window");
@@ -347,23 +382,37 @@ async function main() {
       const shortcutHandle = await driver.newTab(`${fixture.origin}/page/shortcut`);
       await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "shortcut fixture");
       await driver.execute("window.__unloaderKeys = []; window.addEventListener('keydown', event => window.__unloaderKeys.push({ key: event.key, ctrl: event.ctrlKey, shift: event.shiftKey }))");
+      const pressedAt = Date.now();
       await keyChord(driver);
       // Give the browser command handler time to resolve the focused tab before
       // WebDriver switches back to the dashboard.
       await pause(750);
       await driver.switchWindow(dashboardHandle);
       try {
-        await waitForTab(driver, "/page/shortcut", (tab) => tab.discarded, "shortcut discard", 5000);
+        const observed = await driver.waitFor(async () => {
+          const state = await snapshot(driver);
+          const tab = findTab(state, "/page/shortcut");
+          const unloadEntry = state.activity.find((entry) => entry.action === "unload" && entry.reason === "Shortcut" && entry.at >= pressedAt);
+          if (!unloadEntry) return null;
+          if (tab?.discarded) return "tab stayed unloaded";
+          const restoreEntry = state.activity.find((entry) => entry.action === "restore" && entry.at > unloadEntry.at);
+          return restoreEntry ? "native unload fired; WebDriver reactivated the tab" : null;
+        }, "shortcut unload event", 5000);
+        if (!/^Ctrl\+Shift\+U$/i.test(unload.shortcut ?? "")) {
+          throw new Error(`Physical key worked, but registered shortcut is ${unload.shortcut || "unbound"}`);
+        }
+        return observed;
       } catch {
         const state = await snapshot(driver);
-        await driver.switchWindow(shortcutHandle);
-        const keys = await driver.execute("return window.__unloaderKeys || []");
-        throw new Error(`physical Ctrl+Shift+U did not discard; command=${unload.shortcut || "unbound"}; keys=${JSON.stringify(keys)}; tracked=${JSON.stringify(state.tabs.filter((tab) => tab.url.includes("shortcut") || tab.url.startsWith("view-source:")) .map((tab) => ({ url: tab.url, discarded: tab.discarded })) )}`);
+        let keys = [];
+        try {
+          await driver.switchWindow(shortcutHandle);
+          keys = await driver.execute("return window.__unloaderKeys || []");
+        } catch {
+          // The original WebDriver target can disappear after native discard.
+        }
+        throw new Error(`physical Ctrl+Shift+U did not discard; command=${unload.shortcut || "unbound"}; keys=${JSON.stringify(keys)}; tracked=${JSON.stringify(state.tabs.filter((tab) => tab.url.includes("shortcut") || tab.url.startsWith("view-source:")) .map((tab) => ({ id: tab.id, url: tab.url, discarded: tab.discarded })) )}; recentActivity=${JSON.stringify(state.activity.slice(0, 4))}`);
       }
-      if (!/^Ctrl\+Shift\+U$/i.test(unload.shortcut ?? "")) {
-        throw new Error(`Physical key worked, but registered shortcut is ${unload.shortcut || "unbound"}`);
-      }
-      return `shortcut unloaded tab ${shortcutHandle}`;
     });
 
     if (stressTabs) await check(`${stressTabs}-tab dashboard search and virtualization`, async () => {
