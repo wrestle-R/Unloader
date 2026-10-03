@@ -350,6 +350,13 @@ export async function linuxProcessSample(driverPid) {
   return { pssKiB, cpuTicks, cpuByPid, processes: readable, measuredAt: Date.now() };
 }
 
+/** Counts work by surviving and newly started processes without negative totals. */
+export function cpuTicksBetween(beforeByPid, afterByPid) {
+  return Object.entries(afterByPid).reduce(
+    (sum, [pid, ticks]) => sum + Math.max(0, ticks - (beforeByPid[pid] ?? 0)), 0,
+  );
+}
+
 export function clockTicksPerSecond() {
   const result = spawnSync("getconf", ["CLK_TCK"], { encoding: "utf8" });
   const ticks = Number(result.stdout.trim());

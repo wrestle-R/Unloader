@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import { startFixtureServer } from "./lib/fixture-server.mjs";
 import {
   clockTicksPerSecond,
+  cpuTicksBetween,
   isFirefox,
   linuxProcessSample,
   parseArgs,
@@ -75,6 +76,20 @@ async function openFixtureTabs(driver, origin, count, fixtureMb) {
       return targetInfos.filter((target) => target.type === "page" && target.url.startsWith(`${origin}/page/`)).length >= count;
     }, `${count} page targets`, 90000);
   }
+  // Target creation alone does not prove a background page ran its memory
+  // fixture. Visit each target in both baseline and extension profiles.
+  let ready = 0;
+  for (const handle of await driver.getWindowHandles()) {
+    await driver.switchWindow(handle);
+    const currentUrl = await driver.command("GET", "/url");
+    if (!currentUrl.startsWith(`${origin}/page/`)) continue;
+    await driver.waitFor(() => driver.execute(
+      "return window.__fixtureReady === true && (arguments[0] === 0 || window.__memoryFixture?.length === arguments[0] * 1048576)",
+      [fixtureMb],
+    ), `fixture ready in ${currentUrl}`, 30000);
+    ready += 1;
+  }
+  if (ready !== count) throw new Error(`Only ${ready} of ${count} fixture pages finished loading`);
 }
 
 async function sample(driver, settleMs, cpuMs, ticksPerSecond) {
@@ -83,10 +98,13 @@ async function sample(driver, settleMs, cpuMs, ticksPerSecond) {
   await pause(cpuMs);
   const after = await linuxProcessSample(driver.driverProcess.pid);
   const elapsedSeconds = (after.measuredAt - before.measuredAt) / 1000;
+  // Browser child processes can exit between reads. Subtracting two process
+  // tree totals would then produce a nonsensical negative CPU percentage.
+  const cpuDeltaTicks = cpuTicksBetween(before.cpuByPid, after.cpuByPid);
   return {
     pssKiB: after.pssKiB,
     processes: after.processes,
-    cpuPercent: Number((((after.cpuTicks - before.cpuTicks) / ticksPerSecond / elapsedSeconds) * 100).toFixed(2)),
+    cpuPercent: Number(((cpuDeltaTicks / ticksPerSecond / elapsedSeconds) * 100).toFixed(2)),
   };
 }
 
@@ -100,6 +118,7 @@ async function runBaseline(options, origin, count, ticksPerSecond) {
   try {
     await driver.start();
     await openFixtureTabs(driver, origin, count, options.fixtureMb);
+    await driver.newTab("about:blank");
     const value = await sample(driver, options.settleMs, options.cpuMs, ticksPerSecond);
     return { ...value, browserVersion: driver.capabilities.browserVersion };
   } finally {
@@ -118,6 +137,7 @@ async function runExtension(options, origin, count, ticksPerSecond) {
   try {
     await driver.start();
     await openFixtureTabs(driver, origin, count, options.fixtureMb);
+    const neutralHandle = await driver.newTab("about:blank");
     const idle = await sample(driver, options.settleMs, options.cpuMs, ticksPerSecond);
     const extensionOrigin = isFirefox(options.browser)
       ? await driver.firefoxExtensionOrigin()
@@ -128,10 +148,11 @@ async function runExtension(options, origin, count, ticksPerSecond) {
     ), "dashboard app", 30000);
     const dashboard = await sample(driver, options.settleMs, options.cpuMs, ticksPerSecond);
 
-    await send(driver, { type: "setGlobalMinutes", minutes: 1 });
+    // Keep automation enabled while every fixture stays loaded. A one-minute
+    // timer can expire during the 300-tab setup and contaminate the comparison.
+    await send(driver, { type: "setGlobalMinutes", minutes: 15 });
     await driver.command("DELETE", "/window");
-    const handles = await driver.getWindowHandles();
-    await driver.switchWindow(handles[handles.length - 1]);
+    await driver.switchWindow(neutralHandle);
     const automatic = await sample(driver, options.settleMs, options.cpuMs, ticksPerSecond);
 
     await driver.newTab(`${extensionOrigin}/dashboard.html`);
@@ -153,8 +174,7 @@ async function runExtension(options, origin, count, ticksPerSecond) {
       throw new Error(`Only ${discarded} of ${count} fixture tabs could be unloaded`);
     }
     await driver.command("DELETE", "/window");
-    const remainingHandles = await driver.getWindowHandles();
-    await driver.switchWindow(remainingHandles[remainingHandles.length - 1]);
+    await driver.switchWindow(neutralHandle);
     const unloaded = await sample(driver, options.settleMs, options.cpuMs, ticksPerSecond);
     return {
       idle, dashboard, automatic, unloaded,
@@ -206,7 +226,7 @@ async function main() {
     browser,
     generatedAt: new Date().toISOString(),
     method: "Linux process-tree PSS from /proc/*/smaps_rollup; CPU from /proc/*/stat",
-    note: "CPU windows are noisy; use the median of repeated paired runs. Unloading savings are measured as extension idle PSS minus extension unloaded PSS, separately from extension overhead versus the no-extension baseline.",
+    note: "Every fixture page is verified loaded before sampling; a neutral blank tab stays active in baseline, idle, automatic, and unloaded conditions. CPU windows are noisy and omit processes that ended during the sample. Use medians of repeated paired runs. Automation uses a 15-minute timer so fixtures remain loaded before explicit discards. Unloading savings compare automation-enabled PSS before and after discarding in the same profile; negative savings mean measured resident PSS was higher afterward, often because processes or caches remain. Savings are separate from extension overhead versus the no-extension baseline.",
     fixtureMb,
     settleMs,
     cpuMs,
@@ -226,7 +246,7 @@ async function main() {
           run,
           baseline,
           extension: extensionResult,
-          unloadingSavingsKiB: extensionResult.idle.pssKiB - extensionResult.unloaded.pssKiB,
+          unloadingSavingsKiB: extensionResult.automatic.pssKiB - extensionResult.unloaded.pssKiB,
         });
         process.stdout.write(`  PSS KiB: ${baseline.pssKiB} baseline; ${extensionResult.idle.pssKiB} idle; ${extensionResult.unloaded.pssKiB} unloaded\n`);
       }
@@ -265,7 +285,8 @@ async function main() {
   const report = {
     schema: 1,
     generatedAt: new Date().toISOString(),
-    browser,
+    browser: ({ chrome: "Chrome for Testing", brave: "Brave (Chromium)", firefox: "Firefox", zen: "Zen (Firefox engine)", chromium: "Chromium" }[browser] ?? browser) +
+      ` ${raw.samples[0]?.extension.browserVersion ?? ""}`.trimEnd(),
     platform: `${process.platform} ${process.arch}`,
     series,
   };
