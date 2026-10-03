@@ -583,9 +583,15 @@ async function main() {
         const state = await snapshot(driver);
         return state.tabs.filter((tab) => tab.url.includes("/page/stress-")).length === stressTabs;
       }, `${stressTabs} tracked stress tabs`, 120000);
+      const totalTabs = (await snapshot(driver)).tabs.length;
+      await driver.execute("document.querySelector('button[aria-label=\"Refresh dashboard\"]').click()");
+      await driver.waitFor(() => driver.execute(
+        "return Number(document.querySelector('[data-testid=nav-tabs] b')?.textContent) === arguments[0]",
+        [totalTabs],
+      ), "dashboard count after loading stress tabs");
       await driver.execute("document.querySelector('[data-testid=nav-tabs]').click()");
       const visible = await driver.execute("return document.querySelectorAll('[data-testid=tab-list] [role=listitem]').length");
-      if (visible >= stressTabs) throw new Error(`All ${visible} rows rendered; list is not virtualized`);
+      if (visible < 1 || visible >= stressTabs) throw new Error(`Rendered ${visible} rows for ${stressTabs} tabs`);
       await driver.screenshot(resolve(artifacts, "dashboard-300-list.png"));
       await driver.execute(`
         const list = document.querySelector('[data-testid=tab-list]');
