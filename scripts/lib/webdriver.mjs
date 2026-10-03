@@ -32,7 +32,7 @@ export function isFirefox(browser) {
 }
 
 export class WebDriverSession {
-  constructor({ browser, binary, driver, extension, headless = true, artifactDir, profile, preserveProfile = false }) {
+  constructor({ browser, binary, driver, extension, headless = true, artifactDir, profile, preserveProfile = false, extraArgs = [], firefoxPrefs = {}, permanentAddon = false, installAddon = true }) {
     if (!(browser in DEFAULT_BINARIES)) {
       throw new Error(`Unknown browser: ${browser}`);
     }
@@ -44,6 +44,11 @@ export class WebDriverSession {
     this.artifactDir = artifactDir;
     this.profile = profile ? resolve(profile) : null;
     this.preserveProfile = preserveProfile;
+    this.extraArgs = extraArgs;
+    this.firefoxPrefs = firefoxPrefs;
+    this.permanentAddon = permanentAddon;
+    this.installAddon = installAddon;
+    if (permanentAddon && !installAddon) this.firefoxAddonId = "unloader@wrestle-r.local";
     this.driverOutput = "";
   }
 
@@ -65,7 +70,7 @@ export class WebDriverSession {
       await this.waitUntilReady();
       const firefox = isFirefox(this.browser);
       const args = firefox
-        ? ["-profile", this.profile, ...(this.headless ? ["-headless"] : [])]
+        ? ["-profile", this.profile, ...(this.headless ? ["-headless"] : []), ...this.extraArgs]
         : [
             `--user-data-dir=${this.profile}`,
             "--no-first-run",
@@ -74,6 +79,7 @@ export class WebDriverSession {
             "--disable-sync",
             "--window-size=1440,900",
             ...(this.headless ? ["--headless=new"] : []),
+            ...this.extraArgs,
             ...(this.extension
               ? [
                   `--load-extension=${this.extension}`,
@@ -82,7 +88,7 @@ export class WebDriverSession {
               : []),
           ];
       const capabilities = firefox
-        ? { browserName: "firefox", "moz:firefoxOptions": { binary: this.binary, args } }
+        ? { browserName: "firefox", "moz:firefoxOptions": { binary: this.binary, args, prefs: this.firefoxPrefs } }
         : { browserName: "chrome", "goog:chromeOptions": { binary: this.binary, args } };
       const response = await this.request("POST", "/session", {
         capabilities: { alwaysMatch: capabilities },
@@ -90,7 +96,7 @@ export class WebDriverSession {
       this.sessionId = response.sessionId;
       this.capabilities = response.capabilities;
       if (!this.sessionId) throw new Error("WebDriver did not return a session ID.");
-      if (firefox && this.extension) await this.installFirefoxAddon();
+      if (firefox && this.extension && this.installAddon) await this.installFirefoxAddon();
       return this;
     } catch (error) {
       await this.stop();
@@ -231,7 +237,7 @@ export class WebDriverSession {
     if (zip.status !== 0) throw new Error(`zip failed: ${zip.stderr}`);
     this.firefoxAddonId = await this.command("POST", "/moz/addon/install", {
       path: archivePath,
-      temporary: true,
+      temporary: !this.permanentAddon,
     });
   }
 
@@ -322,6 +328,7 @@ export async function linuxProcessSample(driverPid) {
   const pids = await profileProcessIds(driverPid);
   let pssKiB = 0;
   let cpuTicks = 0;
+  const cpuByPid = {};
   let readable = 0;
   for (const pid of pids) {
     try {
@@ -331,14 +338,16 @@ export async function linuxProcessSample(driverPid) {
       ]);
       pssKiB += Number(rollup.match(/^Pss:\s+(\d+) kB$/m)?.[1] ?? 0);
       const fields = stat.slice(stat.lastIndexOf(")") + 2).trim().split(/\s+/);
-      cpuTicks += Number(fields[11]) + Number(fields[12]);
+      const ticks = Number(fields[11]) + Number(fields[12]);
+      cpuTicks += ticks;
+      cpuByPid[pid] = ticks;
       readable += 1;
     } catch {
       // Process ended during sampling.
     }
   }
   if (readable === 0) throw new Error("No readable browser processes were found below WebDriver.");
-  return { pssKiB, cpuTicks, processes: readable, measuredAt: Date.now() };
+  return { pssKiB, cpuTicks, cpuByPid, processes: readable, measuredAt: Date.now() };
 }
 
 export function clockTicksPerSecond() {

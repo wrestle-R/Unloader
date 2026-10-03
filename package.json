@@ -18,6 +18,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:browser": "node scripts/browser-smoke.mjs",
+    "test:startup": "node scripts/startup-smoke.mjs",
     "benchmark": "node scripts/benchmark.mjs"
   },
   "dependencies": {
