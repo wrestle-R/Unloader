@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { parseBenchmarkReport, sortedTabs } from "../src/ui/utils";
-import type { BenchmarkReport, TabInfo } from "../src/shared/types";
+import { describePolicy, sortedTabs } from "../src/ui/utils";
+import type { TabInfo } from "../src/shared/types";
 
 function tab(id: number, title: string, today: number, week: number): TabInfo {
   return {
@@ -40,31 +40,15 @@ describe("usage ordering", () => {
   });
 });
 
-describe("benchmark report import", () => {
-  const valid: BenchmarkReport = {
-    schema: 1,
-    generatedAt: "2026-10-03T10:00:00.000Z",
-    browser: "Chromium 153",
-    platform: "linux x64",
-    series: [{
-      tabs: 20,
-      condition: "idle",
-      baselineMedianPssKiB: 500_000,
-      extensionMedianPssKiB: 510_000,
-      deltaMedianPssKiB: 10_000,
-      runs: 3,
-      cpuPercent: 0.4,
-    }],
-  };
-
-  it("accepts a measured browser comparison", () => {
-    expect(parseBenchmarkReport(valid)).toEqual(valid);
-  });
-
-  it("rejects malformed conditions and impossible memory readings", () => {
-    expect(() => parseBenchmarkReport({ ...valid, series: [{ ...valid.series[0], condition: "guessed" }] }))
-      .toThrow();
-    expect(() => parseBenchmarkReport({ ...valid, series: [{ ...valid.series[0], baselineMedianPssKiB: -1 }] }))
-      .toThrow();
+describe("unloading labels", () => {
+  it("shows protection instead of misleading timers", () => {
+    const timed = { ...tab(1, "Page", 0, 0), policyMode: "timed" as const, timerMinutes: 15 };
+    expect(describePolicy(timed)).toBe("15 min timer");
+    expect(describePolicy({ ...timed, pinned: true })).toBe("Pinned · protected");
+    expect(describePolicy({ ...timed, url: "moz-extension://unloader/dashboard.html" })).toBe("Browser page · excluded");
+    expect(describePolicy({ ...timed, pinned: true, policyMode: "awake" })).toBe("Keep awake");
+    expect(describePolicy({ ...timed, active: true })).toBe("Active · protected");
+    expect(describePolicy({ ...timed, safety: { editing: true, media: false } })).toBe("Editing · protected");
+    expect(describePolicy({ ...timed, audible: true })).toBe("Media · protected");
   });
 });

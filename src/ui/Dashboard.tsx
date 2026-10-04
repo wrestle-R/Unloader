@@ -1,19 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { browser } from "wxt/browser";
 import { sendRequest } from "../shared/api";
-import type { BenchmarkReport, DashboardSnapshot, ExportedSettings, Settings, SiteRule, TabInfo, Theme, UnloadResult } from "../shared/types";
+import type { DashboardSnapshot, ExportedSettings, Settings, TabInfo, Theme, UnloadResult } from "../shared/types";
 import { Icon, type IconName } from "./Icons";
-import { ActivityPage, RulesPage, SettingsPage, StatisticsPage, UsagePage } from "./Pages";
+import { ActivityPage, RulesPage, SettingsPage } from "./Pages";
 import { TabList } from "./TabList";
-import { parseBenchmarkReport, type UsageSort } from "./utils";
+import { type UsageSort } from "./utils";
 
-type Section = "tabs" | "rules" | "usage" | "stats" | "activity" | "settings";
-const sectionNames: Record<Section, string> = {
-  tabs: "Tabs", rules: "Website rules", usage: "Page usage", stats: "Extension statistics", activity: "Activity", settings: "Settings",
-};
-const navGroups: { title: string; items: { id: Section; icon: IconName }[] }[] = [
-  { title: "WORKSPACE", items: [{ id: "tabs", icon: "layers" }, { id: "rules", icon: "shield" }, { id: "usage", icon: "chart" }] },
-  { title: "INSIGHTS", items: [{ id: "stats", icon: "activity" }, { id: "activity", icon: "clock" }, { id: "settings", icon: "settings" }] },
+type Section = "tabs" | "rules" | "activity" | "settings";
+const sectionNames: Record<Section, string> = { tabs: "Tabs", rules: "Rules", activity: "Activity", settings: "Settings" };
+const navItems: { id: Section; icon: IconName }[] = [
+  { id: "tabs", icon: "layers" }, { id: "rules", icon: "shield" },
+  { id: "activity", icon: "clock" }, { id: "settings", icon: "settings" },
 ];
 
 function initialSection(): Section {
@@ -36,13 +34,11 @@ export function Dashboard() {
   const [section, setSection] = useState<Section>(initialSection);
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<UsageSort>("recent");
-  const [usageSort, setUsageSort] = useState<UsageSort>("mostToday");
+  const [statusFilter, setStatusFilter] = useState<"all" | "loaded" | "unloaded">("all");
   const [notice, setNotice] = useState<{ text: string; kind: "success" | "error" } | null>(null);
   const [fatal, setFatal] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [pendingTab, setPendingTab] = useState<{ tab: TabInfo; message: string } | null>(null);
-  const [benchmarkReports, setBenchmarkReports] = useState<BenchmarkReport[]>([]);
-  const [mobileNav, setMobileNav] = useState(false);
   const handledQuery = useRef(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
@@ -80,15 +76,6 @@ export function Dashboard() {
       window.removeEventListener("focus", schedule);
     };
   }, [refresh]);
-
-  useEffect(() => {
-    void browser.storage.local.get("benchmarkReports").then(value => {
-      const entries = value.benchmarkReports;
-      if (Array.isArray(entries)) setBenchmarkReports(entries.flatMap(entry => {
-        try { return [parseBenchmarkReport(entry)]; } catch { return []; }
-      }).slice(0, 20));
-    }).catch(() => undefined);
-  }, []);
 
   useEffect(() => {
     if (!snapshot) return;
@@ -164,33 +151,24 @@ export function Dashboard() {
   const activeCount = snapshot?.tabs.filter(tab => !tab.discarded).length ?? 0;
   const unloadedCount = snapshot?.tabs.filter(tab => tab.discarded).length ?? 0;
   const rulesCount = Object.keys(snapshot?.settings.siteRules ?? {}).length;
-  const changeSection = (id: Section) => { setSection(id); window.location.hash = id; setMobileNav(false); };
+  const changeSection = (id: Section) => { setSection(id); window.location.hash = id; };
 
   return <div className="dashboard" data-testid="dashboard-app">
-    <aside className={`sidebar ${mobileNav ? "open" : ""}`} aria-label="Primary navigation">
-      <div className="brand-lockup"><div className="brand-mark"><Icon name="layers" size={23}/></div><div><div className="brand-name">unloader<span>.</span></div><div className="brand-sub">A calmer browser</div></div></div>
-      <div className="sidebar-rule" />
-      <nav>
-        {navGroups.map(group => <div className="nav-group" key={group.title}><div className="nav-label">{group.title}</div>{group.items.map(item => <button key={item.id} className={`nav-item ${section === item.id ? "active" : ""}`} type="button" onClick={() => changeSection(item.id)} aria-current={section === item.id ? "page" : undefined} data-testid={`nav-${item.id}`}><Icon name={item.icon} size={18}/><span>{sectionNames[item.id]}</span>{item.id === "tabs" && snapshot ? <b>{snapshot.tabs.length}</b> : null}</button>)}</div>)}
-      </nav>
-      <div className="sidebar-bottom"><div className="sidebar-status"><span className="live-dot"/><span>Working locally</span></div><p>Thoughtful tab care, right in your browser.</p></div>
-    </aside>
-    {mobileNav ? <button className="nav-scrim" type="button" aria-label="Close navigation" onClick={() => setMobileNav(false)}/> : null}
+    <header className="app-header">
+      <a className="brand-lockup" href="#tabs" aria-label="Unloader tabs"><span className="brand-mark"><Icon name="layers" size={21}/></span><span className="brand-name">Unloader</span></a>
+      <nav aria-label="Primary navigation">{navItems.map(item => <button key={item.id} className={`nav-item ${section === item.id ? "active" : ""}`} type="button" onClick={() => changeSection(item.id)} aria-current={section === item.id ? "page" : undefined} data-testid={`nav-${item.id}`}><Icon name={item.icon} size={17}/><span>{sectionNames[item.id]}</span>{item.id === "tabs" && snapshot ? <b>{snapshot.tabs.length}</b> : null}</button>)}</nav>
+      <div className="header-actions"><label className="theme-select"><Icon name={snapshot?.settings.theme === "dark" ? "moon" : "sun"} size={17}/><select aria-label="Color theme" disabled={!snapshot || busy} value={snapshot?.settings.theme ?? "system"} onChange={event => void runMutation(() => sendRequest<Settings>({ type: "setTheme", theme: event.target.value as Theme }), "Appearance updated.")}><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label><button type="button" className="icon-button" onClick={() => void refresh()} aria-label="Refresh dashboard" title="Refresh"><Icon name="refresh" size={17}/></button></div>
+    </header>
     <main className="main-panel">
-      <header className="topbar"><button className="mobile-menu icon-button" type="button" onClick={() => setMobileNav(true)} aria-label="Open navigation"><Icon name="menu"/></button><div className="breadcrumb"><span>UNLOADER</span><span className="breadcrumb-slash">/</span><strong>{sectionNames[section]}</strong></div><div className="topbar-right"><span className="topbar-caption">YOUR BROWSER, IN BALANCE</span><button type="button" className="icon-button refresh-button" onClick={() => void refresh()} aria-label="Refresh dashboard" title="Refresh"><Icon name="refresh" size={17}/></button></div></header>
       <div className="content">
         {fatal && !snapshot ? <div className="fatal-panel"><Icon name="warning" size={30}/><h2>Could not load Unloader</h2><p>{fatal}</p><button className="button primary" onClick={() => void refresh()}>Try again</button></div> : null}
         {!snapshot && !fatal ? <div className="loading-state"><div className="loading-ring"/><span>Getting your tabs ready…</span></div> : null}
         {snapshot ? <>
           {section === "tabs" ? <>
-            <div className="page-heading"><div className="eyebrow"><span className="eyebrow-line"/> YOUR SPACE</div><h1>Your tabs, <em>in balance.</em></h1><p>See what is open, keep what matters, and give everything else room to rest.</p></div>
-            <div className="overview-grid"><div className="overview-card primary-overview"><div className="overview-icon"><Icon name="layers"/></div><div className="overview-label">OPEN TABS</div><div className="overview-number">{snapshot.tabs.length.toString().padStart(2, "0")}</div><div className="overview-foot">Across your browser windows <Icon name="arrow" size={16}/></div></div><div className="overview-card"><div className="overview-icon soft"><Icon name="sun"/></div><div className="overview-label">LOADED</div><div className="overview-number">{activeCount.toString().padStart(2, "0")}</div><div className="overview-foot muted">Ready whenever you need them</div></div><div className="overview-card"><div className="overview-icon soft"><Icon name="moon"/></div><div className="overview-label">UNLOADED</div><div className="overview-number">{unloadedCount.toString().padStart(2, "0")}</div><div className="overview-foot muted">Still in your tab bar</div></div></div>
-            <div className="section-heading"><div><span className="section-kicker">01 / TAB MANAGEMENT</span><h2>All your tabs <span className="count-badge">{snapshot.tabs.length}</span></h2></div><span className="section-help">Unloading keeps a tab in place and reloads it on return.</span></div>
-            <div className="panel list-panel"><div className="list-toolbar"><label className="search-field"><Icon name="search" size={18}/><input ref={searchRef} value={search} onChange={event => setSearch(event.target.value)} placeholder="Search pages or websites" aria-label="Search tabs"/><kbd>/</kbd></label><label className="select-wrap"><span>Sort</span><select value={sort} onChange={event => setSort(event.target.value as UsageSort)} aria-label="Sort tabs"><option value="recent">Recently used</option><option value="title">Page title</option><option value="mostToday">Most used today</option><option value="leastToday">Least used today</option><option value="mostWeek">Most used, 7 days</option><option value="leastWeek">Least used, 7 days</option></select><Icon name="chevron" size={15}/></label></div><TabList key={`${search}-${sort}`} tabs={snapshot.tabs} search={search} sort={sort} onUnload={tab => void unload(tab)} onRestore={tab => void runMutation(() => sendRequest<boolean>({ type: "restoreTab", tabId: tab.id }), "Tab restored.")} /></div>
+            <div className="tabs-heading"><div><h1>Tabs</h1><p>{snapshot.tabs.length} tabs <span>·</span> {activeCount} loaded <span>·</span> {unloadedCount} unloaded</p></div><span className="automation-badge"><Icon name="clock" size={16}/>{snapshot.settings.globalIdleMinutes === null ? "Manual unloading" : `Auto-unload after ${snapshot.settings.globalIdleMinutes} min`}</span></div>
+            <div className="panel list-panel"><div className="list-toolbar"><label className="search-field"><Icon name="search" size={18}/><input ref={searchRef} value={search} onChange={event => setSearch(event.target.value)} placeholder="Search pages or websites" aria-label="Search tabs"/><kbd>/</kbd></label><label className="select-wrap"><span className="sr-only">Status</span><select aria-label="Filter tabs" value={statusFilter} onChange={event => setStatusFilter(event.target.value as typeof statusFilter)}><option value="all">All tabs</option><option value="loaded">Loaded</option><option value="unloaded">Unloaded</option></select><Icon name="chevron" size={15}/></label><label className="select-wrap"><span className="sr-only">Sort</span><select value={sort} onChange={event => setSort(event.target.value as UsageSort)} aria-label="Sort tabs"><option value="recent">Recently used</option><option value="title">Page title</option><option value="mostToday">Most used today</option><option value="leastToday">Least used today</option><option value="mostWeek">Most used, 7 days</option><option value="leastWeek">Least used, 7 days</option></select><Icon name="chevron" size={15}/></label></div><TabList key={`${search}-${sort}-${statusFilter}`} busy={busy} tabs={snapshot.tabs.filter(tab => statusFilter === "all" || (statusFilter === "unloaded" ? tab.discarded : !tab.discarded))} search={search} sort={sort} onUnload={tab => void unload(tab)} onRestore={tab => void runMutation(() => sendRequest<boolean>({ type: "restoreTab", tabId: tab.id }), "Tab restored.")} /></div><p className="unload-hint"><Icon name="info" size={16}/>Unloaded tabs stay in your browser. Open one to reload its page.</p>
           </> : null}
           {section === "rules" ? <RulesPage settings={snapshot.settings} rulesCount={rulesCount} busy={busy} onGlobal={minutes => void runMutation(() => sendRequest<Settings>({ type: "setGlobalMinutes", minutes }), minutes === null ? "Automatic unloading turned off." : "Idle timer updated.")} onRule={(hostname, rule) => void runMutation(() => sendRequest<Settings>({ type: "setRule", hostname, rule }), rule ? "Website rule saved." : "Website rule removed.")} onError={showError}/> : null}
-          {section === "usage" ? <UsagePage tabs={snapshot.tabs} search={search} setSearch={setSearch} sort={usageSort} setSort={setUsageSort} onUnload={tab => void unload(tab)} onRestore={tab => void runMutation(() => sendRequest<boolean>({ type: "restoreTab", tabId: tab.id }), "Tab restored.")}/> : null}
-          {section === "stats" ? <StatisticsPage snapshot={snapshot} reports={benchmarkReports} setReports={setBenchmarkReports} onError={showError} onSuccess={showSuccess}/> : null}
           {section === "activity" ? <ActivityPage activity={snapshot.activity} onClear={() => void runMutation(() => sendRequest<boolean>({ type: "clearActivity" }), "Activity cleared.")} /> : null}
           {section === "settings" ? <SettingsPage settings={snapshot.settings} shortcut={snapshot.shortcut} onTheme={(theme: Theme) => void runMutation(() => sendRequest<Settings>({ type: "setTheme", theme }), "Appearance updated.")} onExport={() => void sendRequest<ExportedSettings>({ type: "exportSettings" }).then(value => { downloadJson("unloader-settings.json", value); showSuccess("Settings exported."); }).catch(showError)} onImport={value => void runMutation(() => sendRequest<Settings>({ type: "importSettings", value }), "Settings imported.")} onError={showError} /> : null}
         </> : null}

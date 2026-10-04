@@ -11,12 +11,12 @@ interface TabListProps {
   search: string;
   sort: UsageSort;
   groupWindows?: boolean;
-  usageView?: boolean;
+  busy?: boolean;
   onUnload: (tab: TabInfo) => void;
   onRestore: (tab: TabInfo) => void;
 }
 
-export function TabList({ tabs, search, sort, groupWindows = true, usageView = false, onUnload, onRestore }: TabListProps) {
+export function TabList({ tabs, search, sort, groupWindows = true, busy = false, onUnload, onRestore }: TabListProps) {
   const [scrollTop, setScrollTop] = useState(0);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
   const items = useMemo(() => {
@@ -48,7 +48,7 @@ export function TabList({ tabs, search, sort, groupWindows = true, usageView = f
     </div>;
   }
 
-  return <div className="tab-list" data-testid="tab-list" role="list" tabIndex={0} aria-label={usageView ? "Page usage" : "Open tabs"} onScroll={event => setScrollTop(event.currentTarget.scrollTop)} onKeyDown={event => {
+  return <><div className="table-heading" aria-hidden="true"><span>Page</span><span>Status</span><span>Unloading rule</span><span>Action</span></div><div className="tab-list" data-testid="tab-list" role="list" tabIndex={0} aria-label="Open tabs" onScroll={event => setScrollTop(event.currentTarget.scrollTop)} onKeyDown={event => {
     if (event.target !== event.currentTarget) return;
     const list = event.currentTarget;
     if (event.key === "ArrowDown") { event.preventDefault(); list.scrollTop += ROW_HEIGHT; }
@@ -71,15 +71,15 @@ export function TabList({ tabs, search, sort, groupWindows = true, usageView = f
           <div className="tab-icon" aria-hidden="true">{tab.favIconUrl ? <img src={tab.favIconUrl} alt="" onError={event => { event.currentTarget.style.display = "none"; }} /> : <Icon name="globe" size={17} />}</div>
           <div className="tab-main">
             <div className="tab-title" title={tab.title || tab.url}>{tab.title || tab.hostname || "Untitled tab"}{tab.pinned ? <span className="tiny-marker" title="Pinned">PINNED</span> : null}</div>
-            <div className="tab-sub" title={tab.url}><span>{tab.hostname || "Browser page"}</span><span className="dot-separator" />{usageView ? <span>{describePolicy(tab)}</span> : <span>{formatIdle(tab.idleMinutes)}</span>}</div>
+            <div className="tab-sub" title={tab.url}><span>{tab.hostname || "Browser page"}</span><span className="dot-separator" /><span>{formatIdle(tab.idleMinutes)}</span><span className="mobile-policy">{describePolicy(tab)}</span></div>
           </div>
           <span className={`status-pill ${tab.discarded ? "asleep" : "awake"}`}><span className="status-dot" />{tab.discarded ? "Unloaded" : "Loaded"}</span>
-          <span className="tab-policy">{usageView ? "RAM unavailable" : describePolicy(tab)}</span>
-          <button className="row-action" type="button" onClick={() => tab.discarded ? onRestore(tab) : onUnload(tab)} aria-label={`${tab.discarded ? "Restore" : "Unload"} ${tab.title || tab.hostname || "tab"}`}>
+          <span className="tab-policy">{describePolicy(tab)}</span>
+          <button className={`row-action ${tab.discarded ? "restore" : ""}`} disabled={busy || !/^https?:\/\//i.test(tab.url)} title={!/^https?:\/\//i.test(tab.url) ? "Browser and extension pages are excluded" : undefined} type="button" onClick={() => tab.discarded ? onRestore(tab) : onUnload(tab)} aria-label={`${tab.discarded ? "Restore" : "Unload"} ${tab.title || tab.hostname || "tab"}`}>
             <Icon name={tab.discarded ? "play" : "power"} size={16}/><span>{tab.discarded ? "Restore" : "Unload"}</span>
           </button>
         </div>;
       })}
     </div>
-  </div>;
+  </div></>;
 }

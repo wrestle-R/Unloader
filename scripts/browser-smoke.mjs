@@ -236,7 +236,7 @@ async function main() {
       await driver.waitFor(() => driver.execute(
         "return !!document.querySelector('[data-testid=dashboard-app]')",
       ), "dashboard app");
-      for (const section of ["tabs", "rules", "usage", "stats", "activity", "settings"]) {
+      for (const section of ["tabs", "rules", "activity", "settings"]) {
         const found = await driver.execute(
           "return !!document.querySelector('[data-testid=nav-' + arguments[0] + ']')",
           [section],
@@ -428,7 +428,7 @@ async function main() {
     await check("dashboard sections and dark screenshot", async () => {
       await driver.switchWindow(dashboardHandle);
       await send(driver, { type: "setTheme", theme: "dark" });
-      for (const section of ["rules", "usage", "stats", "activity", "settings", "tabs"]) {
+      for (const section of ["rules", "activity", "settings", "tabs"]) {
         await driver.execute(
           "document.querySelector('[data-testid=nav-' + arguments[0] + ']').click()",
           [section],
@@ -439,33 +439,32 @@ async function main() {
       return "all sections opened";
     });
 
-    await check("Page usage explains RAM limits and statistics imports a report", async () => {
+    await check("unloading dashboard themes, filters, and excluded pages", async () => {
       await driver.switchWindow(dashboardHandle);
-      await driver.execute("document.querySelector('[data-testid=nav-usage]').click()");
-      await driver.waitFor(() => driver.execute(
-        "return document.body.textContent.includes('Full per-page RAM: Unavailable')",
-      ), "RAM unavailable explanation");
-      await driver.execute("document.querySelector('[data-testid=nav-stats]').click()");
-      await driver.waitFor(() => driver.execute(
-        "return !!document.querySelector('input[aria-label=\"Import benchmark report\"]')",
-      ), "benchmark import control");
-      await driver.execute(`
-        const report = { schema: 1, generatedAt: new Date().toISOString(),
-          browser: 'Browser smoke fixture', platform: 'linux x64', series: [{
-            tabs: 20, condition: 'idle', baselineMedianPssKiB: 500000,
-            extensionMedianPssKiB: 510000, deltaMedianPssKiB: 10000,
-            runs: 3, cpuPercent: 1.2 }] };
-        const transfer = new DataTransfer();
-        transfer.items.add(new File([JSON.stringify(report)], 'benchmark.json', { type: 'application/json' }));
-        const input = document.querySelector('input[aria-label="Import benchmark report"]');
-        input.files = transfer.files;
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-      `);
-      await driver.waitFor(() => driver.execute(
-        "return document.body.textContent.includes('Browser smoke fixture') && !!document.querySelector('.report-table tbody tr')",
-      ), "imported benchmark row");
-      await driver.screenshot(resolve(artifacts, "statistics-imported.png"));
-      return "RAM limitation shown and measured report rendered";
+      for (const theme of ["light", "dark", "system"]) {
+        await send(driver, { type: "setTheme", theme });
+        await driver.execute("document.querySelector('button[aria-label=\"Refresh dashboard\"]').click()");
+        await driver.waitFor(() => driver.execute(
+          "return document.querySelector('select[aria-label=\"Color theme\"]')?.value === arguments[0]", [theme]
+        ), `${theme} theme applied`);
+        const expected = theme === "system" ? await driver.execute("return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'") : theme;
+        await driver.waitFor(() => driver.execute("return document.documentElement.dataset.theme === arguments[0]", [expected]), `${theme} colors`);
+        await driver.screenshot(resolve(artifacts, `dashboard-${theme}.png`));
+        if (await driver.execute("return /\\bRAM\\b|memory|benchmark/i.test(document.body.textContent)")) throw new Error("Removed product content is still visible");
+      }
+      const excluded = await driver.execute("return [...document.querySelectorAll('.tab-row')].some(row => row.textContent.includes('Browser page · excluded') && row.querySelector('button')?.disabled)");
+      if (!excluded) throw new Error("Excluded browser page has an enabled unload action");
+      for (const value of ["unloaded", "loaded", "all"]) {
+        await driver.execute(`
+          const select = document.querySelector('select[aria-label="Filter tabs"]');
+          Object.getOwnPropertyDescriptor(HTMLSelectElement.prototype, 'value').set.call(select, arguments[0]);
+          select.dispatchEvent(new Event('change', { bubbles: true }));
+        `, [value]);
+        await pause(200);
+        const statuses = await driver.execute("return [...document.querySelectorAll('.status-pill')].map(el => el.textContent)");
+        if (value !== "all" && statuses.some(status => status.toLowerCase() !== value)) throw new Error(`${value} filter showed other statuses`);
+      }
+      return "light, dark, system, status filters, and excluded actions verified";
     });
 
     await check("Ctrl+Shift+U is registered and physically unloads the current tab", async () => {
@@ -617,12 +616,8 @@ async function main() {
       await driver.waitFor(() => driver.execute(
         "return window.matchMedia('(max-width: 760px)').matches",
       ), "narrow dashboard layout");
-      await driver.execute("document.querySelector('button[aria-label=\"Open navigation\"]').click()");
-      await driver.waitFor(() => driver.execute(
-        "return document.querySelector('.sidebar').classList.contains('open')",
-      ), "responsive navigation opened");
       const narrow = await driver.execute(`
-        return { menuOpen: document.querySelector('.sidebar').classList.contains('open'),
+        return { menuOpen: [...document.querySelectorAll('nav .nav-item')].every(el => el.getBoundingClientRect().width > 0),
           horizontalOverflow: document.documentElement.scrollWidth > window.innerWidth + 2 };
       `);
       await driver.screenshot(resolve(artifacts, "dashboard-mobile-300.png"));

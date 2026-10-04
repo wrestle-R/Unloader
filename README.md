@@ -25,7 +25,7 @@ npm run preview -- --browser chrome
 
 The launcher installs the matching local build, opens the dashboard, and saves the dedicated profile under ignored `test-results/manual-profiles/`. Keep its terminal open while testing; closing the test window or pressing Ctrl+C ends the preview. Chrome for Testing and Brave load the unpacked build on each preview launch. Firefox and Zen load the unsigned add-on again each time; `firefox-dev` uses a persistent unsigned add-on in its dedicated profile.
 
-Click the toolbar icon to open the dashboard. The **Tabs** page searches and groups open tabs by window. **Website rules** controls global and per-hostname timers. **Page usage** sorts by recent focused use; it deliberately hides time totals. **Extension statistics** shows local storage and scheduler work, and can import a local benchmark report. **Activity** keeps the latest 100 events. **Settings** exports or imports your rules and appearance.
+Click the toolbar icon, then **Manage tabs** to open the dashboard. The **Tabs** page searches, filters loaded or unloaded pages, and groups open tabs by window. Protected pages show why automatic unloading skips them. Browser and extension pages are excluded. Choose **System**, **Light**, or **Dark** in the header or Settings. **Website rules** controls global and per-hostname timers. **Activity** keeps the latest 100 events. **Settings** exports or imports your rules and appearance.
 
 The suggested quick-unload shortcut is **Ctrl+Shift+U** (Command+Shift+U on macOS). Some browsers or operating systems may reserve a key combination. The Settings page shows the shortcut that actually registered and points to the browser's extension-shortcut page if you need to assign another one. The dashboard's Unload button always remains available.
 
@@ -34,9 +34,8 @@ The suggested quick-unload shortcut is **Ctrl+Shift+U** (Command+Shift+U on macO
 ```bash
 npm run test:browser -- --browser chromium
 npm run test:startup -- --browser chrome
-npm run benchmark -- --browser chromium --tab-counts 20,100,300 --runs 3
 ```
 
-The browser scripts use disposable profiles and local fixture pages; use `--help` for browser binary, WebDriver, headed mode, and output options. The restart test supports `chrome`, `brave`, and `firefox-dev`; Firefox Developer Edition is needed for an unsigned add-on to persist across restarts. Reports and screenshots are written under ignored `test-results/`. Benchmarks compare Linux browser-process PSS and CPU across paired profiles. They are environment-specific measurements, not an exact live extension RAM meter or a promise of immediate memory savings. Full per-page RAM is unavailable to a standard cross-browser extension; use Chrome/Brave Task Manager (`Shift+Esc`) or Firefox/Zen `about:processes` for browser-native inspection.
+The browser scripts use disposable profiles and local fixture pages; use `--help` for browser binary, WebDriver, headed mode, and output options. The restart test supports `chrome`, `brave`, and `firefox-dev`; Firefox Developer Edition is needed for an unsigned add-on to persist across restarts. Reports and screenshots are written under ignored `test-results/`.
 
 The detailed product decisions, test matrix, sources, and local verification record live in the intentionally Git-ignored `docs.md`.

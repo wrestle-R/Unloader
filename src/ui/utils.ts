@@ -1,4 +1,4 @@
-import type { BenchmarkReport, SiteRule, TabInfo } from "../shared/types";
+import type { SiteRule, TabInfo } from "../shared/types";
 
 export type UsageSort = "recent" | "title" | "mostToday" | "leastToday" | "mostWeek" | "leastWeek";
 
@@ -21,7 +21,12 @@ export function describeRule(rule: SiteRule | undefined): string {
 }
 
 export function describePolicy(tab: TabInfo): string {
+  if (!/^https?:\/\//i.test(tab.url)) return "Browser page · excluded";
   if (tab.policyMode === "awake") return "Keep awake";
+  if (tab.pinned) return "Pinned · protected";
+  if (tab.active) return "Active · protected";
+  if (tab.audible || tab.safety.media) return "Media · protected";
+  if (tab.safety.editing) return "Editing · protected";
   if (tab.policyMode === "manual") return "Manual only";
   return `${tab.timerMinutes ?? 15} min timer`;
 }
@@ -37,39 +42,4 @@ export function sortedTabs(tabs: TabInfo[], sort: UsageSort): TabInfo[] {
     case "leastWeek": return result.sort((a, b) => a.usageWeekMs - b.usageWeekMs || byTitle(a, b));
     default: return result.sort((a, b) => b.lastActiveAt - a.lastActiveAt || byTitle(a, b));
   }
-}
-
-export function bytesLabel(bytes: number): string {
-  if (bytes < 1024) return `${bytes} B`;
-  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
-  return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
-}
-
-export function deltaLabel(kib: number): string {
-  const mib = Math.abs(kib) / 1024;
-  return `${kib >= 0 ? "+" : "−"}${mib.toFixed(1)} MiB`;
-}
-
-export function parseBenchmarkReport(value: unknown): BenchmarkReport {
-  if (!value || typeof value !== "object") throw new Error("This is not a benchmark report.");
-  const report = value as Partial<BenchmarkReport>;
-  if (report.schema !== 1 || typeof report.browser !== "string" || !report.browser.trim() ||
-      typeof report.platform !== "string" || !report.platform.trim() ||
-      typeof report.generatedAt !== "string" || !Number.isFinite(Date.parse(report.generatedAt)) ||
-      !Array.isArray(report.series) || report.series.length === 0 || report.series.length > 100) {
-    throw new Error("The report is missing its browser, date, or measured series.");
-  }
-  const conditions = new Set(["idle", "dashboard", "automatic", "unloaded"]);
-  for (const series of report.series) {
-    if (!series || !Number.isInteger(series.tabs) || series.tabs < 1 || series.tabs > 10000 ||
-        !conditions.has(series.condition) ||
-        !Number.isFinite(series.baselineMedianPssKiB) || series.baselineMedianPssKiB < 0 ||
-        !Number.isFinite(series.extensionMedianPssKiB) || series.extensionMedianPssKiB < 0 ||
-        !Number.isFinite(series.deltaMedianPssKiB) ||
-        !Number.isInteger(series.runs) || series.runs < 1 || series.runs > 1000 ||
-        (series.cpuPercent !== undefined && (!Number.isFinite(series.cpuPercent) || series.cpuPercent < 0))) {
-      throw new Error("A measurement has an invalid condition or value.");
-    }
-  }
-  return report as BenchmarkReport;
 }

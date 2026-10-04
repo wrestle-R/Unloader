@@ -34,11 +34,11 @@ export function Popup() {
   const loaded = snapshot?.tabs.filter(tab => !tab.discarded).length ?? 0;
   const unloaded = snapshot?.tabs.filter(tab => tab.discarded).length ?? 0;
   return <div className="popup" data-testid="popup-app">
-    <div className="popup-top"><div className="popup-brand"><span className="popup-logo"><Icon name="layers" size={19}/></span><span>unloader<span className="popup-period">.</span></span></div><span className="popup-live"><span/>LOCAL</span></div>
-    <div className="popup-hero"><span className="popup-eyebrow">YOUR BROWSER AT A GLANCE</span><h1>Space to <em>breathe.</em></h1><p>Keep the important pages close. Let the rest take a pause.</p></div>
+    <div className="popup-top"><div className="popup-brand"><span className="popup-logo"><Icon name="layers" size={19}/></span><span>Unloader</span></div><span className="popup-live"><span/>LOCAL</span></div>
+    <div className="popup-hero"><span className="popup-eyebrow">TAB UNLOADING</span><h1>Your tabs. Your choice.</h1><p>Unload a page without closing its tab. Open it again whenever you need it.</p></div>
     <div className="popup-metrics"><div><span className="popup-metric-icon"><Icon name="sun" size={17}/></span><strong>{snapshot ? loaded.toString().padStart(2, "0") : "—"}</strong><span>LOADED</span></div><div><span className="popup-metric-icon"><Icon name="moon" size={17}/></span><strong>{snapshot ? unloaded.toString().padStart(2, "0") : "—"}</strong><span>UNLOADED</span></div></div>
     {error ? <p className="popup-error" role="alert">{error}</p> : null}
-    <button className="popup-launch" type="button" onClick={() => void openDashboard().catch(reason => setError(reason instanceof Error ? reason.message : "Could not open dashboard."))}>Open dashboard <Icon name="arrow" size={19}/></button>
+    <button className="popup-launch" type="button" onClick={() => void openDashboard().catch(reason => setError(reason instanceof Error ? reason.message : "Could not open dashboard."))}>Manage tabs <Icon name="arrow" size={19}/></button>
     <div className="popup-foot"><Icon name="keyboard" size={15}/><span>{snapshot?.shortcut ? `${snapshot.shortcut} to unload this tab` : "Set a shortcut in your browser’s extension settings"}</span></div>
   </div>;
 }
