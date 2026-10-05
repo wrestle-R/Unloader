@@ -42,4 +42,4 @@ The detailed product decisions, test matrix, sources, and local verification rec
 
 ## Website and release downloads
 
-The Next.js docs website lives in [`website/`](website/README.md). For Vercel, import this repository with Root Directory set to `website` and the Next.js preset. GitHub Releases provides the development ZIP downloads; Mozilla's signed Firefox/Zen XPI is required for permanent installation.
+The Next.js docs website lives in the sibling [`next/`](../next/README.md) folder at the workspace root. Deploy that folder as a separate Next.js project on Vercel. GitHub Releases provides the development ZIP downloads; Mozilla's signed Firefox/Zen XPI is required for permanent installation.
