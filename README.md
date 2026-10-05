@@ -10,13 +10,27 @@ Fresh installs start with **automatic unloading after 15 minutes**. Change the d
 
 ![Unloader dashboard in dark mode](extension/previews/dark.png)
 
-*Dashboard previews use local test pages with manual unloading selected. Fresh installs enable the 15-minute automatic timer.*
+*Previews render the actual extension interface with illustrative demo data. Automatic unloading is shown with the 15-minute default.*
 
 ## How it works
 
 Unloader asks the browser to discard an idle tab’s page content. The tab stays in place, so you can keep your reading list, research and open projects without every page continuing to run. Selecting an unloaded tab reloads it; the dashboard also provides a **Restore** action.
 
-Actual memory savings depend on the browser and the page. Unloading does not guarantee an immediate drop in memory usage. Reloading can lose page state that the website has not saved.
+### What does “Unloaded” mean?
+
+An **unloaded** tab is still open in your tab bar, but the browser has discarded its live page content. Its title and address remain available so you can return to it. The page’s scripts, timers and media stop running while it is unloaded; the browser can reclaim memory used by that page.
+
+| State | What it means |
+| --- | --- |
+| **Loaded** | The page content is present. It can run scripts and background work, even when you are looking at another tab. |
+| **Unloaded** | The tab remains, but its live page content has been discarded. Opening it loads the page again. |
+| **Closed** | The tab has been removed from the tab bar. Unloader does not close tabs when it unloads them. |
+
+For example, an article you opened earlier can stay visible as a tab while its page is unloaded. When you select that tab or click **Restore**, the browser loads the article again from its address. This is a page reload, not a paused session resuming exactly where it stopped. If the site needs a network connection to reload, you will need to be online.
+
+Unloading does not clear your cookies or sign you out of websites. However, unsaved form input, in-progress work and other temporary page state can be lost if the website has not saved it. Restoring scroll position and other page details depends on the browser and website. Use **Keep awake** for pages whose live state matters to you.
+
+Actual memory savings depend on the browser and the page. Unloading does not guarantee an immediate drop in memory usage.
 
 ## Manage your tabs
 
@@ -41,6 +55,8 @@ Rules match an exact hostname, such as `web.whatsapp.com`. Subdomains need separ
 | **No override** | Follow the global idle timer, or manual mode if the global timer is disabled. |
 
 For messaging pages you want ready at startup, add a **Keep awake** rule. You can still explicitly unload a Keep awake tab yourself.
+
+![Unloader website rules with automatic unloading and per-site exceptions](extension/previews/rules.png)
 
 ## Protected pages
 
