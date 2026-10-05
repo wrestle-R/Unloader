@@ -8,8 +8,6 @@ Fresh installs start with **automatic unloading after 15 minutes**. Change the d
 
 ![Unloader dashboard in light mode](extension/previews/light.png)
 
-![Unloader dashboard in dark mode](extension/previews/dark.png)
-
 *Previews render the actual extension interface with illustrative demo data. Automatic unloading is shown with the 15-minute default.*
 
 ## How it works
@@ -157,5 +155,7 @@ Unloader/
 Each application has its own package.json and lockfile. Internal notes belong in the Git-ignored `docs/` folder; public documentation belongs in the website.
 
 ## Support
+
+[Documentation and guides](https://unloader-rdp.vercel.app).
 
 [Report a bug or request a feature](https://github.com/wrestle-R/Unloader/issues). Include your browser version and steps to reproduce. Avoid posting private tab URLs or browsing data in public issues.
