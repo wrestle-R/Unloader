@@ -3,6 +3,7 @@ import { defineConfig } from "wxt";
 const pagePatterns = ["http://*/*", "https://*/*"];
 
 export default defineConfig({
+  zip: { excludeSources: ["test-results/**", "artifacts/**", "website/**", "docs.md", ".env", ".env.*"] },
   modules: ["@wxt-dev/module-react"],
   manifest: ({ browser, manifestVersion }) => ({
     name: "Unloader",

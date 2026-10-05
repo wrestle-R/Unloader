@@ -27,8 +27,10 @@ function candidate(overrides: Partial<AutoUnloadCandidate> = {}): AutoUnloadCand
 }
 
 describe("automatic unloading decisions", () => {
-  it("starts manual and lets an explicit site timer enable automation", () => {
-    expect(shouldAutoUnload(candidate(), DEFAULT_SETTINGS, now)).toBe(false);
+  it("enables a 15-minute timer on fresh installs and respects explicit site timers", () => {
+    expect(DEFAULT_SETTINGS.globalIdleMinutes).toBe(15);
+    expect(shouldAutoUnload(candidate(), DEFAULT_SETTINGS, now)).toBe(true);
+    expect(shouldAutoUnload(candidate({ lastActiveAt: now - 14 * 60_000 }), DEFAULT_SETTINGS, now)).toBe(false);
     const settings: Settings = {
       ...DEFAULT_SETTINGS,
       siteRules: { "news.example.org": { mode: "timed", minutes: 10 } },

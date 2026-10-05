@@ -1,6 +1,6 @@
 # Unloader
 
-Unloader keeps idle pages in your browser's tab bar while asking the browser to discard their page content. It starts in **manual mode**: choose a tab in the dashboard or use the browser shortcut to unload it. The page reloads when you return. You can opt into a global idle timer and give each website its own rule. Set `web.whatsapp.com` to **Keep awake** if you want WhatsApp ready when the browser starts.
+Unloader keeps idle pages in your browser's tab bar while asking the browser to discard their page content. Fresh installs automatically unload eligible tabs after **15 minutes** of inactivity. You can also choose a tab in the dashboard or use the browser shortcut to unload it. The page reloads when you return. You can adjust or disable the global idle timer and give each website its own rule. Set `web.whatsapp.com` to **Keep awake** if you want WhatsApp ready when the browser starts.
 
 Unloader is built for desktop Chrome/Brave and Firefox/Zen. It stores settings, recent activity, and focused-tab sorting data in the local browser profile. No account or server is involved.
 
@@ -39,3 +39,7 @@ npm run test:startup -- --browser chrome
 The browser scripts use disposable profiles and local fixture pages; use `--help` for browser binary, WebDriver, headed mode, and output options. The restart test supports `chrome`, `brave`, and `firefox-dev`; Firefox Developer Edition is needed for an unsigned add-on to persist across restarts. Reports and screenshots are written under ignored `test-results/`.
 
 The detailed product decisions, test matrix, sources, and local verification record live in the intentionally Git-ignored `docs.md`.
+
+## Website and release downloads
+
+The Next.js docs website lives in [`website/`](website/README.md). For Vercel, import this repository with Root Directory set to `website` and the Next.js preset. GitHub Releases provides the development ZIP downloads; Mozilla's signed Firefox/Zen XPI is required for permanent installation.

@@ -1,7 +1,7 @@
 import type { SafetySignals, Settings, SiteRule, Theme } from "../shared/types";
 
 export const DEFAULT_SETTINGS: Settings = {
-  globalIdleMinutes: null,
+  globalIdleMinutes: 15,
   siteRules: {},
   theme: "system",
 };
