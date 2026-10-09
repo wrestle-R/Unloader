@@ -29,6 +29,8 @@ Click the toolbar icon, then **Manage tabs** to open the dashboard. The **Tabs**
 
 The suggested quick-unload shortcut is **Ctrl+Shift+U** (Command+Shift+U on macOS). Some browsers or operating systems may reserve a key combination. The Settings page shows the shortcut that actually registered and points to the browser's extension-shortcut page if you need to assign another one. The dashboard's Unload button always remains available.
 
+The dashboard memory figures are representative estimates rather than live measurements. The editable catalog is [`src/data/site-memory-estimates.json`](src/data/site-memory-estimates.json); its schema and update guidance are documented in [`src/data/README.md`](src/data/README.md). Successful unloads store the estimate used at the time so later catalog edits do not rewrite history.
+
 ## Measure and test
 
 ```bash

@@ -30,6 +30,8 @@ Unloading does not clear your cookies or sign you out of websites. However, unsa
 
 Actual memory savings depend on the browser and the page. Unloading does not guarantee an immediate drop in memory usage.
 
+The dashboard reports **estimated** memory freed by currently unloaded tabs, cumulative memory released across successful unload events, and a seven-day trend. Browsers do not expose reliable per-tab RAM to extensions, so these figures come from the editable 650-domain catalog at [`extension/src/data/site-memory-estimates.json`](extension/src/data/site-memory-estimates.json). Unknown sites use a documented fallback. These values are planning estimates, not live hardware telemetry.
+
 ## Manage your tabs
 
 Click the toolbar icon, then **Manage tabs** to open the dashboard.
@@ -37,7 +39,7 @@ Click the toolbar icon, then **Manage tabs** to open the dashboard.
 - **Tabs:** search pages and websites, filter loaded or unloaded tabs, sort them, and view tabs grouped by browser window. Unload or restore a page directly from its row.
 - **Website rules:** adjust or disable the global idle timer and choose a rule for individual websites.
 - **Activity:** see the latest 100 events and clear the history when you want.
-- **Settings:** export and import rules and appearance, inspect the registered shortcut, and choose System, Light or Dark mode.
+- **Settings:** export and import rules and appearance, inspect the registered shortcut, open the browser shortcut manager, and choose System, Light or Dark mode.
 
 The dashboard does not need to stay open for automatic unloading to work.
 

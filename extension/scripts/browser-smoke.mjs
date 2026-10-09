@@ -450,7 +450,7 @@ async function main() {
         const expected = theme === "system" ? await driver.execute("return matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'") : theme;
         await driver.waitFor(() => driver.execute("return document.documentElement.dataset.theme === arguments[0]", [expected]), `${theme} colors`);
         await driver.screenshot(resolve(artifacts, `dashboard-${theme}.png`));
-        if (await driver.execute("return /\\bRAM\\b|memory|benchmark/i.test(document.body.textContent)")) throw new Error("Removed product content is still visible");
+        if (!await driver.execute("return /estimated freed now/i.test(document.body.textContent)")) throw new Error("Memory estimate overview is missing");
       }
       const excluded = await driver.execute("return [...document.querySelectorAll('.tab-row')].some(row => row.textContent.includes('Browser page · excluded') && row.querySelector('button')?.disabled)");
       if (!excluded) throw new Error("Excluded browser page has an enabled unload action");

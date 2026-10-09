@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { browser } from "wxt/browser";
 import { sendRequest } from "../shared/api";
-import type { DashboardSnapshot, ExportedSettings, Settings, TabInfo, Theme, UnloadResult } from "../shared/types";
+import type { DashboardSnapshot, ExportedSettings, MemorySummary, Settings, TabInfo, Theme, UnloadResult } from "../shared/types";
 import { Icon, type IconName } from "./Icons";
 import { ActivityPage, RulesPage, SettingsPage } from "./Pages";
 import { TabList } from "./TabList";
@@ -27,6 +27,20 @@ function downloadJson(filename: string, value: unknown) {
   link.download = filename;
   link.click();
   window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function formatMemory(mib: number) {
+  return mib >= 1024 ? `${(mib / 1024).toFixed(mib >= 10240 ? 0 : 1)} GiB` : `${Math.round(mib)} MiB`;
+}
+
+function MemoryOverview({ memory, unloaded }: { memory: MemorySummary; unloaded: number }) {
+  const max = Math.max(1, ...memory.daily.map((day) => day.estimatedMiB));
+  return <section className="memory-overview" aria-labelledby="memory-title">
+    <div className="memory-lead"><span className="section-kicker">MEMORY ESTIMATE</span><h2 id="memory-title">A little more room to work.</h2><p>Browser extensions cannot inspect live per-tab RAM. These are transparent estimates from a {memory.catalogEntries}-site catalog.</p></div>
+    <div className="memory-stat primary-stat"><span>Estimated freed now</span><strong>{formatMemory(memory.currentEstimatedMiB)}</strong><small>{unloaded} unloaded {unloaded === 1 ? "tab" : "tabs"}</small></div>
+    <div className="memory-stat"><span>Released across unloads</span><strong>{formatMemory(memory.cumulativeEstimatedMiB)}</strong><small>Cumulative, not simultaneous</small></div>
+    <div className="memory-trend"><div><span>Last 7 days</span><small>estimated memory released</small></div><div className="trend-bars" aria-label="Seven-day estimated memory released">{memory.daily.map(day => <span key={day.day} className="trend-day" title={`${day.day}: ${formatMemory(day.estimatedMiB)}`}><i style={{ height: `${Math.max(4, day.estimatedMiB / max * 100)}%` }}/><b>{new Date(`${day.day}T12:00:00`).toLocaleDateString(undefined, { weekday: "narrow" })}</b></span>)}</div></div>
+  </section>;
 }
 
 export function Dashboard() {
@@ -166,11 +180,12 @@ export function Dashboard() {
         {snapshot ? <>
           {section === "tabs" ? <>
             <div className="tabs-heading"><div><h1>Tabs</h1><p>{snapshot.tabs.length} tabs <span>·</span> {activeCount} loaded <span>·</span> {unloadedCount} unloaded</p></div><span className="automation-badge"><Icon name="clock" size={16}/>{snapshot.settings.globalIdleMinutes === null ? "Manual unloading" : `Auto-unload after ${snapshot.settings.globalIdleMinutes} min`}</span></div>
+            <MemoryOverview memory={snapshot.memory} unloaded={unloadedCount}/>
             <div className="panel list-panel"><div className="list-toolbar"><label className="search-field"><Icon name="search" size={18}/><input ref={searchRef} value={search} onChange={event => setSearch(event.target.value)} placeholder="Search pages or websites" aria-label="Search tabs"/><kbd>/</kbd></label><label className="select-wrap"><span className="sr-only">Status</span><select aria-label="Filter tabs" value={statusFilter} onChange={event => setStatusFilter(event.target.value as typeof statusFilter)}><option value="all">All tabs</option><option value="loaded">Loaded</option><option value="unloaded">Unloaded</option></select><Icon name="chevron" size={15}/></label><label className="select-wrap"><span className="sr-only">Sort</span><select value={sort} onChange={event => setSort(event.target.value as UsageSort)} aria-label="Sort tabs"><option value="recent">Recently used</option><option value="title">Page title</option><option value="mostToday">Most used today</option><option value="leastToday">Least used today</option><option value="mostWeek">Most used, 7 days</option><option value="leastWeek">Least used, 7 days</option></select><Icon name="chevron" size={15}/></label></div><TabList key={`${search}-${sort}-${statusFilter}`} busy={busy} tabs={snapshot.tabs.filter(tab => statusFilter === "all" || (statusFilter === "unloaded" ? tab.discarded : !tab.discarded))} search={search} sort={sort} onUnload={tab => void unload(tab)} onRestore={tab => void runMutation(() => sendRequest<boolean>({ type: "restoreTab", tabId: tab.id }), "Tab restored.")} /></div><p className="unload-hint"><Icon name="info" size={16}/>Unloaded tabs stay in your browser. Open one to reload its page.</p>
           </> : null}
           {section === "rules" ? <RulesPage settings={snapshot.settings} rulesCount={rulesCount} busy={busy} onGlobal={minutes => void runMutation(() => sendRequest<Settings>({ type: "setGlobalMinutes", minutes }), minutes === null ? "Automatic unloading turned off." : "Idle timer updated.")} onRule={(hostname, rule) => void runMutation(() => sendRequest<Settings>({ type: "setRule", hostname, rule }), rule ? "Website rule saved." : "Website rule removed.")} onError={showError}/> : null}
           {section === "activity" ? <ActivityPage activity={snapshot.activity} onClear={() => void runMutation(() => sendRequest<boolean>({ type: "clearActivity" }), "Activity cleared.")} /> : null}
-          {section === "settings" ? <SettingsPage settings={snapshot.settings} shortcut={snapshot.shortcut} onTheme={(theme: Theme) => void runMutation(() => sendRequest<Settings>({ type: "setTheme", theme }), "Appearance updated.")} onExport={() => void sendRequest<ExportedSettings>({ type: "exportSettings" }).then(value => { downloadJson("unloader-settings.json", value); showSuccess("Settings exported."); }).catch(showError)} onImport={value => void runMutation(() => sendRequest<Settings>({ type: "importSettings", value }), "Settings imported.")} onError={showError} /> : null}
+          {section === "settings" ? <SettingsPage settings={snapshot.settings} shortcut={snapshot.shortcut} onTheme={(theme: Theme) => void runMutation(() => sendRequest<Settings>({ type: "setTheme", theme }), "Appearance updated.")} onShortcut={() => void sendRequest<{ opened: boolean; message: string }>({ type: "openShortcutSettings" }).then(result => result.opened ? showSuccess(result.message) : showError(new Error(result.message))).catch(showError)} onExport={() => void sendRequest<ExportedSettings>({ type: "exportSettings" }).then(value => { downloadJson("unloader-settings.json", value); showSuccess("Settings exported."); }).catch(showError)} onImport={value => void runMutation(() => sendRequest<Settings>({ type: "importSettings", value }), "Settings imported.")} onError={showError} /> : null}
         </> : null}
       </div>
     </main>

@@ -1,0 +1,4560 @@
+{
+  "version": 1,
+  "generatedFrom": "Majestic Million ranked domains plus curated common web apps",
+  "updatedAt": "2026-10-09",
+  "unit": "MiB",
+  "fallbackEstimatedMiB": 170,
+  "disclaimer": "Representative planning estimates only. Browser extensions cannot reliably measure live per-tab memory. Values vary by browser, account state, page content, extensions, and session length.",
+  "entries": [
+    {
+      "domain": "163.com",
+      "name": "163",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "abc.net.au",
+      "name": "Abc",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "about.com",
+      "name": "About",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "aboutads.info",
+      "name": "Aboutads",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "aboutcookies.org",
+      "name": "Aboutcookies",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "academia.edu",
+      "name": "Academia",
+      "category": "education",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "academic.oup.com",
+      "name": "Academic",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "accounts.google.com",
+      "name": "Accounts",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "acm.org",
+      "name": "Acm",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "acs.org",
+      "name": "Acs",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "addtoany.com",
+      "name": "Addtoany",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "admin.ch",
+      "name": "Admin",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "adobe.com",
+      "name": "Adobe",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "ailawandorder.com",
+      "name": "Ailawandorder",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "airbnb.com",
+      "name": "Airbnb",
+      "category": "travel",
+      "estimatedMiB": 229,
+      "confidence": "low"
+    },
+    {
+      "domain": "akismet.com",
+      "name": "Akismet",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "alibaba.com",
+      "name": "Alibaba",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "aliexpress.com",
+      "name": "AliExpress",
+      "category": "shopping",
+      "estimatedMiB": 260,
+      "confidence": "medium"
+    },
+    {
+      "domain": "aliyun.com",
+      "name": "Aliyun",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "aljazeera.com",
+      "name": "Aljazeera",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "allaboutcookies.org",
+      "name": "Allaboutcookies",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "amazon.co.jp",
+      "name": "Amazon",
+      "category": "shopping",
+      "estimatedMiB": 192,
+      "confidence": "low"
+    },
+    {
+      "domain": "amazon.co.uk",
+      "name": "Amazon",
+      "category": "shopping",
+      "estimatedMiB": 192,
+      "confidence": "low"
+    },
+    {
+      "domain": "amazon.com",
+      "name": "Amazon",
+      "category": "shopping",
+      "estimatedMiB": 240,
+      "confidence": "medium"
+    },
+    {
+      "domain": "amazon.de",
+      "name": "Amazon",
+      "category": "shopping",
+      "estimatedMiB": 212,
+      "confidence": "low"
+    },
+    {
+      "domain": "amazonaws.com",
+      "name": "Amazonaws",
+      "category": "shopping",
+      "estimatedMiB": 199,
+      "confidence": "low"
+    },
+    {
+      "domain": "amd.com",
+      "name": "Amd",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "amzn.to",
+      "name": "Amzn",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "android.com",
+      "name": "Android",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "anthropic.com",
+      "name": "Anthropic",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "aol.com",
+      "name": "Aol",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "apa.org",
+      "name": "Apa",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "apache.org",
+      "name": "Apache",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "apachefriends.org",
+      "name": "Apachefriends",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "api.whatsapp.com",
+      "name": "Api",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "apnews.com",
+      "name": "Apnews",
+      "category": "news",
+      "estimatedMiB": 169,
+      "confidence": "low"
+    },
+    {
+      "domain": "apple.com",
+      "name": "Apple",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "apps.apple.com",
+      "name": "Apps",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "arcgis.com",
+      "name": "Arcgis",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "archive.org",
+      "name": "Archive",
+      "category": "reference",
+      "estimatedMiB": 146,
+      "confidence": "low"
+    },
+    {
+      "domain": "arstechnica.com",
+      "name": "Arstechnica",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "arxiv.org",
+      "name": "Arxiv",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "atlassian.com",
+      "name": "Atlassian",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "automattic.com",
+      "name": "Automattic",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "azurewebsites.net",
+      "name": "Azurewebsites",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "baidu.com",
+      "name": "Baidu",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "baike.baidu.com",
+      "name": "Baike",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "bandcamp.com",
+      "name": "Bandcamp",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "barnesandnoble.com",
+      "name": "Barnesandnoble",
+      "category": "other",
+      "estimatedMiB": 153,
+      "confidence": "low"
+    },
+    {
+      "domain": "bbb.org",
+      "name": "Bbb",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "bbc.co.uk",
+      "name": "Bbc",
+      "category": "news",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "bbc.com",
+      "name": "Bbc",
+      "category": "news",
+      "estimatedMiB": 148,
+      "confidence": "low"
+    },
+    {
+      "domain": "behance.net",
+      "name": "Behance",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "beian.gov.cn",
+      "name": "Beian",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "berkeley.edu",
+      "name": "Berkeley",
+      "category": "education",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "bigcartel.com",
+      "name": "Bigcartel",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "bilibili.com",
+      "name": "Bilibili",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "bing.com",
+      "name": "Bing",
+      "category": "search",
+      "estimatedMiB": 190,
+      "confidence": "medium"
+    },
+    {
+      "domain": "biomedcentral.com",
+      "name": "Biomedcentral",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "bit.ly",
+      "name": "Bit",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "blog.google",
+      "name": "Blog",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "blogger.com",
+      "name": "Blogger",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "blogspot.com",
+      "name": "Blogspot",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "bloomberg.com",
+      "name": "Bloomberg",
+      "category": "news",
+      "estimatedMiB": 149,
+      "confidence": "low"
+    },
+    {
+      "domain": "bls.gov",
+      "name": "Bls",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "bmj.com",
+      "name": "Bmj",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "booking.com",
+      "name": "Booking",
+      "category": "travel",
+      "estimatedMiB": 236,
+      "confidence": "low"
+    },
+    {
+      "domain": "books.google.com",
+      "name": "Books",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "box.com",
+      "name": "Box",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "bp.blogspot.com",
+      "name": "Bp",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "britannica.com",
+      "name": "Britannica",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "bsky.app",
+      "name": "Bsky",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "bund.de",
+      "name": "Bund",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "business.site",
+      "name": "Business",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "businessinsider.com",
+      "name": "Businessinsider",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "businesswire.com",
+      "name": "Businesswire",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "buydomains.com",
+      "name": "Buydomains",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "buzzfeed.com",
+      "name": "Buzzfeed",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "ca.gov",
+      "name": "Ca",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "calendly.com",
+      "name": "Calendly",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "cam.ac.uk",
+      "name": "Cam",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "cambridge.org",
+      "name": "Cambridge",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "canada.ca",
+      "name": "Canada",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "canva.com",
+      "name": "Canva",
+      "category": "productivity",
+      "estimatedMiB": 470,
+      "confidence": "medium"
+    },
+    {
+      "domain": "cbc.ca",
+      "name": "Cbc",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "cbsnews.com",
+      "name": "Cbsnews",
+      "category": "news",
+      "estimatedMiB": 176,
+      "confidence": "low"
+    },
+    {
+      "domain": "cctv.com",
+      "name": "Cctv",
+      "category": "streaming",
+      "estimatedMiB": 415,
+      "confidence": "low"
+    },
+    {
+      "domain": "cdc.gov",
+      "name": "Cdc",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "census.gov",
+      "name": "Census",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "change.org",
+      "name": "Change",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "chat.whatsapp.com",
+      "name": "Chat",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "chatgpt.com",
+      "name": "ChatGPT",
+      "category": "ai",
+      "estimatedMiB": 420,
+      "confidence": "medium"
+    },
+    {
+      "domain": "chinadaily.com.cn",
+      "name": "Chinadaily",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "cisco.com",
+      "name": "Cisco",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "claude.ai",
+      "name": "Claude",
+      "category": "ai",
+      "estimatedMiB": 390,
+      "confidence": "medium"
+    },
+    {
+      "domain": "clevelandclinic.org",
+      "name": "Clevelandclinic",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "cloud.microsoft",
+      "name": "Cloud",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "cloudflare.com",
+      "name": "Cloudflare",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "cloudfront.net",
+      "name": "Cloudfront",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "cmu.edu",
+      "name": "Cmu",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "cnbc.com",
+      "name": "Cnbc",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "cnet.com",
+      "name": "Cnet",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "cnil.fr",
+      "name": "Cnil",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "cnn.com",
+      "name": "Cnn",
+      "category": "news",
+      "estimatedMiB": 148,
+      "confidence": "low"
+    },
+    {
+      "domain": "co.com",
+      "name": "Co",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "codepen.io",
+      "name": "CodePen",
+      "category": "development",
+      "estimatedMiB": 240,
+      "confidence": "medium"
+    },
+    {
+      "domain": "columbia.edu",
+      "name": "Columbia",
+      "category": "education",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "commons.wikimedia.org",
+      "name": "Commons",
+      "category": "reference",
+      "estimatedMiB": 134,
+      "confidence": "low"
+    },
+    {
+      "domain": "congress.gov",
+      "name": "Congress",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "constantcontact.com",
+      "name": "Constantcontact",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "cookiedatabase.org",
+      "name": "Cookiedatabase",
+      "category": "other",
+      "estimatedMiB": 153,
+      "confidence": "low"
+    },
+    {
+      "domain": "cornell.edu",
+      "name": "Cornell",
+      "category": "education",
+      "estimatedMiB": 196,
+      "confidence": "low"
+    },
+    {
+      "domain": "coursera.org",
+      "name": "Coursera",
+      "category": "education",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "cpanel.net",
+      "name": "Cpanel",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "creativecommons.org",
+      "name": "Creativecommons",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "cve.org",
+      "name": "Cve",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "dailymail.co.uk",
+      "name": "Dailymail",
+      "category": "email",
+      "estimatedMiB": 253,
+      "confidence": "low"
+    },
+    {
+      "domain": "dailymail.com",
+      "name": "Dailymail",
+      "category": "email",
+      "estimatedMiB": 239,
+      "confidence": "low"
+    },
+    {
+      "domain": "dailymotion.com",
+      "name": "Dailymotion",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "de.com",
+      "name": "De",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "de.wikipedia.org",
+      "name": "De",
+      "category": "reference",
+      "estimatedMiB": 140,
+      "confidence": "low"
+    },
+    {
+      "domain": "debian.org",
+      "name": "Debian",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "dell.com",
+      "name": "Dell",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "deloitte.com",
+      "name": "Deloitte",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "deviantart.com",
+      "name": "Deviantart",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "digg.com",
+      "name": "Digg",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "discord.com",
+      "name": "Discord",
+      "category": "messaging",
+      "estimatedMiB": 390,
+      "confidence": "medium"
+    },
+    {
+      "domain": "discord.gg",
+      "name": "Discord",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "disneyplus.com",
+      "name": "Disney+",
+      "category": "streaming",
+      "estimatedMiB": 470,
+      "confidence": "medium"
+    },
+    {
+      "domain": "disqus.com",
+      "name": "Disqus",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "docker.com",
+      "name": "Docker",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "docs.google.com",
+      "name": "Google Docs",
+      "category": "productivity",
+      "estimatedMiB": 340,
+      "confidence": "medium"
+    },
+    {
+      "domain": "doi.org",
+      "name": "Doi",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "doubleclick.net",
+      "name": "Doubleclick",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "douyin.com",
+      "name": "Douyin",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "dribbble.com",
+      "name": "Dribbble",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "drive.google.com",
+      "name": "Google Drive",
+      "category": "productivity",
+      "estimatedMiB": 240,
+      "confidence": "medium"
+    },
+    {
+      "domain": "dropbox.com",
+      "name": "Dropbox",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "dropcatch.com",
+      "name": "Dropcatch",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "drupal.org",
+      "name": "Drupal",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "duckduckgo.com",
+      "name": "DuckDuckGo",
+      "category": "search",
+      "estimatedMiB": 120,
+      "confidence": "medium"
+    },
+    {
+      "domain": "duke.edu",
+      "name": "Duke",
+      "category": "education",
+      "estimatedMiB": 175,
+      "confidence": "low"
+    },
+    {
+      "domain": "dw.com",
+      "name": "Dw",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "dx.doi.org",
+      "name": "Dx",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "earthlink.net",
+      "name": "Earthlink",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "ebay.com",
+      "name": "eBay",
+      "category": "shopping",
+      "estimatedMiB": 210,
+      "confidence": "medium"
+    },
+    {
+      "domain": "economist.com",
+      "name": "Economist",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "ed.gov",
+      "name": "Ed",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "eepurl.com",
+      "name": "Eepurl",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "eff.org",
+      "name": "Eff",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "elegantthemes.com",
+      "name": "Elegantthemes",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "elpais.com",
+      "name": "Elpais",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "elsevier.com",
+      "name": "Elsevier",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "en.wikipedia.org",
+      "name": "En",
+      "category": "reference",
+      "estimatedMiB": 140,
+      "confidence": "low"
+    },
+    {
+      "domain": "enable-javascript.com",
+      "name": "Enable Javascript",
+      "category": "other",
+      "estimatedMiB": 174,
+      "confidence": "low"
+    },
+    {
+      "domain": "energy.gov",
+      "name": "Energy",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "engadget.com",
+      "name": "Engadget",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "entrepreneur.com",
+      "name": "Entrepreneur",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "epa.gov",
+      "name": "Epa",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "es.wikipedia.org",
+      "name": "Es",
+      "category": "reference",
+      "estimatedMiB": 140,
+      "confidence": "low"
+    },
+    {
+      "domain": "etsy.com",
+      "name": "Etsy",
+      "category": "shopping",
+      "estimatedMiB": 220,
+      "confidence": "medium"
+    },
+    {
+      "domain": "eu.com",
+      "name": "Eu",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "euronews.com",
+      "name": "Euronews",
+      "category": "news",
+      "estimatedMiB": 142,
+      "confidence": "low"
+    },
+    {
+      "domain": "europa.eu",
+      "name": "Europa",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "eventbrite.com",
+      "name": "Eventbrite",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "example.com",
+      "name": "Example",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "expireddomains.com",
+      "name": "Expireddomains",
+      "category": "other",
+      "estimatedMiB": 153,
+      "confidence": "low"
+    },
+    {
+      "domain": "f5.com",
+      "name": "F5",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "facebook.com",
+      "name": "Facebook",
+      "category": "social",
+      "estimatedMiB": 330,
+      "confidence": "medium"
+    },
+    {
+      "domain": "fandom.com",
+      "name": "Fandom",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "fao.org",
+      "name": "Fao",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "fastcompany.com",
+      "name": "Fastcompany",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "fb.com",
+      "name": "Fb",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "fb.me",
+      "name": "Fb",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "fb.watch",
+      "name": "Fb",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "fda.gov",
+      "name": "Fda",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "fedoraproject.org",
+      "name": "Fedoraproject",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "feedburner.com",
+      "name": "Feedburner",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "feeds.feedburner.com",
+      "name": "Feeds",
+      "category": "other",
+      "estimatedMiB": 167,
+      "confidence": "low"
+    },
+    {
+      "domain": "figma.com",
+      "name": "Figma",
+      "category": "productivity",
+      "estimatedMiB": 620,
+      "confidence": "medium"
+    },
+    {
+      "domain": "firefox.com",
+      "name": "Firefox",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "flickr.com",
+      "name": "Flickr",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "fliphtml5.com",
+      "name": "Fliphtml5",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "flipkart.com",
+      "name": "Flipkart",
+      "category": "shopping",
+      "estimatedMiB": 250,
+      "confidence": "medium"
+    },
+    {
+      "domain": "forbes.com",
+      "name": "Forbes",
+      "category": "news",
+      "estimatedMiB": 169,
+      "confidence": "low"
+    },
+    {
+      "domain": "forms.gle",
+      "name": "Forms",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "fortune.com",
+      "name": "Fortune",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "foxnews.com",
+      "name": "Foxnews",
+      "category": "news",
+      "estimatedMiB": 176,
+      "confidence": "low"
+    },
+    {
+      "domain": "fr.wikipedia.org",
+      "name": "Fr",
+      "category": "reference",
+      "estimatedMiB": 140,
+      "confidence": "low"
+    },
+    {
+      "domain": "free.fr",
+      "name": "Free",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "freebsd.org",
+      "name": "Freebsd",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "freepik.com",
+      "name": "Freepik",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "frontiersin.org",
+      "name": "Frontiersin",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "ft.com",
+      "name": "Ft",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "ftc.gov",
+      "name": "Ftc",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "g.co",
+      "name": "G",
+      "category": "other",
+      "estimatedMiB": 178,
+      "confidence": "low"
+    },
+    {
+      "domain": "g.page",
+      "name": "G",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "gallup.com",
+      "name": "Gallup",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "gartner.com",
+      "name": "Gartner",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "gc.ca",
+      "name": "Gc",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "gemini.google.com",
+      "name": "Gemini",
+      "category": "ai",
+      "estimatedMiB": 380,
+      "confidence": "medium"
+    },
+    {
+      "domain": "generatepress.com",
+      "name": "Generatepress",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "geocities.com",
+      "name": "Geocities",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "get.adobe.com",
+      "name": "Get",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "getbootstrap.com",
+      "name": "Getbootstrap",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "giphy.com",
+      "name": "Giphy",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "git-scm.com",
+      "name": "Git Scm",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "github.com",
+      "name": "GitHub",
+      "category": "development",
+      "estimatedMiB": 260,
+      "confidence": "medium"
+    },
+    {
+      "domain": "github.io",
+      "name": "Github",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "gitlab.com",
+      "name": "GitLab",
+      "category": "development",
+      "estimatedMiB": 280,
+      "confidence": "medium"
+    },
+    {
+      "domain": "gizmodo.com",
+      "name": "Gizmodo",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "globenewswire.com",
+      "name": "Globenewswire",
+      "category": "news",
+      "estimatedMiB": 177,
+      "confidence": "low"
+    },
+    {
+      "domain": "gmail.com",
+      "name": "Gmail",
+      "category": "email",
+      "estimatedMiB": 300,
+      "confidence": "medium"
+    },
+    {
+      "domain": "gnu.org",
+      "name": "Gnu",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "go.com",
+      "name": "Go",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "go.id",
+      "name": "Go",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "go.kr",
+      "name": "Go",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "gob.es",
+      "name": "Gob",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "gob.mx",
+      "name": "Gob",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "godaddy.com",
+      "name": "Godaddy",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "gofundme.com",
+      "name": "Gofundme",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "goo.gl",
+      "name": "Goo",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "goodreads.com",
+      "name": "Goodreads",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "google.ca",
+      "name": "Google",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "google.co.jp",
+      "name": "Google",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "google.co.uk",
+      "name": "Google",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "google.com",
+      "name": "Google Search",
+      "category": "search",
+      "estimatedMiB": 170,
+      "confidence": "medium"
+    },
+    {
+      "domain": "google.de",
+      "name": "Google",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "google.es",
+      "name": "Google",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "google.fr",
+      "name": "Google",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "googleapis.com",
+      "name": "Googleapis",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "googleblog.com",
+      "name": "Googleblog",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "googletagmanager.com",
+      "name": "Googletagmanager",
+      "category": "other",
+      "estimatedMiB": 167,
+      "confidence": "low"
+    },
+    {
+      "domain": "googleusercontent.com",
+      "name": "Googleusercontent",
+      "category": "other",
+      "estimatedMiB": 174,
+      "confidence": "low"
+    },
+    {
+      "domain": "gouv.fr",
+      "name": "Gouv",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "govt.nz",
+      "name": "Govt",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "gravatar.com",
+      "name": "Gravatar",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "guardian.co.uk",
+      "name": "Guardian",
+      "category": "news",
+      "estimatedMiB": 156,
+      "confidence": "low"
+    },
+    {
+      "domain": "gv.at",
+      "name": "Gv",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "harvard.edu",
+      "name": "Harvard",
+      "category": "education",
+      "estimatedMiB": 196,
+      "confidence": "low"
+    },
+    {
+      "domain": "hatena.ne.jp",
+      "name": "Hatena",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "hbr.org",
+      "name": "Hbr",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "healthline.com",
+      "name": "Healthline",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "hhs.gov",
+      "name": "Hhs",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "hilton.com",
+      "name": "Hilton",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "house.gov",
+      "name": "House",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "hp.com",
+      "name": "Hp",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "httpd.apache.org",
+      "name": "Httpd",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "huawei.com",
+      "name": "Huawei",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "hubspot.com",
+      "name": "Hubspot",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "huffingtonpost.com",
+      "name": "Huffingtonpost",
+      "category": "news",
+      "estimatedMiB": 143,
+      "confidence": "low"
+    },
+    {
+      "domain": "huffpost.com",
+      "name": "Huffpost",
+      "category": "news",
+      "estimatedMiB": 142,
+      "confidence": "low"
+    },
+    {
+      "domain": "hugedomains.com",
+      "name": "Hugedomains",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "huggingface.co",
+      "name": "Huggingface",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "i.imgur.com",
+      "name": "I",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "i0.wp.com",
+      "name": "I0",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "iana.org",
+      "name": "Iana",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "ibm.com",
+      "name": "Ibm",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "ico.org.uk",
+      "name": "Ico",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "ieee.org",
+      "name": "Ieee",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "ietf.org",
+      "name": "Ietf",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "ikea.com",
+      "name": "Ikea",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "imdb.com",
+      "name": "Imdb",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "imf.org",
+      "name": "Imf",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "imgur.com",
+      "name": "Imgur",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "in.ua",
+      "name": "In",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "inc.com",
+      "name": "Inc",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "indeed.com",
+      "name": "Indeed",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "independent.co.uk",
+      "name": "Independent",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "indiatimes.com",
+      "name": "Indiatimes",
+      "category": "news",
+      "estimatedMiB": 156,
+      "confidence": "low"
+    },
+    {
+      "domain": "instagram.com",
+      "name": "Instagram",
+      "category": "social",
+      "estimatedMiB": 360,
+      "confidence": "medium"
+    },
+    {
+      "domain": "intel.com",
+      "name": "Intel",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "intuit.com",
+      "name": "Intuit",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "investopedia.com",
+      "name": "Investopedia",
+      "category": "finance",
+      "estimatedMiB": 220,
+      "confidence": "low"
+    },
+    {
+      "domain": "ionos.de",
+      "name": "Ionos",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "irs.gov",
+      "name": "Irs",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "iso.org",
+      "name": "Iso",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "issuu.com",
+      "name": "Issuu",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "it.com",
+      "name": "It",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "itu.int",
+      "name": "Itu",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "itunes.apple.com",
+      "name": "Itunes",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "iubenda.com",
+      "name": "Iubenda",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "jamanetwork.com",
+      "name": "Jamanetwork",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "java.com",
+      "name": "Java",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "jd.com",
+      "name": "Jd",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "jhu.edu",
+      "name": "Jhu",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "jigsaw.w3.org",
+      "name": "Jigsaw",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "jimdo.com",
+      "name": "Jimdo",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "jimdofree.com",
+      "name": "Jimdofree",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "jotform.com",
+      "name": "Jotform",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "jquery.com",
+      "name": "Jquery",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "jstor.org",
+      "name": "Jstor",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "justice.gov",
+      "name": "Justice",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "kde.org",
+      "name": "Kde",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "kernel.org",
+      "name": "Kernel",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "kickstarter.com",
+      "name": "Kickstarter",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "kiev.ua",
+      "name": "Kiev",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "laravel.com",
+      "name": "Laravel",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "latimes.com",
+      "name": "Latimes",
+      "category": "news",
+      "estimatedMiB": 176,
+      "confidence": "low"
+    },
+    {
+      "domain": "launchpad.net",
+      "name": "Launchpad",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "lemonde.fr",
+      "name": "Lemonde",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "letsencrypt.org",
+      "name": "Letsencrypt",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "lin.ee",
+      "name": "Lin",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "line.me",
+      "name": "Line",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "linkedin.com",
+      "name": "LinkedIn",
+      "category": "social",
+      "estimatedMiB": 260,
+      "confidence": "medium"
+    },
+    {
+      "domain": "linktr.ee",
+      "name": "Linktr",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "list-manage.com",
+      "name": "List Manage",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "live.com",
+      "name": "Live",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "livejournal.com",
+      "name": "Livejournal",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "lnkd.in",
+      "name": "Lnkd",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "loc.gov",
+      "name": "Loc",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "lww.com",
+      "name": "Lww",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "m.facebook.com",
+      "name": "M",
+      "category": "social",
+      "estimatedMiB": 266,
+      "confidence": "low"
+    },
+    {
+      "domain": "m.me",
+      "name": "M",
+      "category": "other",
+      "estimatedMiB": 178,
+      "confidence": "low"
+    },
+    {
+      "domain": "macromedia.com",
+      "name": "Macromedia",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "magnific.com",
+      "name": "Magnific",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "mail.google.com",
+      "name": "Gmail",
+      "category": "email",
+      "estimatedMiB": 300,
+      "confidence": "medium"
+    },
+    {
+      "domain": "mailchi.mp",
+      "name": "Mailchi",
+      "category": "email",
+      "estimatedMiB": 259,
+      "confidence": "low"
+    },
+    {
+      "domain": "mailchimp.com",
+      "name": "Mailchimp",
+      "category": "email",
+      "estimatedMiB": 239,
+      "confidence": "low"
+    },
+    {
+      "domain": "maps.app.goo.gl",
+      "name": "Maps",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "maps.google.com",
+      "name": "Maps",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "marketwatch.com",
+      "name": "Marketwatch",
+      "category": "shopping",
+      "estimatedMiB": 213,
+      "confidence": "low"
+    },
+    {
+      "domain": "marriott.com",
+      "name": "Marriott",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "mashable.com",
+      "name": "Mashable",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "matomo.org",
+      "name": "Matomo",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "matterport.com",
+      "name": "Matterport",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "mayoclinic.org",
+      "name": "Mayoclinic",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "mckinsey.com",
+      "name": "Mckinsey",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "mdpi.com",
+      "name": "Mdpi",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "medicalnewstoday.com",
+      "name": "Medicalnewstoday",
+      "category": "news",
+      "estimatedMiB": 157,
+      "confidence": "low"
+    },
+    {
+      "domain": "medium.com",
+      "name": "Medium",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "meetup.com",
+      "name": "Meetup",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "merriam-webster.com",
+      "name": "Merriam Webster",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "messenger.com",
+      "name": "Messenger",
+      "category": "messaging",
+      "estimatedMiB": 300,
+      "confidence": "medium"
+    },
+    {
+      "domain": "meta.com",
+      "name": "Meta",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "microsoft.com",
+      "name": "Microsoft",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "microsoftonline.com",
+      "name": "Microsoftonline",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "miit.gov.cn",
+      "name": "Miit",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "mit.edu",
+      "name": "Mit",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "mitre.org",
+      "name": "Mitre",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "moodle.com",
+      "name": "Moodle",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "moodle.org",
+      "name": "Moodle",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "mozilla.org",
+      "name": "Mozilla",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "mp.weixin.qq.com",
+      "name": "Mp",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "mps.gov.cn",
+      "name": "Mps",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "msn.com",
+      "name": "Msn",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "music.apple.com",
+      "name": "Music",
+      "category": "streaming",
+      "estimatedMiB": 423,
+      "confidence": "low"
+    },
+    {
+      "domain": "myshopify.com",
+      "name": "Myshopify",
+      "category": "shopping",
+      "estimatedMiB": 199,
+      "confidence": "low"
+    },
+    {
+      "domain": "myspace.com",
+      "name": "Myspace",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "mysql.com",
+      "name": "Mysql",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "namecheap.com",
+      "name": "Namecheap",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "namepros.com",
+      "name": "Namepros",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "nasa.gov",
+      "name": "Nasa",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "nationalgeographic.com",
+      "name": "Nationalgeographic",
+      "category": "other",
+      "estimatedMiB": 181,
+      "confidence": "low"
+    },
+    {
+      "domain": "nature.com",
+      "name": "Nature",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "naver.com",
+      "name": "Naver",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "nbcnews.com",
+      "name": "Nbcnews",
+      "category": "news",
+      "estimatedMiB": 176,
+      "confidence": "low"
+    },
+    {
+      "domain": "nejm.org",
+      "name": "Nejm",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "netflix.com",
+      "name": "Netflix",
+      "category": "streaming",
+      "estimatedMiB": 520,
+      "confidence": "medium"
+    },
+    {
+      "domain": "netlify.app",
+      "name": "Netlify",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "netscape.com",
+      "name": "Netscape",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "networkadvertising.org",
+      "name": "Networkadvertising",
+      "category": "other",
+      "estimatedMiB": 181,
+      "confidence": "low"
+    },
+    {
+      "domain": "news.google.com",
+      "name": "News",
+      "category": "news",
+      "estimatedMiB": 163,
+      "confidence": "low"
+    },
+    {
+      "domain": "newsweek.com",
+      "name": "Newsweek",
+      "category": "news",
+      "estimatedMiB": 142,
+      "confidence": "low"
+    },
+    {
+      "domain": "newyorker.com",
+      "name": "Newyorker",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "nginx.com",
+      "name": "Nginx",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "nginx.org",
+      "name": "Nginx",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "nih.gov",
+      "name": "Nih",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "nist.gov",
+      "name": "Nist",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "noaa.gov",
+      "name": "Noaa",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "nodejs.org",
+      "name": "Nodejs",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "notion.site",
+      "name": "Notion",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "notion.so",
+      "name": "Notion",
+      "category": "productivity",
+      "estimatedMiB": 360,
+      "confidence": "medium"
+    },
+    {
+      "domain": "npmjs.com",
+      "name": "Npmjs",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "npr.org",
+      "name": "Npr",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "nps.gov",
+      "name": "Nps",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "nvidia.com",
+      "name": "Nvidia",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "nypost.com",
+      "name": "Nypost",
+      "category": "news",
+      "estimatedMiB": 169,
+      "confidence": "low"
+    },
+    {
+      "domain": "nytimes.com",
+      "name": "Nytimes",
+      "category": "news",
+      "estimatedMiB": 176,
+      "confidence": "low"
+    },
+    {
+      "domain": "nyu.edu",
+      "name": "Nyu",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "odoo.com",
+      "name": "Odoo",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "oecd.org",
+      "name": "Oecd",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "office.com",
+      "name": "Microsoft 365",
+      "category": "productivity",
+      "estimatedMiB": 330,
+      "confidence": "medium"
+    },
+    {
+      "domain": "ok.ru",
+      "name": "Ok",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "open.spotify.com",
+      "name": "Open",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "openai.com",
+      "name": "OpenAI",
+      "category": "ai",
+      "estimatedMiB": 260,
+      "confidence": "medium"
+    },
+    {
+      "domain": "opensource.org",
+      "name": "Opensource",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "openssl.org",
+      "name": "Openssl",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "openstreetmap.org",
+      "name": "Openstreetmap",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "opera.com",
+      "name": "Opera",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "or.kr",
+      "name": "Or",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "oracle.com",
+      "name": "Oracle",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "orcid.org",
+      "name": "Orcid",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "oreilly.com",
+      "name": "Oreilly",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "oup.com",
+      "name": "Oup",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "outlook.com",
+      "name": "Outlook",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "outlook.live.com",
+      "name": "Outlook",
+      "category": "email",
+      "estimatedMiB": 320,
+      "confidence": "medium"
+    },
+    {
+      "domain": "outlook.office.com",
+      "name": "Outlook",
+      "category": "other",
+      "estimatedMiB": 153,
+      "confidence": "low"
+    },
+    {
+      "domain": "ovh.com",
+      "name": "Ovh",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "ovhcloud.com",
+      "name": "Ovhcloud",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "ox.ac.uk",
+      "name": "Ox",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "pages.dev",
+      "name": "Pages",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "patreon.com",
+      "name": "Patreon",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "paypal.com",
+      "name": "Paypal",
+      "category": "finance",
+      "estimatedMiB": 219,
+      "confidence": "low"
+    },
+    {
+      "domain": "pbs.org",
+      "name": "Pbs",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "pcmag.com",
+      "name": "Pcmag",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "people.com.cn",
+      "name": "People",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "perl.org",
+      "name": "Perl",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "perplexity.ai",
+      "name": "Perplexity",
+      "category": "ai",
+      "estimatedMiB": 280,
+      "confidence": "medium"
+    },
+    {
+      "domain": "pewresearch.org",
+      "name": "Pewresearch",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "pexels.com",
+      "name": "Pexels",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "photobucket.com",
+      "name": "Photobucket",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "php.net",
+      "name": "Php",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "picasaweb.google.com",
+      "name": "Picasaweb",
+      "category": "other",
+      "estimatedMiB": 167,
+      "confidence": "low"
+    },
+    {
+      "domain": "pinterest.com",
+      "name": "Pinterest",
+      "category": "social",
+      "estimatedMiB": 300,
+      "confidence": "medium"
+    },
+    {
+      "domain": "pixabay.com",
+      "name": "Pixabay",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "play.google.com",
+      "name": "Play",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "player.vimeo.com",
+      "name": "Player",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "plesk.com",
+      "name": "Plesk",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "plos.org",
+      "name": "Plos",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "plus.google.com",
+      "name": "Plus",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "pnas.org",
+      "name": "Pnas",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "policies.google.com",
+      "name": "Policies",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "politico.com",
+      "name": "Politico",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "postgresql.org",
+      "name": "Postgresql",
+      "category": "news",
+      "estimatedMiB": 156,
+      "confidence": "low"
+    },
+    {
+      "domain": "primevideo.com",
+      "name": "Prime Video",
+      "category": "streaming",
+      "estimatedMiB": 480,
+      "confidence": "medium"
+    },
+    {
+      "domain": "princeton.edu",
+      "name": "Princeton",
+      "category": "education",
+      "estimatedMiB": 169,
+      "confidence": "low"
+    },
+    {
+      "domain": "prnewswire.com",
+      "name": "Prnewswire",
+      "category": "news",
+      "estimatedMiB": 156,
+      "confidence": "low"
+    },
+    {
+      "domain": "proton.me",
+      "name": "Proton Mail",
+      "category": "email",
+      "estimatedMiB": 240,
+      "confidence": "medium"
+    },
+    {
+      "domain": "psu.edu",
+      "name": "Psu",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "psychologytoday.com",
+      "name": "Psychologytoday",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "pubmed.ncbi.nlm.nih.gov",
+      "name": "Pubmed",
+      "category": "other",
+      "estimatedMiB": 188,
+      "confidence": "low"
+    },
+    {
+      "domain": "purdue.edu",
+      "name": "Purdue",
+      "category": "education",
+      "estimatedMiB": 189,
+      "confidence": "low"
+    },
+    {
+      "domain": "pwc.com",
+      "name": "Pwc",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "python.org",
+      "name": "Python",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "qc.ca",
+      "name": "Qc",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "qq.com",
+      "name": "Qq",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "quora.com",
+      "name": "Quora",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "qz.com",
+      "name": "Qz",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "rakuten.co.jp",
+      "name": "Rakuten",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "readthedocs.io",
+      "name": "Readthedocs",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "reddit.com",
+      "name": "Reddit",
+      "category": "social",
+      "estimatedMiB": 260,
+      "confidence": "medium"
+    },
+    {
+      "domain": "redhat.com",
+      "name": "Redhat",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "replit.com",
+      "name": "Replit",
+      "category": "development",
+      "estimatedMiB": 420,
+      "confidence": "medium"
+    },
+    {
+      "domain": "researchgate.net",
+      "name": "Researchgate",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "reuters.com",
+      "name": "Reuters",
+      "category": "news",
+      "estimatedMiB": 176,
+      "confidence": "low"
+    },
+    {
+      "domain": "rfc-editor.org",
+      "name": "Rfc Editor",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "rollingstone.com",
+      "name": "Rollingstone",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "ru.wikipedia.org",
+      "name": "Ru",
+      "category": "reference",
+      "estimatedMiB": 140,
+      "confidence": "low"
+    },
+    {
+      "domain": "safety.google",
+      "name": "Safety",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "sagepub.com",
+      "name": "Sagepub",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "salesforce.com",
+      "name": "Salesforce",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "samsung.com",
+      "name": "Samsung",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "sap.com",
+      "name": "Sap",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "scholar.google.com",
+      "name": "Scholar",
+      "category": "other",
+      "estimatedMiB": 153,
+      "confidence": "low"
+    },
+    {
+      "domain": "science.org",
+      "name": "Science",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "sciencedaily.com",
+      "name": "Sciencedaily",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "sciencedirect.com",
+      "name": "Sciencedirect",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "sciencemag.org",
+      "name": "Sciencemag",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "scientificamerican.com",
+      "name": "Scientificamerican",
+      "category": "other",
+      "estimatedMiB": 181,
+      "confidence": "low"
+    },
+    {
+      "domain": "scmp.com",
+      "name": "Scmp",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "scribd.com",
+      "name": "Scribd",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "sec.gov",
+      "name": "Sec",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "sedo.com",
+      "name": "Sedo",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "semrush.com",
+      "name": "Semrush",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "senate.gov",
+      "name": "Senate",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "service.gov.uk",
+      "name": "Service",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "service.weibo.com",
+      "name": "Service",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "share.google",
+      "name": "Share",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "sharepoint.com",
+      "name": "Sharepoint",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "sheets.google.com",
+      "name": "Google Sheets",
+      "category": "productivity",
+      "estimatedMiB": 410,
+      "confidence": "medium"
+    },
+    {
+      "domain": "shopify.com",
+      "name": "Shopify",
+      "category": "shopping",
+      "estimatedMiB": 226,
+      "confidence": "low"
+    },
+    {
+      "domain": "shorturl.at",
+      "name": "Shorturl",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "shutterstock.com",
+      "name": "Shutterstock",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "si.edu",
+      "name": "Si",
+      "category": "education",
+      "estimatedMiB": 161,
+      "confidence": "low"
+    },
+    {
+      "domain": "siemens.com",
+      "name": "Siemens",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "sina.com.cn",
+      "name": "Sina",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "sites.google.com",
+      "name": "Sites",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "skype.com",
+      "name": "Skype",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "slack.com",
+      "name": "Slack",
+      "category": "messaging",
+      "estimatedMiB": 430,
+      "confidence": "medium"
+    },
+    {
+      "domain": "slate.com",
+      "name": "Slate",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "slideshare.net",
+      "name": "Slideshare",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "snapchat.com",
+      "name": "Snapchat",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "so.com",
+      "name": "So",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "sohu.com",
+      "name": "Sohu",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "soundcloud.com",
+      "name": "Soundcloud",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "sourceforge.net",
+      "name": "Sourceforge",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "spiegel.de",
+      "name": "Spiegel",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "spotify.com",
+      "name": "Spotify",
+      "category": "streaming",
+      "estimatedMiB": 330,
+      "confidence": "medium"
+    },
+    {
+      "domain": "springer.com",
+      "name": "Springer",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "squarespace.com",
+      "name": "Squarespace",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "ssrn.com",
+      "name": "Ssrn",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "stackexchange.com",
+      "name": "Stackexchange",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "stackoverflow.com",
+      "name": "Stack Overflow",
+      "category": "development",
+      "estimatedMiB": 170,
+      "confidence": "medium"
+    },
+    {
+      "domain": "stanford.edu",
+      "name": "Stanford",
+      "category": "education",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "statcounter.com",
+      "name": "Statcounter",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "state.gov",
+      "name": "State",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "statista.com",
+      "name": "Statista",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "steamcommunity.com",
+      "name": "Steamcommunity",
+      "category": "gaming",
+      "estimatedMiB": 303,
+      "confidence": "low"
+    },
+    {
+      "domain": "steampowered.com",
+      "name": "Steampowered",
+      "category": "gaming",
+      "estimatedMiB": 330,
+      "confidence": "low"
+    },
+    {
+      "domain": "storage.googleapis.com",
+      "name": "Storage",
+      "category": "other",
+      "estimatedMiB": 181,
+      "confidence": "low"
+    },
+    {
+      "domain": "store.steampowered.com",
+      "name": "Store",
+      "category": "gaming",
+      "estimatedMiB": 331,
+      "confidence": "low"
+    },
+    {
+      "domain": "strato.de",
+      "name": "Strato",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "stripe.com",
+      "name": "Stripe",
+      "category": "finance",
+      "estimatedMiB": 219,
+      "confidence": "low"
+    },
+    {
+      "domain": "substack.com",
+      "name": "Substack",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "sun.com",
+      "name": "Sun",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "support.apple.com",
+      "name": "Support",
+      "category": "other",
+      "estimatedMiB": 187,
+      "confidence": "low"
+    },
+    {
+      "domain": "support.google.com",
+      "name": "Support",
+      "category": "other",
+      "estimatedMiB": 153,
+      "confidence": "low"
+    },
+    {
+      "domain": "support.microsoft.com",
+      "name": "Support",
+      "category": "other",
+      "estimatedMiB": 174,
+      "confidence": "low"
+    },
+    {
+      "domain": "surveymonkey.com",
+      "name": "Surveymonkey",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "t.co",
+      "name": "T",
+      "category": "other",
+      "estimatedMiB": 178,
+      "confidence": "low"
+    },
+    {
+      "domain": "t.me",
+      "name": "T",
+      "category": "other",
+      "estimatedMiB": 178,
+      "confidence": "low"
+    },
+    {
+      "domain": "tandfonline.com",
+      "name": "Tandfonline",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "taobao.com",
+      "name": "Taobao",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "teams.live.com",
+      "name": "Teams",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "teamviewer.com",
+      "name": "Teamviewer",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "techcrunch.com",
+      "name": "Techcrunch",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "technologyreview.com",
+      "name": "Technologyreview",
+      "category": "other",
+      "estimatedMiB": 167,
+      "confidence": "low"
+    },
+    {
+      "domain": "techradar.com",
+      "name": "Techradar",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "techtarget.com",
+      "name": "Techtarget",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "ted.com",
+      "name": "Ted",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "telegra.ph",
+      "name": "Telegra",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "telegram.me",
+      "name": "Telegram",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "telegram.org",
+      "name": "Telegram",
+      "category": "messaging",
+      "estimatedMiB": 230,
+      "confidence": "medium"
+    },
+    {
+      "domain": "telegraph.co.uk",
+      "name": "Telegraph",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "tencent.com",
+      "name": "Tencent",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "theatlantic.com",
+      "name": "Theatlantic",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "theconversation.com",
+      "name": "Theconversation",
+      "category": "other",
+      "estimatedMiB": 160,
+      "confidence": "low"
+    },
+    {
+      "domain": "theguardian.com",
+      "name": "Theguardian",
+      "category": "news",
+      "estimatedMiB": 163,
+      "confidence": "low"
+    },
+    {
+      "domain": "thelancet.com",
+      "name": "Thelancet",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "themeforest.net",
+      "name": "Themeforest",
+      "category": "other",
+      "estimatedMiB": 173,
+      "confidence": "low"
+    },
+    {
+      "domain": "themeisle.com",
+      "name": "Themeisle",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "thenai.org",
+      "name": "Thenai",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "theverge.com",
+      "name": "Theverge",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "threads.com",
+      "name": "Threads",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "threads.net",
+      "name": "Threads",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "tiktok.com",
+      "name": "TikTok",
+      "category": "social",
+      "estimatedMiB": 410,
+      "confidence": "medium"
+    },
+    {
+      "domain": "time.com",
+      "name": "Time",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "timesofindia.indiatimes.com",
+      "name": "Timesofindia",
+      "category": "news",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "tinyurl.com",
+      "name": "Tinyurl",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "translate.google.com",
+      "name": "Translate",
+      "category": "other",
+      "estimatedMiB": 167,
+      "confidence": "low"
+    },
+    {
+      "domain": "trello.com",
+      "name": "Trello",
+      "category": "productivity",
+      "estimatedMiB": 250,
+      "confidence": "medium"
+    },
+    {
+      "domain": "tripadvisor.com",
+      "name": "Tripadvisor",
+      "category": "travel",
+      "estimatedMiB": 223,
+      "confidence": "low"
+    },
+    {
+      "domain": "tripod.com",
+      "name": "Tripod",
+      "category": "travel",
+      "estimatedMiB": 229,
+      "confidence": "low"
+    },
+    {
+      "domain": "trustindex.io",
+      "name": "Trustindex",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "trustpilot.com",
+      "name": "Trustpilot",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "tumblr.com",
+      "name": "Tumblr",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "twitch.tv",
+      "name": "Twitch",
+      "category": "streaming",
+      "estimatedMiB": 540,
+      "confidence": "medium"
+    },
+    {
+      "domain": "twitter.com",
+      "name": "Twitter",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "typeform.com",
+      "name": "Typeform",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "typepad.com",
+      "name": "Typepad",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "ubuntu.com",
+      "name": "Ubuntu",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "uchicago.edu",
+      "name": "Uchicago",
+      "category": "education",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "uci.edu",
+      "name": "Uci",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "ucla.edu",
+      "name": "Ucla",
+      "category": "education",
+      "estimatedMiB": 175,
+      "confidence": "low"
+    },
+    {
+      "domain": "ucsd.edu",
+      "name": "Ucsd",
+      "category": "education",
+      "estimatedMiB": 175,
+      "confidence": "low"
+    },
+    {
+      "domain": "udemy.com",
+      "name": "Udemy",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "ufl.edu",
+      "name": "Ufl",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "uiuc.edu",
+      "name": "Uiuc",
+      "category": "education",
+      "estimatedMiB": 175,
+      "confidence": "low"
+    },
+    {
+      "domain": "uk.com",
+      "name": "Uk",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "umich.edu",
+      "name": "Umich",
+      "category": "education",
+      "estimatedMiB": 182,
+      "confidence": "low"
+    },
+    {
+      "domain": "umn.edu",
+      "name": "Umn",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "un.org",
+      "name": "Un",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "unesco.org",
+      "name": "Unesco",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "unicef.org",
+      "name": "Unicef",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "unsplash.com",
+      "name": "Unsplash",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "upenn.edu",
+      "name": "Upenn",
+      "category": "education",
+      "estimatedMiB": 182,
+      "confidence": "low"
+    },
+    {
+      "domain": "us.com",
+      "name": "Us",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "usatoday.com",
+      "name": "Usatoday",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "usc.edu",
+      "name": "Usc",
+      "category": "education",
+      "estimatedMiB": 168,
+      "confidence": "low"
+    },
+    {
+      "domain": "usda.gov",
+      "name": "Usda",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "usgs.gov",
+      "name": "Usgs",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "usnews.com",
+      "name": "Usnews",
+      "category": "news",
+      "estimatedMiB": 169,
+      "confidence": "low"
+    },
+    {
+      "domain": "utexas.edu",
+      "name": "Utexas",
+      "category": "education",
+      "estimatedMiB": 189,
+      "confidence": "low"
+    },
+    {
+      "domain": "v.qq.com",
+      "name": "V",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "validator.w3.org",
+      "name": "Validator",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "variety.com",
+      "name": "Variety",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "vercel.app",
+      "name": "Vercel",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "vercel.com",
+      "name": "Vercel",
+      "category": "development",
+      "estimatedMiB": 190,
+      "confidence": "medium"
+    },
+    {
+      "domain": "vice.com",
+      "name": "Vice",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "vimeo.com",
+      "name": "Vimeo",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "visualstudio.com",
+      "name": "Visualstudio",
+      "category": "other",
+      "estimatedMiB": 180,
+      "confidence": "low"
+    },
+    {
+      "domain": "vk.com",
+      "name": "Vk",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "vmware.com",
+      "name": "Vmware",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "vox.com",
+      "name": "Vox",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "w2rt6byl5nf1opmc-a.com",
+      "name": "W2rt6byl5nf1opmc A",
+      "category": "other",
+      "estimatedMiB": 181,
+      "confidence": "low"
+    },
+    {
+      "domain": "w3.org",
+      "name": "W3",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "w3schools.com",
+      "name": "W3schools",
+      "category": "education",
+      "estimatedMiB": 169,
+      "confidence": "low"
+    },
+    {
+      "domain": "wa.link",
+      "name": "Wa",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "wa.me",
+      "name": "Wa",
+      "category": "other",
+      "estimatedMiB": 185,
+      "confidence": "low"
+    },
+    {
+      "domain": "walmart.com",
+      "name": "Walmart",
+      "category": "shopping",
+      "estimatedMiB": 230,
+      "confidence": "medium"
+    },
+    {
+      "domain": "washington.edu",
+      "name": "Washington",
+      "category": "education",
+      "estimatedMiB": 176,
+      "confidence": "low"
+    },
+    {
+      "domain": "washingtonpost.com",
+      "name": "Washingtonpost",
+      "category": "news",
+      "estimatedMiB": 143,
+      "confidence": "low"
+    },
+    {
+      "domain": "web.archive.org",
+      "name": "Web",
+      "category": "reference",
+      "estimatedMiB": 133,
+      "confidence": "low"
+    },
+    {
+      "domain": "web.dev",
+      "name": "Web",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "web.facebook.com",
+      "name": "Web",
+      "category": "social",
+      "estimatedMiB": 280,
+      "confidence": "low"
+    },
+    {
+      "domain": "web.mit.edu",
+      "name": "Web",
+      "category": "education",
+      "estimatedMiB": 196,
+      "confidence": "low"
+    },
+    {
+      "domain": "web.whatsapp.com",
+      "name": "WhatsApp Web",
+      "category": "messaging",
+      "estimatedMiB": 310,
+      "confidence": "medium"
+    },
+    {
+      "domain": "webmd.com",
+      "name": "Webmd",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "weebly.com",
+      "name": "Weebly",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "weforum.org",
+      "name": "Weforum",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "weibo.com",
+      "name": "Weibo",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "whatsapp.com",
+      "name": "Whatsapp",
+      "category": "other",
+      "estimatedMiB": 152,
+      "confidence": "low"
+    },
+    {
+      "domain": "whitehouse.gov",
+      "name": "Whitehouse",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "who.int",
+      "name": "Who",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "wikia.com",
+      "name": "Wikia",
+      "category": "reference",
+      "estimatedMiB": 132,
+      "confidence": "low"
+    },
+    {
+      "domain": "wikihow.com",
+      "name": "Wikihow",
+      "category": "reference",
+      "estimatedMiB": 146,
+      "confidence": "low"
+    },
+    {
+      "domain": "wikimedia.org",
+      "name": "Wikimedia",
+      "category": "reference",
+      "estimatedMiB": 119,
+      "confidence": "low"
+    },
+    {
+      "domain": "wikipedia.org",
+      "name": "Wikipedia",
+      "category": "reference",
+      "estimatedMiB": 119,
+      "confidence": "low"
+    },
+    {
+      "domain": "wiktionary.org",
+      "name": "Wiktionary",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "wiley.com",
+      "name": "Wiley",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "windows.net",
+      "name": "Windows",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "wired.com",
+      "name": "Wired",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "wisc.edu",
+      "name": "Wisc",
+      "category": "education",
+      "estimatedMiB": 175,
+      "confidence": "low"
+    },
+    {
+      "domain": "withgoogle.com",
+      "name": "Withgoogle",
+      "category": "other",
+      "estimatedMiB": 166,
+      "confidence": "low"
+    },
+    {
+      "domain": "wix.com",
+      "name": "Wix",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "wixsite.com",
+      "name": "Wixsite",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "wordpress.com",
+      "name": "Wordpress",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "wordpress.org",
+      "name": "Wordpress",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "workspaceupdates.googleblog.com",
+      "name": "Workspaceupdates",
+      "category": "other",
+      "estimatedMiB": 162,
+      "confidence": "low"
+    },
+    {
+      "domain": "worldbank.org",
+      "name": "Worldbank",
+      "category": "finance",
+      "estimatedMiB": 199,
+      "confidence": "low"
+    },
+    {
+      "domain": "wp.com",
+      "name": "Wp",
+      "category": "other",
+      "estimatedMiB": 151,
+      "confidence": "low"
+    },
+    {
+      "domain": "wpa.qq.com",
+      "name": "Wpa",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "wpastra.com",
+      "name": "Wpastra",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "wpguardian.com",
+      "name": "Wpguardian",
+      "category": "news",
+      "estimatedMiB": 156,
+      "confidence": "low"
+    },
+    {
+      "domain": "wpguardian.io",
+      "name": "Wpguardian",
+      "category": "news",
+      "estimatedMiB": 149,
+      "confidence": "low"
+    },
+    {
+      "domain": "wsj.com",
+      "name": "Wsj",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    },
+    {
+      "domain": "www.gov.cn",
+      "name": "Gov",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "www.gov.uk",
+      "name": "Gov",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "www.ncbi.nlm.nih.gov",
+      "name": "Ncbi",
+      "category": "other",
+      "estimatedMiB": 167,
+      "confidence": "low"
+    },
+    {
+      "domain": "www.nhs.uk",
+      "name": "Nhs",
+      "category": "other",
+      "estimatedMiB": 179,
+      "confidence": "low"
+    },
+    {
+      "domain": "x.com",
+      "name": "X",
+      "category": "social",
+      "estimatedMiB": 300,
+      "confidence": "medium"
+    },
+    {
+      "domain": "xing.com",
+      "name": "Xing",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "xinhuanet.com",
+      "name": "Xinhuanet",
+      "category": "other",
+      "estimatedMiB": 159,
+      "confidence": "low"
+    },
+    {
+      "domain": "yahoo.co.jp",
+      "name": "Yahoo",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "yahoo.com",
+      "name": "Yahoo",
+      "category": "portal",
+      "estimatedMiB": 210,
+      "confidence": "medium"
+    },
+    {
+      "domain": "yale.edu",
+      "name": "Yale",
+      "category": "education",
+      "estimatedMiB": 175,
+      "confidence": "low"
+    },
+    {
+      "domain": "yandex.ru",
+      "name": "Yandex",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "yelp.com",
+      "name": "Yelp",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "youku.com",
+      "name": "Youku",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "youronlinechoices.com",
+      "name": "Youronlinechoices",
+      "category": "other",
+      "estimatedMiB": 174,
+      "confidence": "low"
+    },
+    {
+      "domain": "youtu.be",
+      "name": "Youtu",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "youtube-nocookie.com",
+      "name": "Youtube Nocookie",
+      "category": "other",
+      "estimatedMiB": 167,
+      "confidence": "low"
+    },
+    {
+      "domain": "youtube.com",
+      "name": "YouTube",
+      "category": "streaming",
+      "estimatedMiB": 480,
+      "confidence": "medium"
+    },
+    {
+      "domain": "zdnet.com",
+      "name": "Zdnet",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "zend.com",
+      "name": "Zend",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "zendesk.com",
+      "name": "Zendesk",
+      "category": "other",
+      "estimatedMiB": 186,
+      "confidence": "low"
+    },
+    {
+      "domain": "zhihu.com",
+      "name": "Zhihu",
+      "category": "other",
+      "estimatedMiB": 172,
+      "confidence": "low"
+    },
+    {
+      "domain": "zoom.com",
+      "name": "Zoom",
+      "category": "other",
+      "estimatedMiB": 165,
+      "confidence": "low"
+    },
+    {
+      "domain": "zoom.us",
+      "name": "Zoom",
+      "category": "other",
+      "estimatedMiB": 158,
+      "confidence": "low"
+    }
+  ]
+}

@@ -42,6 +42,17 @@ export interface ActivityEntry {
   hostname: string;
   action: "unload" | "restore" | "blocked";
   reason: string;
+  estimatedMiB?: number;
+}
+
+export interface MemoryDay { day: string; estimatedMiB: number }
+export interface MemorySummary {
+  currentEstimatedMiB: number;
+  cumulativeEstimatedMiB: number;
+  daily: MemoryDay[];
+  catalogEntries: number;
+  catalogVersion: number;
+  fallbackEstimatedMiB: number;
 }
 
 export interface BackgroundStats {
@@ -58,6 +69,7 @@ export interface DashboardSnapshot {
   activity: ActivityEntry[];
   stats: BackgroundStats;
   shortcut: string | null;
+  memory: MemorySummary;
 }
 
 export interface UnloadResult {
@@ -100,7 +112,8 @@ export type RequestMessage =
   | { type: "exportSettings" }
   | { type: "importSettings"; value: unknown }
   | { type: "safetyUpdate"; safety: SafetySignals }
-  | { type: "shortcutFromPage" };
+  | { type: "shortcutFromPage" }
+  | { type: "openShortcutSettings" };
 
 export type ResponseMessage<T> =
   | { ok: true; data: T }

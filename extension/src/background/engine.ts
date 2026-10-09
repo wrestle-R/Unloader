@@ -26,6 +26,7 @@ import {
   validMinutes,
 } from "./policy";
 import { remapTabIdentity } from "./tab-identity";
+import { estimateForUrl, memoryCatalogMeta } from "./memory-estimates";
 
 type Tab = Browser.tabs.Tab;
 type Sender = Browser.runtime.MessageSender;
@@ -54,6 +55,8 @@ interface PersistedState {
   stats: Pick<BackgroundStats, "scanCount" | "lastScanAt" | "lastScanDurationMs">;
   startupWakeUntil: number;
   manualSleep: Record<string, true>;
+  memoryReleasedMiB: number;
+  dailyMemoryReleased: Record<string, number>;
 }
 
 const STORAGE_KEY = "unloaderState";
@@ -72,6 +75,8 @@ function initialState(): PersistedState {
     stats: { scanCount: 0, lastScanAt: null, lastScanDurationMs: null },
     startupWakeUntil: 0,
     manualSleep: {},
+    memoryReleasedMiB: 0,
+    dailyMemoryReleased: {},
   };
 }
 
@@ -131,6 +136,12 @@ function loadState(value: unknown): PersistedState {
       if (/^\d+$/.test(id) && flag === true) fresh.manualSleep[id] = true;
     }
   }
+  fresh.memoryReleasedMiB = typeof value.memoryReleasedMiB === "number" && value.memoryReleasedMiB >= 0 ? value.memoryReleasedMiB : 0;
+  if (isRecord(value.dailyMemoryReleased)) {
+    for (const [day, amount] of Object.entries(value.dailyMemoryReleased)) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(day) && typeof amount === "number" && amount >= 0) fresh.dailyMemoryReleased[day] = amount;
+    }
+  }
   pruneUsage(fresh, Date.now());
   return fresh;
 }
@@ -155,16 +166,26 @@ function pruneUsage(state: PersistedState, now: number): void {
   for (const day of Object.keys(state.dailyUsage)) {
     if (!allowed.has(day)) delete state.dailyUsage[day];
   }
+  for (const day of Object.keys(state.dailyMemoryReleased)) {
+    if (!allowed.has(day)) delete state.dailyMemoryReleased[day];
+  }
 }
 
 function recordActivity(state: PersistedState, tab: Tab, action: ActivityEntry["action"], reason: string): void {
+  const estimatedMiB = action === "unload" ? estimateForUrl(tab.url).estimatedMiB : undefined;
   state.activity.unshift({
     id: crypto.randomUUID(),
     at: Date.now(),
     hostname: hostnameFromUrl(tab.url),
     action,
     reason,
+    ...(estimatedMiB === undefined ? {} : { estimatedMiB }),
   });
+  if (estimatedMiB !== undefined) {
+    state.memoryReleasedMiB += estimatedMiB;
+    const day = localDay(Date.now());
+    state.dailyMemoryReleased[day] = (state.dailyMemoryReleased[day] ?? 0) + estimatedMiB;
+  }
   state.activity.length = Math.min(state.activity.length, MAX_ACTIVITY);
 }
 
@@ -559,6 +580,14 @@ export function startBackground(): void {
     return {
       settings: structuredClone(state.settings), tabs: items, activity: [...state.activity],
       stats: { ...state.stats, trackedTabs: items.length, storageBytes }, shortcut,
+      memory: {
+        currentEstimatedMiB: items.filter((tab) => tab.discarded).reduce((sum, tab) => sum + estimateForUrl(tab.url).estimatedMiB, 0),
+        cumulativeEstimatedMiB: state.memoryReleasedMiB,
+        daily: [...days].reverse().map((day) => ({ day, estimatedMiB: state.dailyMemoryReleased[day] ?? 0 })),
+        catalogEntries: memoryCatalogMeta.entries,
+        catalogVersion: memoryCatalogMeta.version,
+        fallbackEstimatedMiB: memoryCatalogMeta.fallbackEstimatedMiB,
+      },
     };
   }
 
@@ -609,6 +638,16 @@ export function startBackground(): void {
           throw new Error("The shortcut must come from a webpage tab.");
         }
         return handleShortcut(sender.tab.id);
+      case "openShortcutSettings": {
+        const isFirefox = /firefox/i.test(navigator.userAgent);
+        const url = isFirefox ? "about:addons" : "chrome://extensions/shortcuts";
+        try {
+          await browser.tabs.create({ url });
+          return { opened: true, url, message: isFirefox ? "Open Extensions, then Manage Extension Shortcuts." : "Shortcut settings opened." };
+        } catch {
+          return { opened: false, url, message: isFirefox ? "Open Add-ons Manager → Extensions → Manage Extension Shortcuts." : `Open ${url} in the address bar.` };
+        }
+      }
       case "restoreTab":
         return restoreTab(message.tabId);
       case "clearActivity":

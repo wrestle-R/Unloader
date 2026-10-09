@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import Link from 'next/link';
 import './globals.css';
+import './refresh.css';
 const sans = localFont({ src: './fonts/Rubik.woff2', variable: '--font-sans', display: 'swap' });
 const serif = localFont({ src: './fonts/NotoSerifDisplay.woff2', variable: '--font-serif', display: 'swap' });
 export const metadata: Metadata = { title: { default: 'Unloader — Give your tabs a rest.', template: '%s · Unloader' }, description: 'A local-first tab unloader for Zen, Firefox, Chrome and Brave. Keep your tabs. Let idle pages rest.' };
