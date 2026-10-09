@@ -1,9 +1,42 @@
-import Link from 'next/link';
-import { addonUrl } from './addon';
+import Link from "next/link";
+import { addonUrl } from "./addon";
 
-export default function Home() { return <>
-  <section className="hero"><div className="eyebrow"><span className="status-dot"/> A LITTLE LESS WEIGHT IN YOUR BROWSER</div><h1>Keep the tabs.<br/><em>Lose the load.</em></h1><p className="hero-copy">Let finished pages rest without losing your place.<br/>Return whenever you need them.</p><div className="actions"><a className="button" href={addonUrl}>Add to Firefox <span>↗</span></a><Link className="text-link" href="/download">Other downloads <span>↓</span></Link></div><p className="compatibility">ZEN & FIREFOX <span>·</span> CHROME & BRAVE <span>·</span> LOCAL FIRST</p><div className="browser-demo" aria-label="Illustration of the Unloader memory dashboard"><div className="demo-toolbar"><span className="demo-dots">● ● ●</span><span>Your tabs, with a little breathing room.</span><span>↗</span></div><div className="demo-body"><div className="demo-label">ESTIMATED MEMORY FREED NOW</div><div className="demo-memory"><strong>1.4 <i>GiB</i></strong><div className="demo-bars" aria-hidden="true"><i/><i/><i/><i/><i/><i/><i/></div></div><p>8 unloaded tabs · estimate based on a transparent 650-site catalog</p></div></div><span className="margin-note">A lighter browser, by habit.</span></section>
-  <section className="intro"><span className="eyebrow">01 / THE IDEA</span><h2>A place for every tab.<br/><em>A pause for the quiet ones.</em></h2><p>Unloader asks your browser to discard idle page content. The tab stays where you left it and reloads when you return. The dashboard shows a clearly labeled memory estimate—never fake live telemetry.</p></section>
-  <section className="features"><article><span className="feature-number">01</span><h3>See the room you made.</h3><p>View estimated memory freed now, cumulative releases, and a seven-day trend. Values come from an editable site catalog.</p></article><article><span className="feature-number">02</span><h3>Protect what matters.</h3><p>Active, pinned, editing and media tabs stay awake. Exact-site rules give important pages their own behavior.</p></article><article><span className="feature-number">03</span><h3>Keep it yours.</h3><p>Rules, activity, estimates and usage stay in your browser profile. No account, analytics or remote service.</p></article></section>
-  <section className="closing"><span className="eyebrow">READY WHEN YOU ARE</span><h2>Let your browser<br/><em>take a breath.</em></h2><Link className="button" href="/download">Download Unloader <span>↓</span></Link></section>
-</>; }
+export default function Home() {
+  return <>
+    <section className="hero">
+      <div className="hero-content">
+        <span className="eyebrow">For Firefox, Zen, Chrome & Brave</span>
+        <h1>Keep your tabs.<br/>Free up some room.</h1>
+        <p className="hero-copy">Unload pages you are not using. They stay in your tab bar, ready to reload when you need them.</p>
+        <div className="actions">
+          <a className="button" href={addonUrl}>Add to Firefox <span aria-hidden="true">↗</span></a>
+          <Link className="text-link" href="/download">Other browsers</Link>
+        </div>
+        <p className="compatibility">Free to use <span>·</span> No account <span>·</span> Everything stays local</p>
+      </div>
+      <div>
+        <div className="browser-demo" aria-label="Example of the Unloader dashboard with illustrative data">
+          <div className="demo-toolbar"><strong>Unloader</strong><span>Tabs</span></div>
+          <div className="demo-body">
+            <div className="demo-label">Estimated freed now</div>
+            <div className="demo-memory"><strong>1.4 <i>GiB</i></strong><div className="demo-bars" aria-hidden="true"><i/><i/><i/><i/><i/><i/><i/></div></div>
+            <div className="demo-tab-row"><span>GitHub · Project workspace</span><span>Unloaded</span></div>
+            <div className="demo-tab-row"><span>Notion · Meeting notes</span><span>Unloaded</span></div>
+            <div className="demo-tab-row"><span>WhatsApp · Messages</span><span>Keep awake</span></div>
+          </div>
+        </div>
+        <p className="demo-caption">Illustrative data. Memory figures are estimates based on typical site usage.</p>
+      </div>
+    </section>
+    <section className="intro">
+      <h2>A lighter browser.<br/>The same tab bar.</h2>
+      <p>Start with a 15-minute idle timer, or decide when each page unloads. Your important pages stay ready, and the rest can wait.</p>
+    </section>
+    <section className="features" aria-label="Features">
+      <article><span className="feature-number">01</span><h3>See your estimated savings</h3><p>View estimated memory freed now, total releases, and a seven-day trend in one compact overview.</p></article>
+      <article><span className="feature-number">02</span><h3>Give each site a rule</h3><p>Keep messaging and work pages awake. Set a custom timer or unload a site manually.</p></article>
+      <article><span className="feature-number">03</span><h3>Your data stays with you</h3><p>Rules, activity and estimates stay in your browser profile. No account or analytics.</p></article>
+    </section>
+    <section className="closing"><h2>Keep the pages. Lose some of the load.</h2><Link className="button" href="/download">Download Unloader <span aria-hidden="true">↓</span></Link></section>
+  </>;
+}

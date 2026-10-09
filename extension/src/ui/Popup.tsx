@@ -36,9 +36,9 @@ export function Popup() {
   const formatMemory = (mib: number) => mib >= 1024 ? `${(mib / 1024).toFixed(1)} GiB` : `${Math.round(mib)} MiB`;
   return <div className="popup" data-testid="popup-app">
     <div className="popup-top"><div className="popup-brand"><span className="popup-logo"><Icon name="layers" size={19}/></span><span>Unloader</span></div><span className="popup-live"><span/>LOCAL</span></div>
-    <div className="popup-hero"><span className="popup-eyebrow">TAB UNLOADING</span><h1>Your tabs. Your choice.</h1><p>Unload a page without closing its tab. Open it again whenever you need it.</p></div>
-    <div className="popup-memory"><span>ESTIMATED FREED NOW</span><strong>{snapshot ? formatMemory(snapshot.memory.currentEstimatedMiB) : "—"}</strong><small>Based on unloaded tabs, not live measurement</small></div>
-    <div className="popup-metrics"><div><span className="popup-metric-icon"><Icon name="sun" size={17}/></span><strong>{snapshot ? loaded.toString().padStart(2, "0") : "—"}</strong><span>LOADED</span></div><div><span className="popup-metric-icon"><Icon name="moon" size={17}/></span><strong>{snapshot ? unloaded.toString().padStart(2, "0") : "—"}</strong><span>UNLOADED</span></div></div>
+    <div className="popup-hero"><h1>Keep your tabs. Free up some room.</h1><p>Unloaded pages stay in your tab bar and reload when you open them.</p></div>
+    <div className="popup-memory"><span>Estimated freed now</span><strong>{snapshot ? formatMemory(snapshot.memory.currentEstimatedMiB) : "—"}</strong><small>Based on typical site memory use</small></div>
+    <div className="popup-metrics"><div><strong>{snapshot ? loaded : "—"}</strong><span>loaded</span></div><div><strong>{snapshot ? unloaded : "—"}</strong><span>unloaded</span></div></div>
     {error ? <p className="popup-error" role="alert">{error}</p> : null}
     <button className="popup-launch" type="button" onClick={() => void openDashboard().catch(reason => setError(reason instanceof Error ? reason.message : "Could not open dashboard."))}>Manage tabs <Icon name="arrow" size={19}/></button>
     <div className="popup-foot"><Icon name="keyboard" size={15}/><span>{snapshot?.shortcut ? `${snapshot.shortcut} to unload this tab` : "Set a shortcut in your browser’s extension settings"}</span></div>

@@ -570,7 +570,7 @@ async function main() {
       }
     });
 
-    if (stressTabs) await check(`${stressTabs}-tab dashboard search and virtualization`, async () => {
+    if (stressTabs) await check(`${stressTabs}-tab dashboard search and batches`, async () => {
       await driver.switchWindow(dashboardHandle);
       for (let index = 0; index < stressTabs; index += 1) {
         const url = `${fixture.origin}/page/stress-${index}`;
@@ -590,17 +590,18 @@ async function main() {
       ), "dashboard count after loading stress tabs");
       await driver.execute("document.querySelector('[data-testid=nav-tabs]').click()");
       const visible = await driver.execute("return document.querySelectorAll('[data-testid=tab-list] [role=listitem]').length");
-      if (visible < 1 || visible >= stressTabs) throw new Error(`Rendered ${visible} rows for ${stressTabs} tabs`);
+      if (visible < 1 || visible > 50) throw new Error(`Initial batch rendered ${visible} rows`);
       await driver.screenshot(resolve(artifacts, "dashboard-300-list.png"));
       await driver.execute(`
-        const list = document.querySelector('[data-testid=tab-list]');
-        list.focus();
-        list.dispatchEvent(new KeyboardEvent('keydown', { key: 'End', bubbles: true, cancelable: true }));
+        const more = document.querySelector('.load-more button');
+        if (!more) throw new Error('Missing Show more tabs button');
+        more.click();
       `);
       await driver.waitFor(() => driver.execute(
-        "return document.querySelector('[data-testid=tab-list]').scrollTop > 0",
-      ), "keyboard scroll to last virtual rows");
-      await driver.execute("document.querySelector('[data-testid=tab-list]').scrollTop = 0");
+        "return document.querySelectorAll('[data-testid=tab-list] [role=listitem]').length > arguments[0]", [visible],
+      ), "next tab batch");
+      const scrolling = await driver.execute("const list = document.querySelector('[data-testid=tab-list]'); return { overflow: getComputedStyle(list).overflowY, scroll: list.scrollHeight, height: list.clientHeight };");
+      if (scrolling.overflow !== "visible" || scrolling.scroll > scrolling.height + 1) throw new Error("Nested tab scroller returned");
       const target = `stress-${stressTabs - 1}`;
       await driver.execute(`
         const input = document.querySelector('input[aria-label="Search tabs"]');
@@ -625,7 +626,7 @@ async function main() {
       if (!narrow.menuOpen || narrow.horizontalOverflow) {
         throw new Error(`Narrow dashboard failed navigation or overflow: ${JSON.stringify(narrow)}`);
       }
-      return `${stressTabs} tracked, ${visible} rendered, keyboard End/search and narrow navigation passed`;
+      return `${stressTabs} tracked, ${visible} initially rendered, Show more/search and narrow navigation passed`;
     });
 
     await check("activity and storage statistics are available", async () => {

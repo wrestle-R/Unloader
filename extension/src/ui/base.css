@@ -1,0 +1,26 @@
+@import "./theme.css";
+@font-face {
+  font-family: RubikLocal;
+  src: url("./assets/Rubik.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink); font-family: RubikLocal, sans-serif; font-size: 14px; line-height: 1.5; }
+button, input, select { font: inherit; }
+button, select { cursor: pointer; }
+button { color: inherit; }
+button:disabled { cursor: default; opacity: .45; }
+a { color: inherit; text-decoration: none; }
+input, select { color: var(--ink); background: var(--surface); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+button, a, input, select { -webkit-tap-highlight-color: transparent; }
+button { transition: background .15s, color .15s, border-color .15s; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+.skip-link { position: fixed; top: 8px; left: 8px; padding: 10px 16px; background: var(--surface); color: var(--ink); border: 1px solid var(--line-strong); transform: translateY(-150%); z-index: 40; }
+.skip-link:focus { transform: translateY(0); }
+kbd { font: inherit; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}

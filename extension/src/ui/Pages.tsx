@@ -72,5 +72,5 @@ export function SettingsPage({ settings, shortcut, onTheme, onShortcut, onExport
 }
 
 function ThemeButton({ theme, selected, onClick }: { theme: Theme; selected: boolean; onClick: (theme: Theme) => void }) {
-  return <button type="button" className={`theme-option ${selected ? "selected" : ""}`} aria-pressed={selected} onClick={() => onClick(theme)}><span className={`theme-preview ${theme}`}><span/><span/><span/></span><span className="theme-option-bottom"><span>{theme === "system" ? "System" : theme === "light" ? "Light" : "Dark"}</span>{selected ? <Icon name="check" size={15}/> : null}</span></button>;
+  return <button type="button" className={`theme-option ${selected ? "selected" : ""}`} aria-pressed={selected} onClick={() => onClick(theme)}><span>{theme === "system" ? "System" : theme === "light" ? "Light" : "Dark"}</span>{selected ? <Icon name="check" size={15}/> : null}</button>;
 }

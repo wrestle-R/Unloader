@@ -1,0 +1,61 @@
+/* Keep in sync with the identical theme.css in the other app.
+   Both apps build independently; every surface uses these neutral tokens. */
+:root {
+  color-scheme: light;
+  --page: #fafafa;
+  --surface: #fafafa;
+  --surface-soft: #f0f0f0;
+  --ink: #202020;
+  --muted: #656565;
+  --subtle: #777777;
+  --line: #e3e3e3;
+  --line-strong: #b6b6b6;
+  --accent: #202020;
+  --accent-hover: #414141;
+  --accent-tint: #ededed;
+  --on-accent: #fafafa;
+  --success: #397055;
+  --danger: #ac3434;
+  --danger-tint: #f9eded;
+  --overlay: #00000066;
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #181818;
+  --surface: #181818;
+  --surface-soft: #242424;
+  --ink: #ededed;
+  --muted: #aaaaaa;
+  --subtle: #999999;
+  --line: #333333;
+  --line-strong: #666666;
+  --accent: #ededed;
+  --accent-hover: #cecece;
+  --accent-tint: #292929;
+  --on-accent: #181818;
+  --success: #8dc5a7;
+  --danger: #f0a1a1;
+  --danger-tint: #382424;
+  --overlay: #00000099;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #181818;
+    --surface: #181818;
+    --surface-soft: #242424;
+    --ink: #ededed;
+    --muted: #aaaaaa;
+    --subtle: #999999;
+    --line: #333333;
+    --line-strong: #666666;
+    --accent: #ededed;
+    --accent-hover: #cecece;
+    --accent-tint: #292929;
+    --on-accent: #181818;
+    --success: #8dc5a7;
+    --danger: #f0a1a1;
+    --danger-tint: #382424;
+    --overlay: #00000099;
+  }
+}

@@ -36,10 +36,13 @@ function formatMemory(mib: number) {
 function MemoryOverview({ memory, unloaded }: { memory: MemorySummary; unloaded: number }) {
   const max = Math.max(1, ...memory.daily.map((day) => day.estimatedMiB));
   return <section className="memory-overview" aria-labelledby="memory-title">
-    <div className="memory-lead"><span className="section-kicker">MEMORY ESTIMATE</span><h2 id="memory-title">A little more room to work.</h2><p>Browser extensions cannot inspect live per-tab RAM. These are transparent estimates from a {memory.catalogEntries}-site catalog.</p></div>
+    <h2 className="sr-only" id="memory-title">Estimated memory savings</h2>
+    <div className="memory-summary">
     <div className="memory-stat primary-stat"><span>Estimated freed now</span><strong>{formatMemory(memory.currentEstimatedMiB)}</strong><small>{unloaded} unloaded {unloaded === 1 ? "tab" : "tabs"}</small></div>
-    <div className="memory-stat"><span>Released across unloads</span><strong>{formatMemory(memory.cumulativeEstimatedMiB)}</strong><small>Cumulative, not simultaneous</small></div>
-    <div className="memory-trend"><div><span>Last 7 days</span><small>estimated memory released</small></div><div className="trend-bars" aria-label="Seven-day estimated memory released">{memory.daily.map(day => <span key={day.day} className="trend-day" title={`${day.day}: ${formatMemory(day.estimatedMiB)}`}><i style={{ height: `${Math.max(4, day.estimatedMiB / max * 100)}%` }}/><b>{new Date(`${day.day}T12:00:00`).toLocaleDateString(undefined, { weekday: "narrow" })}</b></span>)}</div></div>
+    <div className="memory-stat"><span>Estimated released across unloads</span><strong>{formatMemory(memory.cumulativeEstimatedMiB)}</strong><small>Total across successful unloads</small></div>
+    <div className="memory-trend"><div><span>Last 7 days</span><small>estimated releases</small></div><div className="trend-bars" aria-label="Seven-day estimated memory released">{memory.daily.map(day => <span key={day.day} className="trend-day" title={`${day.day}: ${formatMemory(day.estimatedMiB)}`}><i aria-hidden="true" style={{ height: `${day.estimatedMiB / max * 80}%` }}/><b aria-hidden="true">{new Date(`${day.day}T12:00:00`).toLocaleDateString(undefined, { weekday: "narrow" })}</b><span className="sr-only">{day.day}: {formatMemory(day.estimatedMiB)}</span></span>)}</div></div>
+    </div>
+    <details className="memory-method"><summary>About these estimates</summary><p>These figures use typical values from a {memory.catalogEntries}-site catalog; extensions cannot reliably read live per-tab RAM. The current estimate covers unloaded tabs. The cumulative total adds successful unload events and does not represent memory simultaneously available.</p></details>
   </section>;
 }
 
@@ -168,12 +171,13 @@ export function Dashboard() {
   const changeSection = (id: Section) => { setSection(id); window.location.hash = id; };
 
   return <div className="dashboard" data-testid="dashboard-app">
+    <a className="skip-link" href="#main-content">Skip to content</a>
     <header className="app-header">
       <a className="brand-lockup" href="#tabs" aria-label="Unloader tabs"><span className="brand-mark"><Icon name="layers" size={21}/></span><span className="brand-name">Unloader</span></a>
       <nav aria-label="Primary navigation">{navItems.map(item => <button key={item.id} className={`nav-item ${section === item.id ? "active" : ""}`} type="button" onClick={() => changeSection(item.id)} aria-current={section === item.id ? "page" : undefined} data-testid={`nav-${item.id}`}><Icon name={item.icon} size={17}/><span>{sectionNames[item.id]}</span>{item.id === "tabs" && snapshot ? <b>{snapshot.tabs.length}</b> : null}</button>)}</nav>
       <div className="header-actions"><label className="theme-select"><Icon name={snapshot?.settings.theme === "dark" ? "moon" : "sun"} size={17}/><select aria-label="Color theme" disabled={!snapshot || busy} value={snapshot?.settings.theme ?? "system"} onChange={event => void runMutation(() => sendRequest<Settings>({ type: "setTheme", theme: event.target.value as Theme }), "Appearance updated.")}><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label><button type="button" className="icon-button" onClick={() => void refresh()} aria-label="Refresh dashboard" title="Refresh"><Icon name="refresh" size={17}/></button></div>
     </header>
-    <main className="main-panel">
+    <main id="main-content" className="main-panel" tabIndex={-1}>
       <div className="content">
         {fatal && !snapshot ? <div className="fatal-panel"><Icon name="warning" size={30}/><h2>Could not load Unloader</h2><p>{fatal}</p><button className="button primary" onClick={() => void refresh()}>Try again</button></div> : null}
         {!snapshot && !fatal ? <div className="loading-state"><div className="loading-ring"/><span>Getting your tabs ready…</span></div> : null}
