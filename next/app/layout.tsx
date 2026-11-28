@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return <html lang="en" suppressHydrationWarning>
-    <head><Script id="theme-initializer" strategy="beforeInteractive">{`try{var t=localStorage.getItem("unloader-website-theme");document.documentElement.dataset.theme=t==="light"||t==="dark"?t:matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}catch(e){}`}</Script></head>
+    <head><Script id="theme-initializer" strategy="beforeInteractive">{`try{var t=localStorage.getItem("unloader-website-theme");document.documentElement.dataset.theme=t==="system"?(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"):t==="light"?"light":"dark"}catch(e){document.documentElement.dataset.theme="dark"}`}</Script></head>
     <body className={sans.variable}>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="nav">

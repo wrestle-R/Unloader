@@ -3,7 +3,7 @@ import type { SafetySignals, Settings, SiteRule, Theme } from "../shared/types";
 export const DEFAULT_SETTINGS: Settings = {
   globalIdleMinutes: 15,
   siteRules: {},
-  theme: "system",
+  theme: "dark",
 };
 
 export interface ResolvedPolicy {

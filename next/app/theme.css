@@ -1,17 +1,18 @@
 /* Both apps build independently. Keep their shared theme tokens in sync. */
 :root {
   color-scheme: light;
-  --page: #f1f4ee;
-  --surface: #fbfcf8;
-  --surface-soft: #e9efe7;
-  --ink: #192c23;
-  --muted: #4e6357;
-  --subtle: #5d7064;
-  --line: #d5e0d7;
-  --line-strong: #a2b6aa;
+  --page: #f2f2f2;
+  --page-image: none;
+  --surface: #ffffff;
+  --surface-soft: #eeeeee;
+  --ink: #212121;
+  --muted: #555555;
+  --subtle: #666666;
+  --line: #d8d8d8;
+  --line-strong: #aaaaaa;
   --accent: #1a5945;
   --accent-hover: #134733;
-  --accent-tint: #deeee3;
+  --accent-tint: #eeeeee;
   --on-accent: #f8fff9;
   --success: #1e664b;
   --danger: #9c3131;
@@ -19,17 +20,18 @@
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --page: #101b17;
-  --surface: #17251f;
-  --surface-soft: #21332a;
-  --ink: #edf7ee;
-  --muted: #b3c9ba;
-  --subtle: #98afa1;
-  --line: #30463b;
-  --line-strong: #577464;
+  --page: #101010;
+  --page-image: url("/theme/dark-texture.png");
+  --surface: #171717;
+  --surface-soft: #242424;
+  --ink: #ffffff;
+  --muted: #b8b8b8;
+  --subtle: #a3a3a3;
+  --line: #303030;
+  --line-strong: #555555;
   --accent: #9af4c4;
   --accent-hover: #b5f8d3;
-  --accent-tint: #234333;
+  --accent-tint: #292929;
   --on-accent: #11281d;
   --success: #a9eec8;
   --danger: #ffb4af;
@@ -38,17 +40,18 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --page: #101b17;
-    --surface: #17251f;
-    --surface-soft: #21332a;
-    --ink: #edf7ee;
-    --muted: #b3c9ba;
-    --subtle: #98afa1;
-    --line: #30463b;
-    --line-strong: #577464;
+    --page: #101010;
+    --page-image: url("/theme/dark-texture.png");
+    --surface: #171717;
+    --surface-soft: #242424;
+    --ink: #ffffff;
+    --muted: #b8b8b8;
+    --subtle: #a3a3a3;
+    --line: #303030;
+    --line-strong: #555555;
     --accent: #9af4c4;
     --accent-hover: #b5f8d3;
-    --accent-tint: #234333;
+    --accent-tint: #292929;
     --on-accent: #11281d;
     --success: #a9eec8;
     --danger: #ffb4af;

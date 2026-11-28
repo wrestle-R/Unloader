@@ -8,12 +8,12 @@ const storageKey = "unloader-website-theme";
 function readTheme(): Theme {
   try {
     const stored = localStorage.getItem(storageKey);
-    return stored === "light" || stored === "dark" ? stored : "system";
-  } catch { return "system"; }
+    return stored === "light" || stored === "dark" || stored === "system" ? stored : "dark";
+  } catch { return "dark"; }
 }
 
 export function ThemeSelect() {
-  const [theme, setTheme] = useState<Theme>("system");
+  const [theme, setTheme] = useState<Theme>("dark");
 
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");

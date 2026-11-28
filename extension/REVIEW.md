@@ -1,12 +1,12 @@
 # Mozilla review build instructions
 
-Unloader 0.4.0 is built from TypeScript and React with WXT/Vite. No remote code or external runtime service is used.
+Unloader 0.4.1 is built from TypeScript and React with WXT/Vite. No remote code or external runtime service is used.
 
 1. Install Node.js 24.15 or newer and npm.
 2. Extract this source archive and open a terminal in its root.
 3. Run `npm ci`.
 4. Run `npm run build:firefox`.
-5. The installable extension files are in `.output/firefox-mv2/`. The generated `manifest.json` belongs at the ZIP root. Run `npm run zip:firefox` to reproduce `.output/unloader-0.4.0-firefox.zip`.
+5. The installable extension files are in `.output/firefox-mv2/`. The generated `manifest.json` belongs at the ZIP root. Run `npm run zip:firefox` to reproduce `.output/unloader-0.4.1-firefox.zip`.
 
 The lockfile pins dependencies. The package includes a local Node 24 runtime for WXT. The bundled Rubik WOFF2 font and its license are in `src/ui/assets`. Icons are project assets in `public/icon`.
 
