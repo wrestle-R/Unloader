@@ -143,11 +143,8 @@ footer .brand { font-size: 16px; color: var(--ink); }
 .download-grid article:first-child { background: var(--accent-tint); }
 .download-grid h2 { font-size: 29px; margin-bottom: 10px; }
 .download-grid p { max-width: 45ch; }
-.download-grid .button { margin: 4px 0 10px; }
-.download-links { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; font-size: 14px; }
-.download-note { padding: 17px 0; }
-.download-note h3 { font-size: 18px; margin-bottom: 4px; }
-.download-note p { margin: 0 0 10px; max-width: 66ch; }
+.download-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; margin: 4px 0 10px; }
+.download-links { font-size: 14px; }
 
 @media (max-width: 820px) {
   .hero, .how-it-works, .site-rules, .closing, .download-page, .docs-layout { width: calc(100% - 48px); }

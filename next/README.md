@@ -12,8 +12,8 @@ This website lives in `next/` at the Unloader repository root, alongside `extens
 
 Unloader is published on Firefox Add-ons: https://addons.mozilla.org/en-US/firefox/addon/unloader/ . Firefox and Zen installation links use this listing by default, with no environment configuration required.
 
-Optionally set `NEXT_PUBLIC_AMO_URL` to override the public listing URL. After uploading Mozilla's signed XPI to GitHub Releases, set `NEXT_PUBLIC_SIGNED_XPI_URL` to its release download URL to expose an additional signed download link. Redeploy after changing environment variables. Do not point the signed download setting at an unsigned package.
+Set `NEXT_PUBLIC_AMO_URL` to override the Mozilla listing URL, then redeploy.
 
-The Chromium ZIP comes from the latest GitHub release and supports Load unpacked installation. The temporary Firefox ZIP links to the release that contains it.
+Chrome and Brave use the same Chromium ZIP from the latest GitHub release. Install it through Load unpacked.
 
 The header theme selector applies Light, Dark or System across every route and persists the preference locally. Keep the theme tokens in `app/theme.css` and `extension/src/ui/theme.css` identical so either app can build independently.

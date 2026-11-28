@@ -83,7 +83,7 @@ try {
         const content = {
           "/": [".hero h1", ".demo-toggle", ".site-rules", ".closing"],
           "/docs": [".docs-layout aside nav", ".prose h1"],
-          "/download": [".download-grid", ".download-note"],
+          "/download": [".download-grid", ".download-actions"],
           "/privacy": [".prose h1", ".prose section"],
         };
         await verify("website-" + (route.slice(1) || "home") + "-" + theme + "-" + width, [".nav", "footer", ...content[route]]);
@@ -99,6 +99,21 @@ try {
           await verifyDemo("620 MiB", 1);
           await toggle();
           await verifyDemo("0 MiB", 0);
+        }
+        if (route === "/download") {
+          const links = await driver.execute(`
+            return [...document.querySelectorAll(".download-actions a")].map(link => ({
+              label: link.textContent.trim(),
+              href: link.href,
+            }));
+          `);
+          const chrome = links.find(link => link.label === "Download Chrome ZIP");
+          const brave = links.find(link => link.label === "Download Brave ZIP");
+          const mozilla = links.find(link => link.label.startsWith("Install from Mozilla Add-ons"));
+          if (links.length !== 3 || !chrome?.href.endsWith("/unloader-chromium.zip") ||
+              brave?.href !== chrome.href || !mozilla?.href.startsWith("https://") || mozilla.href.endsWith(".zip")) {
+            failures.push(`Invalid browser download actions at ${width}px in ${theme} mode`);
+          }
         }
       }
     }
