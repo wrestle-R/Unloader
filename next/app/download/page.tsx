@@ -1,6 +1,37 @@
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { addonUrl } from '../addon';
-export const metadata: Metadata = { title: 'Download' };
-const releases = 'https://github.com/wrestle-R/Unloader/releases';
-export default function Download() { const signed = process.env.NEXT_PUBLIC_SIGNED_XPI_URL; return <div className="download-page"><span className="eyebrow">A LITTLE ROOM TO BREATHE</span><h1>Make space.<br/><em>Get Unloader.</em></h1><p className="lead">Choose your browser. Your rules stay on your device.</p><div className="download-grid"><article><span className="download-icon">↓</span><span className="eyebrow">FOR EVERYDAY USE</span><h2>Zen & Firefox</h2><p>Install Unloader from Firefox Add-ons for Firefox or Zen. It stays installed and starts with your browser.</p><a className="button" href={addonUrl}>Install from Firefox Add-ons ↗</a>{signed && <a className="text-link" href={signed}>Download signed XPI from GitHub ↓</a>}<a className="text-link" href={releases}>View GitHub releases ↗</a><p className="small">The Firefox Add-ons install is for everyday use. The unsigned ZIP below is for temporary testing.</p></article><article><span className="download-icon">↗</span><span className="eyebrow">DEVELOPER INSTALL</span><h2>Chrome & Brave</h2><p>Download the Chromium ZIP from GitHub, extract it, then load the folder through your browser’s extension manager.</p><a className="button" href={`${releases}/latest/download/unloader-chromium.zip`}>Download Chromium ZIP ↓</a><Link className="text-link" href="/docs#troubleshooting">Installation instructions ↗</Link><p className="small">Requires Developer mode and Load unpacked. This is a development distribution, not a Chrome Web Store install.</p></article></div><div className="download-note"><div><h3>Building or testing?</h3><p>The unsigned Firefox ZIP can be loaded temporarily through about:debugging. It will be removed on restart.</p></div><a className="text-link" href={`${releases}/latest/download/unloader-firefox-unsigned.zip`}>Firefox development ZIP ↓</a></div><p className="small">Install Firefox and Zen builds from <a href={addonUrl}>Firefox Add-ons</a>. Development downloads and release notes are available on <a href={releases}>GitHub Releases</a>.</p></div>; }
+import type { Metadata } from "next";
+import Link from "next/link";
+import { addonUrl } from "../addon";
+
+export const metadata: Metadata = { title: "Download" };
+const releases = "https://github.com/wrestle-R/Unloader/releases";
+
+export default function Download() {
+  const signed = process.env.NEXT_PUBLIC_SIGNED_XPI_URL;
+
+  return <div className="download-page">
+    <h1>Get Unloader</h1>
+    <p className="lead">Choose your browser to get started.</p>
+    <div className="download-grid">
+      <article>
+        <h2>Firefox &amp; Zen</h2>
+        <p>Install from Mozilla Add-ons. Unloader stays installed when you restart your browser.</p>
+        <a className="button" href={addonUrl}>Install from Mozilla Add-ons <span aria-hidden="true">↗</span></a>
+        <div className="download-links">
+          {signed ? <a className="text-link" href={signed}>Signed XPI</a> : null}
+          <a className="text-link" href={releases}>Release notes</a>
+        </div>
+      </article>
+      <article>
+        <h2>Chrome &amp; Brave</h2>
+        <p>Extract the ZIP, turn on Developer mode and choose <strong>Load unpacked</strong> in your extension manager.</p>
+        <a className="button" href={`${releases}/latest/download/unloader-chromium.zip`}>Download Chromium ZIP</a>
+        <div className="download-links"><Link className="text-link" href="/docs#chromium">Chromium install steps</Link></div>
+      </article>
+    </div>
+    <section className="download-note" aria-labelledby="temporary-title">
+      <h3 id="temporary-title">Temporary Firefox build</h3>
+      <p>Load the unsigned ZIP through <code>about:debugging</code> for testing. Firefox removes it when you restart.</p>
+      <a className="text-link" href={`${releases}/download/v0.2.0/unloader-firefox-unsigned.zip`}>Download Firefox development ZIP</a>
+    </section>
+  </div>;
+}

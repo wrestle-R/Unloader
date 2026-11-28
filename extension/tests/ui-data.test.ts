@@ -41,14 +41,14 @@ describe("usage ordering", () => {
 });
 
 describe("unloading labels", () => {
-  it("shows protection instead of misleading timers", () => {
+  it("shows current tab state and uses the same timer label for pinned tabs", () => {
     const timed = { ...tab(1, "Page", 0, 0), policyMode: "timed" as const, timerMinutes: 15 };
     expect(describePolicy(timed)).toBe("15 min timer");
-    expect(describePolicy({ ...timed, pinned: true })).toBe("Pinned · protected");
+    expect(describePolicy({ ...timed, pinned: true })).toBe("15 min timer");
     expect(describePolicy({ ...timed, url: "moz-extension://unloader/dashboard.html" })).toBe("Browser page · excluded");
     expect(describePolicy({ ...timed, pinned: true, policyMode: "awake" })).toBe("Keep awake");
-    expect(describePolicy({ ...timed, active: true })).toBe("Active · protected");
-    expect(describePolicy({ ...timed, safety: { editing: true, media: false } })).toBe("Editing · protected");
-    expect(describePolicy({ ...timed, audible: true })).toBe("Media · protected");
+    expect(describePolicy({ ...timed, active: true })).toBe("Active");
+    expect(describePolicy({ ...timed, safety: { editing: true, media: false } })).toBe("Editing");
+    expect(describePolicy({ ...timed, audible: true })).toBe("Playing media");
   });
 });

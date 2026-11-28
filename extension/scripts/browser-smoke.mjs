@@ -297,10 +297,7 @@ async function main() {
       const before = await snapshot(driver);
       const target = findTab(before, "/page/main");
       await send(driver, { type: "setRule", hostname: "127.0.0.1", rule: { mode: "awake" } });
-      let result = await send(driver, { type: "unloadTab", tabId: target.id });
-      if (result.status === "needs_confirmation") {
-        result = await send(driver, { type: "unloadTab", tabId: target.id, force: true, expectedUrl: target.url });
-      }
+      const result = await send(driver, { type: "unloadTab", tabId: target.id });
       if (result.status !== "done") throw new Error(`Explicit unload returned ${result.status}`);
       const after = await snapshot(driver);
       if (after.settings.siteRules["127.0.0.1"]?.mode !== "awake") {
@@ -336,21 +333,22 @@ async function main() {
       return "1-minute global, Manual, Keep awake, and 2-minute site timer resolved";
     });
 
-    await check("pinned tabs require manual confirmation", async () => {
+    await check("manual unload keeps the tab pinned", async () => {
       await driver.switchWindow(dashboardHandle);
       const target = findTab(await snapshot(driver), "/page/main");
       const updated = await updateTab(driver, target.id, { pinned: true });
       if (updated?.error) throw new Error(updated.error);
       const result = await send(driver, { type: "unloadTab", tabId: target.id });
-      await updateTab(driver, target.id, { pinned: false });
-      if (result.status !== "needs_confirmation") {
-        throw new Error(`Pinned tab returned ${result.status} instead of confirmation`);
-      }
-      return "pinned page remained loaded";
+      if (result.status !== "done") throw new Error(`Pinned tab returned ${result.status}: ${result.message}`);
+      const unloaded = await waitForTab(driver, "/page/main", (item) => item.discarded && item.pinned, "pinned discard");
+      await send(driver, { type: "restoreTab", tabId: unloaded.id });
+      await driver.switchWindow(dashboardHandle);
+      await updateTab(driver, unloaded.id, { pinned: false });
+      return "pinned page unloaded and restored";
     });
 
-    await check("editing requires explicit confirmation", async () => {
-      const editingHandle = await driver.newTab(`${fixture.origin}/page/editing?editing=1`);
+    await check("editing tab unloads from the list without a dialog", async () => {
+      await driver.newTab(`${fixture.origin}/page/editing?editing=1`);
       await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "editing fixture");
       await pause(700);
       await driver.execute(`
@@ -361,17 +359,15 @@ async function main() {
       await pause(500);
       await driver.switchWindow(dashboardHandle);
       const tab = await waitForTab(driver, "/page/editing", (item) => item.safety.editing, "editing signal", 10000);
-      const guarded = await send(driver, { type: "unloadTab", tabId: tab.id });
-      if (guarded.status !== "needs_confirmation") {
-        throw new Error(`Expected confirmation; got ${guarded.status}`);
-      }
-      const forced = await send(driver, { type: "unloadTab", tabId: tab.id, force: true, expectedUrl: tab.url });
-      if (forced.status !== "done") throw new Error(`Confirmed unload returned ${forced.status}`);
-      await waitForTab(driver, "/page/editing", (item) => item.discarded, "confirmed discard");
-      return `guarded tab ${editingHandle}`;
+      const title = tab.title || tab.hostname || "tab";
+      await driver.waitFor(() => driver.execute("return !!document.querySelector(arguments[0])", [`button[aria-label=${JSON.stringify(`Unload ${title}`)}]`]), "Unload button");
+      await clickCss(driver, `button[aria-label=${JSON.stringify(`Unload ${title}`)}]`);
+      if (await driver.execute("return !!document.querySelector('[role=alertdialog]')")) throw new Error("Unload confirmation appeared");
+      await waitForTab(driver, "/page/editing", (item) => item.discarded, "discard without confirmation", 4000);
+      return "one click unloaded the editing page";
     });
 
-    await check("playing media requires explicit confirmation", async () => {
+    await check("manual media unload returns a final result", async () => {
       const mediaHandle = await driver.newTab(`${fixture.origin}/page/media`);
       await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "media fixture");
       await pause(500);
@@ -379,14 +375,16 @@ async function main() {
       await driver.switchWindow(dashboardHandle);
       const mediaTab = await waitForTab(driver, "/page/media", (tab) => tab.safety.media,
         "playing media signal", 10000);
-      const guarded = await send(driver, { type: "unloadTab", tabId: mediaTab.id });
-      if (guarded.status !== "needs_confirmation") {
-        throw new Error(`Playing media returned ${guarded.status} instead of confirmation`);
+      const result = await send(driver, { type: "unloadTab", tabId: mediaTab.id });
+      if (result.status === "done") {
+        await waitForTab(driver, "/page/media", (tab) => tab.discarded, "discarded media tab");
+        return "playing media tab unloaded";
       }
+      if (result.status !== "blocked" || !result.message) throw new Error(`Unexpected media unload result: ${JSON.stringify(result)}`);
       await driver.switchWindow(mediaHandle);
       await clickCss(driver, "#stop");
       await driver.switchWindow(dashboardHandle);
-      return "content media signal and unload guard verified";
+      return `browser declined discard directly: ${result.message}`;
     });
 
     await check("settings export, import, and invalid-file rejection", async () => {
@@ -423,6 +421,64 @@ async function main() {
         throw new Error("No replacement tab was created in the second window");
       }
       return `window ${target.windowId} retained original page`;
+    });
+
+    await check("Rules editor saves the default timer and site exceptions", async () => {
+      await driver.switchWindow(dashboardHandle);
+      await clickCss(driver, "[data-testid=nav-rules]");
+      await driver.waitFor(() => driver.execute("return !!document.querySelector('[data-testid=rules-page]')"), "rules page");
+      const setField = (label, value, tag) => driver.execute(`
+        const [label, value, tag] = arguments;
+        const field = document.querySelector(tag + '[aria-label="' + label + '"]');
+        Object.getOwnPropertyDescriptor(Object.getPrototypeOf(field), "value").set.call(field, value);
+        field.dispatchEvent(new Event(tag === "select" ? "change" : "input", { bubbles: true }));
+      `, [label, value, tag]);
+      const clickButton = (label) => driver.waitFor(() => driver.execute(`
+        const button = [...document.querySelectorAll(".rules-page button")].find(button => button.textContent.trim() === arguments[0]);
+        if (!button || button.disabled) return false;
+        button.click();
+        return true;
+      `, [label]), label + " button");
+      const clickControl = async (selector) => {
+        await driver.waitFor(() => driver.execute("return !!document.querySelector(arguments[0] + ':enabled')", [selector]), selector);
+        await clickCss(driver, selector);
+      };
+      const waitForSetting = (predicate, label) => driver.waitFor(async () => predicate((await snapshot(driver)).settings), label);
+      await clickControl('input[aria-label="Automatic unloading"]');
+      await driver.waitFor(() => driver.execute("return !!document.querySelector('input[aria-label=\"Default idle minutes\"]')"), "timer control");
+      await setField("Default idle minutes", "27", "input");
+      await clickButton("Save timer");
+      await waitForSetting(settings => settings.globalIdleMinutes === 27, "saved default timer");
+
+      const host = "unloader.example";
+      await clickButton("Add rule");
+      await setField("Website hostname", "https://unloader.example/inbox", "input");
+      await setField("New website rule", "timed", "select");
+      await setField("Custom idle minutes", "32", "input");
+      await clickButton("Save rule");
+      await waitForSetting(settings => settings.siteRules[host]?.minutes === 32, "saved custom timer");
+
+      const edit = 'button[aria-label="Edit rule for unloader.example"]';
+      await clickButton("Add rule");
+      await setField("Website hostname", host, "input");
+      await clickButton("Save rule");
+      await driver.waitFor(() => driver.execute("return !!document.querySelector('select[aria-label=\"Rule for unloader.example\"]')"), "opened the existing rule");
+      if ((await snapshot(driver)).settings.siteRules[host]?.minutes !== 32) throw new Error("Adding a duplicate replaced the saved rule");
+      await setField("Rule for unloader.example", "manual", "select");
+      await clickButton("Cancel");
+      if ((await snapshot(driver)).settings.siteRules[host]?.minutes !== 32) throw new Error("Cancel saved the edit");
+
+      await clickControl(edit);
+      await setField("Rule for unloader.example", "awake", "select");
+      await clickButton("Save rule");
+      await waitForSetting(settings => settings.siteRules[host]?.mode === "awake", "changed rule");
+      await clickControl(edit);
+      await clickButton("Remove rule");
+      await waitForSetting(settings => !settings.siteRules[host], "removed rule");
+      await clickControl('input[aria-label="Automatic unloading"]');
+      await waitForSetting(settings => settings.globalIdleMinutes === null, "disabled default timer");
+      await driver.screenshot(resolve(artifacts, "dashboard-rules.png"));
+      return "changed the default timer, added, edited, canceled and removed a rule";
     });
 
     await check("dashboard sections and dark screenshot", async () => {
@@ -476,6 +532,12 @@ async function main() {
       report.shortcutRegistration = unload.shortcut || null;
       const shortcutHandle = await driver.newTab(`${fixture.origin}/page/shortcut`);
       await driver.waitFor(() => driver.execute("return window.__fixtureReady === true"), "shortcut fixture");
+      await driver.execute(`
+        const field = document.querySelector('#draft');
+        field.focus(); field.value = 'Draft before shortcut';
+        field.dispatchEvent(new Event('input', { bubbles: true }));
+        field.blur();
+      `);
       await driver.execute("window.__unloaderKeys = []; window.addEventListener('keydown', event => window.__unloaderKeys.push({ key: event.key, ctrl: event.ctrlKey, shift: event.shiftKey }))");
       const pressedAt = Date.now();
       await keyChord(driver);
@@ -538,14 +600,14 @@ async function main() {
       return `${cycles} cycles, ${final.activity.length} recent entries, ${final.stats.storageBytes} storage bytes`;
     });
 
-    if (timerWait) await check("real idle timer unloads an unused page but keeps a draft", async () => {
+    if (timerWait) await check("real idle timer unloads an idle pinned page but keeps a draft", async () => {
       await driver.switchWindow(dashboardHandle);
       await send(driver, { type: "setRule", hostname: "127.0.0.1", rule: null });
       await send(driver, { type: "setGlobalMinutes", minutes: 1 });
       try {
         const idleUrl = `${fixture.origin}/page/idle-timer`;
         const editUrl = `${fixture.origin}/page/idle-draft`;
-        const idle = await createBrowserTab(driver, { url: idleUrl, active: false });
+        const idle = await createBrowserTab(driver, { url: idleUrl, active: false, pinned: true });
         const editing = await createBrowserTab(driver, { url: editUrl, active: false });
         if (idle?.error || editing?.error) throw new Error(idle?.error ?? editing?.error);
         await switchToUrlPart(driver, "/page/idle-draft");
@@ -559,11 +621,11 @@ async function main() {
         await driver.switchWindow(dashboardHandle);
         await waitForTab(driver, "/page/idle-draft", (tab) => tab.safety.editing, "timer draft safety");
         const start = Date.now();
-        const sleeping = await waitForTab(driver, "/page/idle-timer", (tab) => tab.discarded,
+        const sleeping = await waitForTab(driver, "/page/idle-timer", (tab) => tab.discarded && tab.pinned,
           "one-minute idle discard", timerWait);
         const draft = findTab(await snapshot(driver), "/page/idle-draft");
         if (!draft || draft.discarded) throw new Error("Unsaved draft was unloaded by the timer");
-        return `unused tab ${sleeping.id} unloaded after ${Math.round((Date.now() - start) / 1000)}s; draft stayed loaded`;
+        return `pinned tab ${sleeping.id} unloaded after ${Math.round((Date.now() - start) / 1000)}s; draft stayed loaded`;
       } finally {
         await send(driver, { type: "setGlobalMinutes", minutes: null });
         await send(driver, { type: "setRule", hostname: "127.0.0.1", rule: { mode: "awake" } });

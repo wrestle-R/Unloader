@@ -1,6 +1,12 @@
 import { defineConfig } from "wxt";
 
 const pagePatterns = ["http://*/*", "https://*/*"];
+const icons = {
+  16: "icon/16.png",
+  32: "icon/32.png",
+  48: "icon/48.png",
+  128: "icon/128.png",
+};
 
 export default defineConfig({
   zip: { excludeSources: ["test-results/**", "artifacts/**", "docs.md", ".env", ".env.*"] },
@@ -8,12 +14,8 @@ export default defineConfig({
   manifest: ({ browser, manifestVersion }) => ({
     name: "Unloader",
     description: "Unload idle tabs while keeping important sites awake.",
-    icons: {
-      16: "icon/16.png",
-      32: "icon/32.png",
-      48: "icon/48.png",
-      128: "icon/128.png",
-    },
+    icons,
+    ...(manifestVersion === 2 ? { browser_action: { default_icon: icons } } : { action: { default_icon: icons } }),
     permissions: [
       "tabs",
       "storage",

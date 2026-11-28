@@ -21,7 +21,7 @@ const driver = new WebDriverSession({
 const results = [];
 const failures = [];
 
-async function verify(name, surfaces) {
+async function verify(name, selectors) {
   await driver.executeAsync("const done = arguments[arguments.length - 1]; document.fonts.ready.then(() => requestAnimationFrame(() => requestAnimationFrame(done)));");
   const state = await driver.execute(`
     function background(el) {
@@ -34,15 +34,11 @@ async function verify(name, surfaces) {
       theme: document.documentElement.dataset.theme,
       page,
       overflow: document.documentElement.scrollWidth > innerWidth + 1,
-      surfaces: [...document.querySelectorAll(arguments[0])].map(el => ({
-        name: el.className, color: background(el),
-        image: getComputedStyle(el).backgroundImage,
-      })),
+      missing: arguments[0].filter(selector => !document.querySelector(selector)?.getClientRects().length),
     };
-  `, [surfaces]);
+  `, [selectors]);
   if (state.overflow) failures.push(name + ": horizontal overflow");
-  const mixed = state.surfaces.filter(el => el.color !== state.page || el.image !== "none");
-  if (mixed.length) failures.push(name + ": inconsistent surfaces " + JSON.stringify(mixed));
+  if (state.missing.length) failures.push(name + ": missing visible content " + state.missing.join(", "));
   await driver.screenshot(resolve(artifacts, name + ".png"));
   results.push({ name, ...state });
   process.stdout.write("Checked " + name + "\n");
@@ -50,22 +46,28 @@ async function verify(name, surfaces) {
 
 try {
   await driver.start();
-  for (const width of [1280, 390]) {
+  for (const width of [1280, 390, 320]) {
     await driver.cdp("Emulation.setDeviceMetricsOverride", {
-      width, height: width === 1280 ? 800 : 844, deviceScaleFactor: 1, mobile: width === 390,
+      width, height: width === 1280 ? 800 : 844, deviceScaleFactor: 1, mobile: width < 1280,
     });
     for (const theme of ["light", "dark"]) {
       for (const section of ["tabs", "rules", "activity", "settings"]) {
         await driver.navigate(preview + "/dashboard.html?theme=" + theme + "#" + section);
         await driver.waitFor(() => driver.execute("return !!document.querySelector('[data-testid=dashboard-app]') && document.documentElement.dataset.theme === arguments[0]", [theme]), "dashboard theme");
-        await verify("extension-" + section + "-" + theme + "-" + width, ".app-header,.panel,.memory-overview,.table-heading,.window-row,.tab-row,.feature-card,.timer-controls,.shortcut-display");
+        const content = {
+          tabs: [".memory-overview", ".tab-row", ".row-action span"],
+          rules: [".default-rule", ".rules-list", ".rule-row button"],
+          activity: [".activity-panel"],
+          settings: [".settings-section", ".shortcut-display"],
+        };
+        await verify("extension-" + section + "-" + theme + "-" + width, [".app-header", ...content[section]]);
       }
       await driver.navigate(preview + "/popup.html?theme=" + theme);
       await driver.waitFor(() => driver.execute("return !!document.querySelector('[data-testid=popup-app]') && document.documentElement.dataset.theme === arguments[0]", [theme]), "popup theme");
       // A browser popup has its own fixed width, rather than a full responsive page.
       await driver.cdp("Emulation.setDeviceMetricsOverride", { width: 350, height: 480, deviceScaleFactor: 1, mobile: false });
-      await verify("extension-popup-" + theme + "-" + width, ".popup,.popup-memory,.popup-metrics");
-      await driver.cdp("Emulation.setDeviceMetricsOverride", { width, height: width === 1280 ? 800 : 844, deviceScaleFactor: 1, mobile: width === 390 });
+      await verify("extension-popup-" + theme + "-" + width, [".popup", ".popup-primary", ".popup-memory"]);
+      await driver.cdp("Emulation.setDeviceMetricsOverride", { width, height: width === 1280 ? 800 : 844, deviceScaleFactor: 1, mobile: width < 1280 });
 
       await driver.navigate(website);
       await driver.waitFor(() => driver.execute("return !!document.querySelector('select[aria-label=\"Color theme\"]')"), "website theme selector");
@@ -78,7 +80,26 @@ try {
       for (const route of ["/", "/docs", "/download", "/privacy"]) {
         await driver.navigate(website + route);
         await driver.waitFor(() => driver.execute("return document.documentElement.dataset.theme === arguments[0]", [theme]), "persisted website theme");
-        await verify("website-" + (route.slice(1) || "home") + "-" + theme + "-" + width, ".nav,.browser-demo,.demo-toolbar,.demo-body,.intro,.features,.closing,.download-grid,.download-grid article,.prose,footer");
+        const content = {
+          "/": [".hero h1", ".demo-toggle", ".site-rules", ".closing"],
+          "/docs": [".docs-layout aside nav", ".prose h1"],
+          "/download": [".download-grid", ".download-note"],
+          "/privacy": [".prose h1", ".prose section"],
+        };
+        await verify("website-" + (route.slice(1) || "home") + "-" + theme + "-" + width, [".nav", "footer", ...content[route]]);
+        if (route === "/") {
+          const tabCount = await driver.execute("return document.querySelectorAll('.demo-tab').length");
+          const toggle = () => driver.execute("document.querySelector('.demo-toggle').click()");
+          const verifyDemo = (label, count) => driver.waitFor(() => driver.execute(`
+            return document.querySelector('.demo-result strong').textContent === arguments[0]
+              && document.querySelectorAll('.demo-tab').length === arguments[1]
+              && document.querySelectorAll('.demo-tab.resting').length === arguments[2];
+          `, [label, tabCount, count]), "example tab state");
+          await toggle();
+          await verifyDemo("620 MiB", 1);
+          await toggle();
+          await verifyDemo("0 MiB", 0);
+        }
       }
     }
   }
@@ -93,7 +114,7 @@ try {
   await driver.cdp("Emulation.setEmulatedMedia", { features: [{ name: "prefers-color-scheme", value: "dark" }] });
   await driver.waitFor(() => driver.execute("return document.documentElement.dataset.theme === 'light'"), "explicit preference overrides OS");
   if (failures.length) throw new Error(failures.join("\n"));
-  process.stdout.write("PASS unified themes, all routes, desktop/mobile layouts, persistence, and system preference\n");
+  process.stdout.write("PASS shared themes, all routes, desktop/mobile layouts, interactive demo, and theme persistence\n");
 } finally {
   await writeFile(resolve(artifacts, "report.json"), JSON.stringify({ results, failures }, null, 2));
   await driver.stop();

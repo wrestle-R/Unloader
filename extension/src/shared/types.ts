@@ -73,7 +73,7 @@ export interface DashboardSnapshot {
 }
 
 export interface UnloadResult {
-  status: "done" | "needs_confirmation" | "blocked";
+  status: "done" | "blocked";
   message?: string;
   tabId: number;
 }
@@ -106,7 +106,7 @@ export type RequestMessage =
   | { type: "setGlobalMinutes"; minutes: number | null }
   | { type: "setTheme"; theme: Theme }
   | { type: "setRule"; hostname: string; rule: SiteRule | null }
-  | { type: "unloadTab"; tabId: number; force?: boolean; expectedUrl?: string }
+  | { type: "unloadTab"; tabId: number; expectedUrl?: string }
   | { type: "restoreTab"; tabId: number }
   | { type: "clearActivity" }
   | { type: "exportSettings" }

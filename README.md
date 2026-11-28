@@ -30,11 +30,11 @@ Unloading does not clear your cookies or sign you out of websites. However, unsa
 
 Actual memory savings depend on the browser and the page. Unloading does not guarantee an immediate drop in memory usage.
 
-The dashboard reports **estimated** memory freed by currently unloaded tabs, cumulative memory released across successful unload events, and a seven-day trend. Browsers do not expose reliable per-tab RAM to extensions, so these figures come from the editable 650-domain catalog at [`extension/src/data/site-memory-estimates.json`](extension/src/data/site-memory-estimates.json). Unknown sites use a documented fallback. These values are planning estimates, not live hardware telemetry.
+The dashboard and popup show one estimate for memory freed by currently unloaded tabs. Browsers do not expose reliable per-tab RAM readings to extensions. Unloader uses the bundled [site memory catalog](extension/src/data/site-memory-estimates.json) and a fallback for unknown sites.
 
 ## Manage your tabs
 
-Click the toolbar icon, then **Manage tabs** to open the dashboard.
+Click the toolbar icon to unload the current tab, open **Manage tabs**, or jump to **Website rules**.
 
 - **Tabs:** search pages and websites, filter loaded or unloaded tabs, sort them, and view tabs grouped by browser window. Unload or restore a page directly from its row.
 - **Website rules:** adjust or disable the global idle timer and choose a rule for individual websites.
@@ -60,9 +60,9 @@ For messaging pages you want ready at startup, add a **Keep awake** rule. You ca
 
 ## Protected pages
 
-Automatic unloading skips active, pinned, audible, editing, media-playing and loading tabs, as well as pages without safety signals. Browser and extension pages are excluded. Private tabs are not tracked.
+Pinned tabs follow the same idle timer and site rules as other tabs. Automatic unloading skips active, audible, editing, media-playing and loading tabs, as well as pages without safety signals. Browser, extension and private tabs are excluded.
 
-Editing and media checks are best effort. Use **Keep awake** for important work or sites whose state you need to preserve. Manual unloading may request confirmation for a protected page.
+Use **Keep awake** to keep a site loaded automatically. The dashboard, toolbar popup and keyboard shortcut unload a page directly when you ask.
 
 ## Shortcuts
 
@@ -74,9 +74,9 @@ Browsers and operating systems can reserve shortcuts. The Settings page shows th
 
 Zen uses the Firefox build. Permanent installation requires a **Mozilla-signed add-on** so it stays installed after the browser restarts.
 
-Version **0.2.0** was submitted to Mozilla with its source archive and reviewer build instructions. Publication and the signed download are pending. The reserved [Mozilla listing](https://addons.mozilla.org/en-US/firefox/addon/unloader/) may remain unavailable until publication.
+[Install Unloader for Firefox or Zen from Mozilla Add-ons](https://addons.mozilla.org/en-US/firefox/addon/unloader/).
 
-[Download the Firefox development ZIP](https://github.com/wrestle-R/Unloader/releases/latest/download/unloader-firefox-unsigned.zip)
+[Download the Firefox development ZIP](https://github.com/wrestle-R/Unloader/releases/download/v0.2.0/unloader-firefox-unsigned.zip)
 
 For temporary testing:
 

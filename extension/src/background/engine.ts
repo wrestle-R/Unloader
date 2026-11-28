@@ -13,7 +13,6 @@ import type {
 } from "../shared/types";
 import {
   DEFAULT_SETTINGS,
-  autoUnloadDueAt,
   chooseReplacementTab,
   hostnameFromUrl,
   isWebUrl,
@@ -395,7 +394,7 @@ export function startBackground(): void {
     midnight.setHours(24, 0, 0, 0);
     next = Math.min(next, midnight.getTime());
     for (const tab of tabs) {
-      if (tab.id === undefined || tab.incognito || !isWebUrl(tab.url) || tab.active || tab.discarded || tab.pinned || tab.audible) continue;
+      if (tab.id === undefined || tab.incognito || !isWebUrl(tab.url) || tab.active || tab.discarded || tab.audible) continue;
       const minutes = resolvePolicy(hostnameFromUrl(tab.url), state.settings).minutes;
       if (minutes === null) continue;
       const safety = safetyFor(tab.id);
@@ -416,18 +415,18 @@ export function startBackground(): void {
       if (!meta) continue;
       const policy = resolvePolicy(hostnameFromUrl(tab.url), state.settings);
       if (policy.mode !== "timed" || policy.minutes === null ||
-          meta.lastActiveAt + policy.minutes * 60_000 > now || tab.active || tab.pinned ||
+          meta.lastActiveAt + policy.minutes * 60_000 > now || tab.active ||
           tab.audible || tab.discarded || tab.status === "loading") continue;
       let safety = safetyFor(tab.id);
       if (!safety) safety = await refreshSafety(tab.id);
       if (!shouldAutoUnload({
-        url: tab.url ?? "", active: false, pinned: false, audible: false,
+        url: tab.url ?? "", active: false, audible: false,
         discarded: false, loading: false,
         lastActiveAt: meta.lastActiveAt, safety,
       }, state.settings, now)) continue;
       try {
         const current = await browser.tabs.get(tab.id);
-        if (current.url !== tab.url || current.active || current.pinned || current.audible ||
+        if (current.url !== tab.url || current.active || current.audible ||
             current.discarded || current.status === "loading") continue;
         const currentSafety = safetyFor(tab.id);
         if (!currentSafety || currentSafety.editing || currentSafety.media) continue;
@@ -452,7 +451,6 @@ export function startBackground(): void {
 
   async function unloadTab(
     tabId: number,
-    force = false,
     source = "Manual",
     expectedUrl?: string,
   ): Promise<UnloadResult> {
@@ -466,40 +464,29 @@ export function startBackground(): void {
     if (tab.incognito || !isWebUrl(tab.url)) {
       return { status: "blocked", tabId, message: "This page cannot be unloaded by Unloader." };
     }
-    if (force && (!expectedUrl || expectedUrl !== tab.url)) {
-      return { status: "blocked", tabId, message: "The page changed. Review it again before unloading." };
+    if (expectedUrl !== undefined && expectedUrl !== tab.url) {
+      return { status: "blocked", tabId, message: "The page changed. Try unloading it again." };
     }
     if (tab.discarded) return { status: "done", tabId, message: "Already unloaded." };
-    const safety = safetyFor(tabId) ?? await refreshSafety(tabId);
-    if (!force && (tab.pinned || tab.audible || safety?.editing || safety?.media || !safety)) {
-      const reason = !safety ? "Page safety could not be checked" :
-        tab.pinned ? "Pinned tab" : tab.audible ? "Audio is playing" : safety.editing ? "Unsaved editing may be in progress" : "Media is playing";
-      return { status: "needs_confirmation", tabId, message: reason };
-    }
-    if (tab.active) {
-      const peers = await browser.tabs.query({ windowId: tab.windowId });
-      const replacementId = chooseReplacementTab(tabId, peers.filter((peer) => peer.id !== undefined).map((peer) => ({
-        id: peer.id!, discarded: peer.discarded === true,
-        lastActiveAt: state.tabMeta[String(peer.id)]?.lastActiveAt ?? 0,
-        index: peer.index,
-      })));
-      if (replacementId === null) {
-        await browser.tabs.create({ windowId: tab.windowId, active: true, url: "about:blank" });
-      } else {
-        await browser.tabs.update(replacementId, { active: true });
-      }
-    }
     try {
-      const current = await browser.tabs.get(tabId);
-      if (current.url !== tab.url || current.active) {
-        return { status: "blocked", tabId, message: "The page changed or became active. Review it again before unloading." };
-      }
-      if (!force) {
-        const currentSafety = safetyFor(tabId);
-        if (current.pinned || current.audible || !currentSafety || currentSafety.editing || currentSafety.media) {
-          return { status: "needs_confirmation", tabId, message: "This page may contain active work or media." };
+      if (tab.active) {
+        const peers = await browser.tabs.query({ windowId: tab.windowId });
+        const replacementId = chooseReplacementTab(tabId, peers.filter((peer) => peer.id !== undefined).map((peer) => ({
+          id: peer.id!, discarded: peer.discarded === true,
+          lastActiveAt: state.tabMeta[String(peer.id)]?.lastActiveAt ?? 0,
+          index: peer.index,
+        })));
+        if (replacementId === null) {
+          await browser.tabs.create({ windowId: tab.windowId, active: true, url: "about:blank" });
+        } else {
+          await browser.tabs.update(replacementId, { active: true });
         }
       }
+      const current = await browser.tabs.get(tabId);
+      if (current.url !== tab.url || current.active) {
+        return { status: "blocked", tabId, message: "The page changed or became active. Try unloading it again." };
+      }
+      if (current.discarded) return { status: "done", tabId, message: "Already unloaded." };
       const discarded = await browser.tabs.discard(tabId);
       const updated = discarded?.id !== undefined ? discarded : await browser.tabs.get(tabId);
       if (!updated.discarded) throw new Error("The browser kept this tab loaded.");
@@ -523,9 +510,7 @@ export function startBackground(): void {
     const now = Date.now();
     if (now - lastShortcutAt < 1000) return null;
     lastShortcutAt = now;
-    const result = await unloadTab(tabId, false, "Shortcut");
-    if (result.status === "needs_confirmation") await openConfirmation(tabId);
-    return result;
+    return unloadTab(tabId, "Shortcut");
   }
 
   async function restoreTab(tabId: number): Promise<boolean> {
@@ -591,18 +576,6 @@ export function startBackground(): void {
     };
   }
 
-  async function openConfirmation(tabId: number): Promise<void> {
-    const base = browser.runtime.getURL("/dashboard.html");
-    const url = `${base}?confirmTab=${tabId}`;
-    const existing = (await browser.tabs.query({})).find((tab) => !tab.incognito && tab.url?.startsWith(base));
-    if (existing?.id !== undefined) {
-      await browser.tabs.update(existing.id, { url, active: true });
-      await browser.windows.update(existing.windowId, { focused: true });
-    } else {
-      await browser.tabs.create({ url, active: true });
-    }
-  }
-
   async function handleMessage(message: RequestMessage, sender: Sender): Promise<unknown> {
     switch (message.type) {
       case "getSnapshot":
@@ -632,7 +605,7 @@ export function startBackground(): void {
         return structuredClone(state.settings);
       }
       case "unloadTab":
-        return unloadTab(message.tabId, message.force === true, "Manual", message.expectedUrl);
+        return unloadTab(message.tabId, "Manual", message.expectedUrl);
       case "shortcutFromPage":
         if (sender.tab?.id === undefined || sender.tab.incognito) {
           throw new Error("The shortcut must come from a webpage tab.");

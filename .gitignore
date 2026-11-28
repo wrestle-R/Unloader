@@ -1,4 +1,5 @@
 /docs/
+/local-docs/
 node_modules/
 .output/
 .wxt/

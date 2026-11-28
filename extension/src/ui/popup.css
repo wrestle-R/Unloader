@@ -1,25 +1,20 @@
 @import "./base.css";
+
 html, body, #root { width: 350px; }
-.popup { padding: 20px; }
-.popup-top, .popup-brand { display: flex; align-items: center; }
-.popup-top { justify-content: space-between; }
-.popup-brand { gap: 8px; font-size: 17px; font-weight: 500; letter-spacing: -.4px; }
-.popup-logo { display: grid; place-items: center; color: var(--ink); width: 22px; height: 24px; }
-.popup-live { display: flex; align-items: center; gap: 5px; font-size: 10px; color: var(--muted); }
-.popup-live span { width: 4px; height: 4px; border-radius: 50%; background: var(--success); }
-.popup-hero { padding: 22px 0 16px; }
-.popup-hero h1 { font-size: 18px; font-weight: 450; letter-spacing: -.4px; line-height: 1.4; margin: 0 0 7px; }
-.popup-hero p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.65; }
-.popup-memory { display: flex; flex-direction: column; gap: 5px; padding: 18px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
-.popup-memory > span { color: var(--muted); font-size: 11px; }
-.popup-memory strong { font-size: 32px; letter-spacing: -1px; font-weight: 450; font-variant-numeric: tabular-nums; }
-.popup-memory small { color: var(--muted); font-size: 10px; }
-.popup-metrics { display: grid; grid-template-columns: 1fr 1fr; padding: 16px 0 20px; gap: 20px; }
-.popup-metrics > div { display: flex; align-items: baseline; gap: 8px; }
-.popup-metrics strong { font-size: 18px; font-weight: 450; }
-.popup-metrics > div > span:last-child { font-size: 11px; color: var(--muted); }
-.popup-launch { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: 38px; padding: 8px 12px; border: 1px solid var(--accent); border-radius: 5px; background: var(--accent); color: var(--on-accent); font-size: 12px; }
-.popup-launch:hover { background: var(--accent-hover); }
-.popup-foot { display: flex; align-items: center; gap: 7px; color: var(--muted); font-size: 10px; line-height: 1.6; margin-top: 12px; }
-.popup-foot svg { flex: none; }
-.popup-error { font-size: 12px; color: var(--danger); }
+.popup { padding: 15px; }
+.popup h1 { display: flex; align-items: center; gap: 8px; font-size: 17px; font-weight: 600; letter-spacing: -.025em; margin: 0 0 14px; }
+.popup-memory { display: grid; gap: 1px; margin-top: 12px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--accent-tint); }
+.popup-memory span, .popup-memory small, .popup-foot { color: var(--muted); font-size: 12px; }
+.popup-memory strong { font-size: 26px; line-height: 1.18; letter-spacing: -.04em; font-weight: 580; font-variant-numeric: tabular-nums; }
+.popup-actions { display: flex; gap: 7px; flex-wrap: wrap; }
+.popup-current { min-width: 0; margin-bottom: 8px; }
+.popup-current strong, .popup-current span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.popup-current span { color: var(--muted); font-size: 12px; }
+.popup-launch { display: inline-flex; align-items: center; justify-content: space-between; min-height: 38px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 7px; background: var(--surface); gap: 7px; font-size: 13px; font-weight: 500; }
+.popup-launch:hover { background: var(--surface-soft); }
+.popup-launch.popup-primary { justify-content: start; width: 100%; border-color: var(--accent); background: var(--accent); color: var(--on-accent); }
+.popup-launch.popup-primary:hover:not(:disabled) { background: var(--accent-hover); }
+.popup-foot { display: flex; align-items: center; gap: 7px; margin-top: 9px; }
+.popup-error, .popup-notice { font-size: 12px; margin: 6px 0; }
+.popup-error { color: var(--danger); }
+.popup-notice { color: var(--success); }

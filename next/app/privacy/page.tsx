@@ -1,3 +1,22 @@
-import type { Metadata } from 'next';
-export const metadata: Metadata = { title: 'Privacy' };
-export default function Privacy() { return <article className="prose privacy"><span className="eyebrow">LOCAL FIRST, BY DESIGN</span><h1>Your tabs.<br/><em>Your business.</em></h1><p className="lead">Unloader does not transmit your browsing data.</p><section><h2>What stays on your device</h2><p>Settings, rules, recent activity, estimated memory-release totals and focused-tab usage stay in your browser profile. Tab titles and URLs are read only to display and manage tabs. Private tabs are excluded.</p><h2>Memory estimates</h2><p>Memory figures come from a bundled static domain catalog. They are not live readings from your computer. Matching, totals and seven-day history are calculated locally and never sent elsewhere.</p><h2>Page safety</h2><p>A content script reports only editing and media booleans. It does not send or store form text or values.</p><h2>No remote collection</h2><p>There is no analytics, advertising, account system or remote data service. Removing the extension removes its local storage.</p><h2>Permissions</h2><p>Tabs manages and discards pages. Storage keeps local settings and history. Alarms schedules background work. Idle prevents usage tracking while the device is locked. Web-page access enables editing and media protection.</p><h2>This website</h2><p>This site has no analytics or account system. Its hosting provider may process standard request logs.</p><h2>Contact</h2><p><a href="https://github.com/wrestle-R/Unloader/issues">Open a GitHub issue</a> for privacy questions without including private browsing data.</p></section></article>; }
+import type { Metadata } from "next";
+
+export const metadata: Metadata = { title: "Privacy" };
+
+export default function Privacy() {
+  return <article className="prose privacy">
+    <h1>Privacy</h1>
+    <p className="lead">Unloader keeps your browsing data on your device.</p>
+    <section>
+      <h2>What stays in your browser</h2>
+      <p>Settings, site rules, recent activity, memory estimates and focused-tab usage stay in your browser profile. Unloader reads tab titles and URLs to display and manage your tabs. Private tabs are excluded.</p>
+      <h2>Editing and media</h2>
+      <p>Unloader checks whether a page is being edited or playing media for the idle timer. It stores neither form text nor form values.</p>
+      <h2>Extension permissions</h2>
+      <p>Tab access lets Unloader manage pages. Storage keeps settings and history. Alarms run the idle timer. The browser’s idle state pauses usage tracking while your device is locked. Webpage access lets Unloader check editing and media activity.</p>
+      <h2>Data collection</h2>
+      <p>Unloader has no account, analytics, advertising or remote data service. Removing the extension removes its local storage. The website hosting provider may process standard request logs.</p>
+      <h2>Contact</h2>
+      <p><a href="https://github.com/wrestle-R/Unloader/issues">Open a GitHub issue</a> for privacy questions. Keep private browsing data out of the report.</p>
+    </section>
+  </article>;
+}

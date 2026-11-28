@@ -14,7 +14,6 @@ export interface ResolvedPolicy {
 export interface AutoUnloadCandidate {
   url: string;
   active: boolean;
-  pinned: boolean;
   audible: boolean;
   discarded: boolean;
   loading: boolean;
@@ -115,7 +114,7 @@ export function resolvePolicy(hostname: string, settings: Settings): ResolvedPol
 
 export function autoUnloadDueAt(candidate: AutoUnloadCandidate, settings: Settings): number | null {
   const hostname = hostnameFromUrl(candidate.url);
-  if (!hostname || candidate.active || candidate.pinned || candidate.audible || candidate.discarded) return null;
+  if (!hostname || candidate.active || candidate.audible || candidate.discarded) return null;
   if (candidate.loading || !candidate.safety || candidate.safety.editing || candidate.safety.media) return null;
   const policy = resolvePolicy(hostname, settings);
   return policy.mode === "timed" && policy.minutes !== null

@@ -11,12 +11,13 @@ interface TabListProps {
   search: string;
   sort: UsageSort;
   groupWindows?: boolean;
+  emptyMessage?: string;
   busy?: boolean;
   onUnload: (tab: TabInfo) => void;
   onRestore: (tab: TabInfo) => void;
 }
 
-export function TabList({ tabs, search, sort, groupWindows = true, busy = false, onUnload, onRestore }: TabListProps) {
+export function TabList({ tabs, search, sort, groupWindows = true, emptyMessage, busy = false, onUnload, onRestore }: TabListProps) {
   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
   const deferredSearch = useDeferredValue(search.trim().toLowerCase());
   const items = useMemo(() => {
@@ -42,8 +43,8 @@ export function TabList({ tabs, search, sort, groupWindows = true, busy = false,
   if (items.length === 0) {
     return <div className="empty-state" data-testid="tab-list">
       <span className="empty-icon"><Icon name="layers" size={26} /></span>
-      <h3>{tabs.length ? "No tabs match that search" : "No open tabs yet"}</h3>
-      <p>{tabs.length ? "Try a page title or website name." : "Your open browser tabs will appear here."}</p>
+      <h3>{tabs.length ? "No tabs match that search" : emptyMessage ?? "No open tabs yet"}</h3>
+      {tabs.length ? <p>Try a page title or website name.</p> : null}
     </div>;
   }
 
@@ -55,10 +56,10 @@ export function TabList({ tabs, search, sort, groupWindows = true, busy = false,
           </div>;
         }
         const tab = item.tab;
-        return <div className="tab-row" key={tab.id} role="listitem">
-          <div className="tab-icon" aria-hidden="true">{tab.favIconUrl ? <img src={tab.favIconUrl} alt="" onError={event => { event.currentTarget.style.display = "none"; }} /> : <Icon name="globe" size={17} />}</div>
+        return <div className={`tab-row${tab.discarded ? " is-unloaded" : ""}`} key={tab.id} role="listitem">
+          <div className="tab-icon" aria-hidden="true"><Icon name="globe" size={17}/>{tab.favIconUrl ? <img key={tab.favIconUrl} src={tab.favIconUrl} alt="" onError={event => { event.currentTarget.hidden = true; }}/> : null}</div>
           <div className="tab-main">
-            <div className="tab-title" title={tab.title || tab.url}>{tab.title || tab.hostname || "Untitled tab"}{tab.pinned ? <span className="tiny-marker" title="Pinned">PINNED</span> : null}</div>
+            <div className="tab-title" title={tab.title || tab.url}><span>{tab.title || tab.hostname || "Untitled tab"}</span>{tab.pinned ? <span className="tiny-marker" title="Pinned"><Icon name="pin" size={14}/><span className="sr-only">Pinned</span></span> : null}</div>
             <div className="tab-sub" title={tab.url}><span>{tab.hostname || "Browser page"}</span><span className="dot-separator" /><span>{formatIdle(tab.idleMinutes)}</span><span className="mobile-policy">{describePolicy(tab)}</span></div>
           </div>
           <span className={`status-pill ${tab.discarded ? "asleep" : "awake"}`}><span className="status-dot" />{tab.discarded ? "Unloaded" : "Loaded"}</span>

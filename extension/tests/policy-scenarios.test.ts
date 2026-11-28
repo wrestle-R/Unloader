@@ -16,7 +16,6 @@ function candidate(overrides: Partial<AutoUnloadCandidate> = {}): AutoUnloadCand
   return {
     url: "https://news.example.org/read?draft=1#part",
     active: false,
-    pinned: false,
     audible: false,
     discarded: false,
     loading: false,
@@ -56,9 +55,16 @@ describe("automatic unloading decisions", () => {
     expect(shouldAutoUnload(candidate({ url: "https://other.example.org/" }), settings, now)).toBe(true);
   });
 
+  it("applies the same idle timer and site rules to pinned tabs", () => {
+    const pinned = { ...candidate(), pinned: true };
+    expect(shouldAutoUnload(pinned, DEFAULT_SETTINGS, now)).toBe(true);
+    expect(shouldAutoUnload(pinned, { ...DEFAULT_SETTINGS, siteRules: {
+      "news.example.org": { mode: "awake" },
+    } }, now)).toBe(false);
+  });
+
   it.each([
     ["active", { active: true }],
-    ["pinned", { pinned: true }],
     ["audible", { audible: true }],
     ["editing", { safety: { editing: true, media: false } }],
     ["media", { safety: { editing: false, media: true } }],

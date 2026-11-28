@@ -73,7 +73,7 @@ createServer(async (req, res) => {
               return { ok: true, data: message.type === "setTheme" ? demo.settings : demo };
             }
           },
-          tabs: { onCreated:event, onRemoved:event, onUpdated:event, onActivated:event },
+          tabs: { onCreated:event, onRemoved:event, onUpdated:event, onActivated:event, query:async () => demo.tabs.filter(tab => tab.active) },
           windows: { onFocusChanged:event }
         };
       </script>`;
@@ -84,7 +84,7 @@ createServer(async (req, res) => {
     const file = resolve(build, "." + url.pathname);
     if (!file.startsWith(build + "/")) throw new Error("Invalid path");
     res.setHeader("content-type", ({
-      ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2", ".png": "image/png",
+      ".js": "text/javascript", ".css": "text/css", ".woff2": "font/woff2", ".png": "image/png", ".svg": "image/svg+xml",
     })[extname(file)] || "application/octet-stream");
     res.end(await readFile(file));
   } catch {

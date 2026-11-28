@@ -2,6 +2,10 @@ import type { SiteRule, TabInfo } from "../shared/types";
 
 export type UsageSort = "recent" | "title" | "mostToday" | "leastToday" | "mostWeek" | "leastWeek";
 
+export function formatMemory(mib: number): string {
+  return mib >= 1024 ? `${(mib / 1024).toLocaleString(undefined, { maximumFractionDigits: 1 })} GiB` : `${Math.round(mib)} MiB`;
+}
+
 export function formatIdle(minutes: number): string {
   if (minutes < 1) return "Just now";
   if (minutes < 60) return `${Math.floor(minutes)}m idle`;
@@ -23,10 +27,11 @@ export function describeRule(rule: SiteRule | undefined): string {
 export function describePolicy(tab: TabInfo): string {
   if (!/^https?:\/\//i.test(tab.url)) return "Browser page · excluded";
   if (tab.policyMode === "awake") return "Keep awake";
-  if (tab.pinned) return "Pinned · protected";
-  if (tab.active) return "Active · protected";
-  if (tab.audible || tab.safety.media) return "Media · protected";
-  if (tab.safety.editing) return "Editing · protected";
+  if (!tab.discarded) {
+    if (tab.active) return "Active";
+    if (tab.audible || tab.safety.media) return "Playing media";
+    if (tab.safety.editing) return "Editing";
+  }
   if (tab.policyMode === "manual") return "Manual only";
   return `${tab.timerMinutes ?? 15} min timer`;
 }
